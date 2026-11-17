@@ -1,0 +1,291 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="orders-title">Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="orders-content">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    ></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="orders-page">
+    <!-- Orders List -->
+    <ion-list class="orders-list">
+      @for (o of allOrders; track o.id) {
+      <ion-item class="order-item" lines="none">
+        <div class="order-card">
+          <!-- Order Header -->
+          <div class="order-card-header">
+            <div class="order-reference">
+              <span class="order-label">ORDER</span>
+              <span class="order-id">#{{ o.id }}</span>
+            </div>
+
+            <span
+              class="order-status"
+              [class.status-new]="o.status === 'New Order'"
+              [class.status-delivery]="o.status === 'Out for Delivery'"
+              [class.status-delivered]="o.status === 'Delivered'"
+              [class.status-cancelled]="o.status === 'Canceled'"
+              [class.status-refund]="o.status === 'Pending For Refund'"
+              [class.status-returned]="o.status === 'Returned'"
+            >
+              <span class="status-dot"></span>
+              {{ o.status }}
+            </span>
+          </div>
+
+          <!-- Order Body -->
+          <ion-grid class="order-grid">
+            <ion-row>
+              <!-- Products -->
+              <ion-col size="7" class="products-column">
+                @for (item of o.orderproducts; track $index) {
+                <div class="product-row">
+                  <div class="product-image">
+                    <img
+                      [src]="
+                            item?.product_property?.color?.picture ||
+                            item?.picture
+                          "
+                      [alt]="item?.product?.name || 'Product'"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div class="product-info">
+                    <div class="product-name">{{ item?.product?.name }}</div>
+
+                    @if (item?.product_property?.capacity) {
+                    <div class="product-option">
+                      {{ item?.product_property?.capacity?.name }}
+                    </div>
+                    } @if (item?.product_property?.color) {
+                    <div class="product-option">
+                      {{ item?.product_property?.color?.name }}
+                    </div>
+                    }
+
+                    <div class="product-quantity">
+                      Qty: {{ item?.quantity }}
+                    </div>
+                  </div>
+                </div>
+                }
+              </ion-col>
+
+              <!-- Order Summary -->
+              <ion-col size="5" class="order-summary">
+                <div class="summary-label">Total Amount</div>
+
+                <div class="order-total">
+                  {{ o?.total | number }} <span>EGP</span>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-label">Order Date</div>
+
+                <div class="order-date">
+                  {{ o?.date_placed | date: 'dd.MM.yyyy' }}
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-label">Payment Method</div>
+
+                <div class="payment-method">
+                  @switch (o?.payment_method) { @case (0) { Credit on delivery }
+                  @case (1) { Cash on delivery } @case (2) { Online Payment }
+                  @case (4) { Credit - Debit On Delivery } @case (5) { NBE
+                  Installment } @case (6) { NBE 6 months } @case (7) { Credit
+                  Card Installment } @case (9) { NBE 9 months } @case (12) { NBE
+                  12 months } @case (18) { NBE 18 months } @case (24) { NBE 24
+                  months } @case (30) { NBE 30 months } @case (36) { NBE 36
+                  months } @case (100) { vaLU } @case (101) { FawryPay } @case
+                  (203) { Souhoola } @default { — } }
+                </div>
+
+                @if ( o?.status !== 'Canceled' && o?.status !== `Pending For
+                Refund` && o?.status !== 'Returned' ) {
+                <button
+                  type="button"
+                  class="cancel-order"
+                  (click)="openCancelModal(o)"
+                >
+                  <i class="fa-regular fa-circle-xmark"></i>
+                  <span>Cancel Order</span>
+                </button>
+                }
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+          <!-- Order Progress -->
+          @if ( o?.status !== 'Canceled' && o?.status !== 'Pending For Refund'
+          && o?.status !== 'Returned' ) {
+          <div class="order-progress">
+            @switch (o?.status) { @case ('New Order') {
+            <picture>
+              <source
+                srcset="assets/images/order-images/new-black.png"
+                media="(prefers-color-scheme: dark)"
+              />
+              <img
+                src="assets/images/order-images/new.png"
+                alt="New Order"
+                loading="lazy"
+              />
+            </picture>
+            } @case ('Out for Delivery') {
+            <picture>
+              <source
+                srcset="assets/images/order-images/delivery-black.png"
+                media="(prefers-color-scheme: dark)"
+              />
+              <img
+                src="assets/images/order-images/delivery.png"
+                alt="Out for Delivery"
+                loading="lazy"
+              />
+            </picture>
+            } @case ('Delivered') {
+            <picture>
+              <source
+                srcset="assets/images/order-images/delivered-black.png"
+                media="(prefers-color-scheme: dark)"
+              />
+              <img
+                src="assets/images/order-images/delivered.png"
+                alt="Delivered"
+                loading="lazy"
+              />
+            </picture>
+            } }
+          </div>
+          }
+
+          <!-- Cancelled -->
+          @if (o?.status === 'Canceled') {
+          <div class="cancelled-banner">
+            <i class="fa-regular fa-circle-xmark"></i>
+            <span>Order Cancelled</span>
+          </div>
+          }
+
+          <!-- Refund Pending -->
+          @if (o?.status === 'Pending For Refund') {
+          <div class="refund-banner">
+            <i class="fa-regular fa-clock"></i>
+            <span>Refund Pending</span>
+          </div>
+          }
+
+          <!-- Returned -->
+          @if (o?.status === 'Returned') {
+          <div class="returned-banner">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+            <span>Order Returned</span>
+          </div>
+          }
+        </div>
+      </ion-item>
+      } @empty {
+      <div class="empty-orders">
+        <div class="empty-orders-icon">
+          <i class="fa-solid fa-receipt"></i>
+        </div>
+
+        <h3>No orders yet</h3>
+
+        <p>You haven't placed any orders yet. Your orders will appear here.</p>
+      </div>
+      }
+    </ion-list>
+
+    <!-- Shipping / Delivery Instructions -->
+    <div class="delivery-instructions">
+      <button type="button" class="delivery-btn" routerLink="/delivery">
+        <i class="fa-solid fa-box"></i>
+
+        <span>Shipping / Delivery Instructions</span>
+
+        <i class="fa-solid fa-chevron-right delivery-arrow"></i>
+      </button>
+    </div>
+  </div>
+</ion-content>
+
+<!-- CANCEL ORDER MODAL -->
+@if (isCancelModalOpen) {
+<div class="cancel-overlay" (click)="closeCancelModal()">
+  <section
+    class="cancel-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="cancel-modal-title"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="cancel-modal-icon">
+      <i class="fa-solid fa-ban"></i>
+    </div>
+
+    <h3 id="cancel-modal-title">Cancel Order</h3>
+    <p class="cancel-modal-description">
+      Please tell us why you want to cancel this order.
+    </p>
+
+    <label for="cancel-reason">Cancellation Reason</label>
+    <textarea
+      id="cancel-reason"
+      [(ngModel)]="cancelReason"
+      placeholder="Enter your reason..."
+      rows="4"
+      maxlength="500"
+    ></textarea>
+
+    @if (cancelReasonError) {
+    <small class="cancel-error">{{ cancelReasonError }}</small>
+    }
+
+    <div class="cancel-modal-actions">
+      <button
+        type="button"
+        class="cancel-back-btn"
+        (click)="closeCancelModal()"
+      >
+        Keep Order
+      </button>
+
+      <button
+        type="button"
+        class="cancel-confirm-btn"
+        [disabled]="isCancelling"
+        (click)="confirmCancelOrder()"
+      >
+        @if (isCancelling) {
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Cancelling... } @else { Confirm Cancellation }
+      </button>
+    </div>
+  </section>
+</div>
+}
+
+<!-- Footer -->
+<ion-footer class="orders-footer">
+  <app-tabs></app-tabs>
+</ion-footer>

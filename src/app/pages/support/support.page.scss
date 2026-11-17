@@ -1,0 +1,25 @@
+$main-color: #0e7d3f;
+
+ion-title {
+  img {
+    width: 70%;
+  }
+}
+.item {
+  padding: 10px;
+  box-shadow: 0 0 3px #cccccc90;
+
+  .item-content {
+    h5 {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 0 3px $main-color;
+    .item-img {
+      transform: scale(1.01);
+    }
+  }
+}

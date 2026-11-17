@@ -1,0 +1,116 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="text-center me-5 fw-bold">Favorites</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="favorites-content">
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    ></ion-refresher-content>
+  </ion-refresher>
+
+  <section class="favorites">
+    <div class="favorites-header">
+      <div>
+        <span class="section-eyebrow">YOUR COLLECTION</span>
+        <h1>My Favorites</h1>
+        <p>Your favorite products, all in one place.</p>
+      </div>
+
+      <span class="favorites-count"> {{ allFavorites().length }} Items </span>
+    </div>
+
+    @if (allFavorites().length > 0) {
+    <div class="favorites-list">
+      @for (item of allFavorites(); track item.id) {
+      <article class="favorite-item" [routerLink]="'/product/' + item.seo_slug">
+        <div class="item-image">
+          <img
+            [src]="item.picture1 || 'assets/images/product-placeholder.png'"
+            [alt]="item.picture1_alt || item.name_en || item.name"
+            loading="lazy"
+          />
+
+          @if ( item.availability?.toLowerCase() === 'out of stock' ) {
+          <span class="stock-badge out-of-stock">
+            <span class="status-dot"></span>
+            Out of Stock
+          </span>
+          } @else {
+          <span class="stock-badge in-stock">
+            <span class="status-dot"></span>
+            {{ item.availability || 'Check Availability' }}
+          </span>
+          }
+        </div>
+
+        <div class="item-info">
+          <div class="item-details">
+            @if (item.category_seo_slug) {
+            <span class="item-category"> {{ item.category_seo_slug }} </span>
+            }
+
+            <h3 class="item-name">{{ item.name_en || item.name }}</h3>
+
+            @if (item.product_code && item.product_code !== '------') {
+            <span class="product-code"> SKU: {{ item.product_code }} </span>
+            }
+          </div>
+
+          <div class="item-bottom">
+            <div class="item-pricing">
+              @if (!item.hidden_price) {
+              <span class="current-price"> {{ item.price | number }} EGP </span>
+
+              @if (item.old_price && item.old_price > item.price) {
+              <span class="old-price"> {{ item.old_price | number }} EGP </span>
+
+              <span class="discount-badge">
+                {{ ((item.old_price - item.price) / item.old_price * 100) |
+                number: '1.0-0' }}% OFF
+              </span>
+              } } @else {
+              <span class="price-hidden"> Contact us for price </span>
+              }
+            </div>
+
+            <span class="view-product">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </span>
+          </div>
+        </div>
+      </article>
+      }
+    </div>
+    } @else {
+    <div class="favorites-empty">
+      <div class="empty-icon">
+        <i class="fa-regular fa-heart"></i>
+      </div>
+
+      <h2>No favorites yet</h2>
+      <p>Products you save will appear here, so you can find them easily.</p>
+
+      <a routerLink="/home" class="browse-products">
+        Explore Products
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+    }
+  </section>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

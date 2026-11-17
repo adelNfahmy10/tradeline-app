@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="text-center me-5 fw-bold">Why TL</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="about-us p-3">
+    @for (item of aboutUsData; track item?.id; let first = $first) { @if (first)
+    {
+
+    <!-- Main About -->
+    <section class="about-intro">
+      @if (item?.picture) {
+      <div class="about-image">
+        <img [src]="item?.picture" [alt]="item?.picture_alt || item?.title" />
+      </div>
+      }
+
+      <div class="about-intro-content">
+        <!-- <span class="eyebrow">
+              About Tradeline
+            </span> -->
+
+        <h1 [innerHTML]="item?.title | safeHtml"></h1>
+
+        <div
+          class="intro-description"
+          [innerHTML]="item?.description | safeHtml"
+        ></div>
+      </div>
+    </section>
+
+    } @else if (item?.picture) {
+
+    <!-- Image / Pillars -->
+    <section class="about-feature">
+      <img [src]="item?.picture" [alt]="item?.picture_alt || 'Tradeline'" />
+
+      <div
+        class="feature-description"
+        [innerHTML]="item?.description | safeHtml"
+      ></div>
+    </section>
+
+    } @else {
+
+    <!-- Simple Section -->
+    <section class="about-section">
+      <div class="section-content">
+        @if (item?.title) {
+        <h2 [innerHTML]="item?.title | safeHtml"></h2>
+        }
+
+        <div
+          class="section-description"
+          [innerHTML]="item?.description | safeHtml"
+        ></div>
+      </div>
+    </section>
+
+    } }
+  </div>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

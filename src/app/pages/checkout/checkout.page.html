@@ -1,0 +1,477 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="text-center fw-bold me-5">Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="checkout">
+    <!-- ================= Payment ================= -->
+    <div class="payment-checkbox mb-3">
+      <h4 class="main-color fw-semibold px-3 mb-1">Payment Methods</h4>
+      <div class="payment-list p-3">
+        @for (pm of payments_arr_avail; track $index) { @if (pm?.is_allowed) {
+        <label class="payment-item d-flex align-items-center pb-2">
+          <input
+            type="radio"
+            name="paymentMethod"
+            [value]="pm?.code"
+            [checked]="selectedPaymentMethod === pm?.code"
+            (change)="onPaymentChange(pm?.code)"
+          />
+
+          @switch(pm?.code){ @case(0) {
+          <img [src]="pm?.image" alt="Credit Card on delivery" />
+          Credit Card on delivery } @case(1) {
+          <img [src]="pm?.image" alt="Cash On Delivery" />
+          Cash On Delivery } @case(2) {
+          <img [src]="pm?.image" alt="Online Payment" />
+          Online Payment } @case(4) {
+          <img [src]="pm?.image" alt="Credit - Debit On Delivery" />
+          Credit - Debit On Delivery } @case(5) {
+          <img [src]="pm?.image" alt="NBE Installment" />
+          NBE Installment } @case(6) { 6 months } @case(7) { Credit Card
+          Installment (CIB - QNB) } @case(9) { ahly 9 months } @case(12) { 12
+          months } @case(18) { 18 months } @case(24) { 24 months } @case(30) {
+          30 months } @case(36) { ahly 36 months } @case(100) {
+          <img [src]="pm?.image" alt="valU" />
+          valU } @case(101) {
+          <img [src]="pm?.image" alt="FawryPay" />
+          FawryPay } @case(200) {
+          <img [src]="pm?.image" alt="PremiumCard" />
+          PremiumCard } @case(201) {
+          <img [src]="pm?.image" alt="Orange" />
+          Orange } @case(202) {
+          <img [src]="pm?.image" alt="Contact Shopping" />
+          Contact Shopping } @case(203) {
+          <img [src]="pm?.image" alt="Souhoola" />
+          Souhoola } @case(204) {
+          <img [src]="pm?.image" alt="Sympl" />
+          Sympl } @case(213) {
+          <img [src]="pm?.image" alt="Forsa" />
+          Forsa } @case(216) {
+          <img [src]="pm?.image" alt="Banque du cairo Installment" />
+          Banque du cairo Installment } @case(222) {
+          <img [src]="pm?.image" alt="Vodafone" />
+          Vodafone } @case(444) {
+          <img [src]="pm?.image" alt="NBE Installment Direct" />
+          NBE Installment Direct } @case(555) {
+          <img [src]="pm?.image" alt="paymob" />
+          ValU | Apple Pay | Online Payment } @case(556) {
+          <img [src]="pm?.image" alt="Souhoola 12m" />
+          Souhoola 12m 0% interest 0% downpaymet 0% admin fees (machine on
+          delivery) } @case(206) {
+          <img [src]="pm?.image" alt="valU 12m" />
+          valU 12m 0% interest 0% downpaymet (Payment Link will be sent via SMS)
+          } @default { {{ pm?.name }} } }
+        </label>
+        } } @empty {
+        <div class="text-center">
+          <ion-spinner name="dots"></ion-spinner>
+          <h6 class="mt-1">Loading Available Payment Method....</h6>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- ================= Installments ================= -->
+    @if(installmentMethods().length > 0){
+    <ion-list lines="none" class="p-2">
+      <ion-list-header>
+        <ion-label>Installment Options</ion-label>
+      </ion-list-header>
+      @for (pm of installmentMethods(); track $index) {
+      <ion-item>
+        <ion-label>{{ pm?.name }}</ion-label>
+        <ion-radio
+          slot="start"
+          value="pm?.code"
+          [(ngModel)]="selectedPaymentMethod"
+          name="paymentMethod"
+        ></ion-radio>
+      </ion-item>
+      }
+    </ion-list>
+    }
+
+    <!-- ================= Form Checkout ================= -->
+    @if(showForms){
+    <form
+      class="checkform px-3"
+      [formGroup]="checkoutForm"
+      (ngSubmit)="continueOrder(true)"
+    >
+      <h4 class="main-color fw-semibold mb-1">Shipping Address</h4>
+
+      <ion-list lines="none" class="d-flex flex-column gap-2">
+        <!-- Name -->
+        <div>
+          <ion-item
+            class="shadow-sm rounded-4"
+            [class.invalid-item]="checkoutControls['name'].invalid && (checkoutControls['name'].touched || submitted)"
+          >
+            <ion-input
+              formControlName="name"
+              class="main-color"
+              placeholder="Name"
+            ></ion-input>
+          </ion-item>
+          @if (checkoutControls['name'].invalid &&
+          (checkoutControls['name'].touched || submitted)) {
+          <p class="validation-msg">{{ getValidationMessage('name') }}</p>
+          }
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <ion-item
+            class="shadow-sm rounded-4"
+            [class.invalid-item]="checkoutControls['phone'].invalid && (checkoutControls['phone'].touched || submitted)"
+          >
+            <ion-input
+              formControlName="phone"
+              class="main-color"
+              type="tel"
+              placeholder="Phone"
+            ></ion-input>
+          </ion-item>
+          @if (checkoutControls['phone'].invalid &&
+          (checkoutControls['phone'].touched || submitted)) {
+          <p class="validation-msg">{{ getValidationMessage('phone') }}</p>
+          }
+        </div>
+
+        <!-- Email -->
+        <div>
+          <ion-item
+            class="shadow-sm rounded-4"
+            [class.invalid-item]="checkoutControls['email'].invalid && (checkoutControls['email'].touched || submitted)"
+          >
+            <ion-input
+              formControlName="email"
+              class="main-color"
+              type="email"
+              placeholder="Email"
+            ></ion-input>
+          </ion-item>
+          @if (checkoutControls['email'].invalid &&
+          (checkoutControls['email'].touched || submitted)) {
+          <p class="validation-msg">{{ getValidationMessage('email') }}</p>
+          }
+        </div>
+
+        <!-- Address 1 -->
+        <div>
+          <ion-item
+            class="shadow-sm rounded-4"
+            [class.invalid-item]="checkoutControls['address1'].invalid && (checkoutControls['address1'].touched || submitted)"
+          >
+            <ion-input
+              formControlName="address1"
+              class="main-color"
+              placeholder="Enter Your Address 1*"
+            ></ion-input>
+          </ion-item>
+          @if (checkoutControls['address1'].invalid &&
+          (checkoutControls['address1'].touched || submitted)) {
+          <p class="validation-msg">{{ getValidationMessage('address1') }}</p>
+          }
+        </div>
+
+        <!-- City -->
+        <div>
+          <p class="mx-2 mt-2 mb-0 fw-semibold">City*</p>
+          <ion-item
+            class="shadow-sm rounded-4"
+            [class.invalid-item]="checkoutControls['city'].invalid && (checkoutControls['city'].touched || submitted)"
+          >
+            <ion-select
+              formControlName="city"
+              aria-label="City"
+              interface="popover"
+              placeholder="Select Your City"
+            >
+              @for (city of cities; track $index) {
+              <ion-select-option [value]="city">{{ city }}</ion-select-option>
+              }
+            </ion-select>
+          </ion-item>
+          @if (checkoutControls['city'].invalid &&
+          (checkoutControls['city'].touched || submitted)) {
+          <p class="validation-msg">{{ getValidationMessage('city') }}</p>
+          }
+        </div>
+
+        <!-- Address 2 -->
+        <ion-item class="shadow-sm rounded-4">
+          <ion-input
+            formControlName="address2"
+            class="main-color"
+            placeholder="Enter Your Address 2"
+          ></ion-input>
+        </ion-item>
+
+        <!-- Billing Address -->
+        <h3 class="main-color fw-semibold mb-1">Billing Address</h3>
+
+        <p
+          class="border border-2 text-center p-2 rounded-4"
+          [class.toggle-biling]="!showBilingAddress"
+          (click)="toggleBilingAddress()"
+        >
+          Use the same as above
+        </p>
+
+        @if (showBilingAddress) {
+        <!-- Billing City -->
+        <div>
+          <ion-item
+            class="shadow-sm rounded-4"
+            [class.invalid-item]="checkoutControls['bilingCity'].invalid && (checkoutControls['bilingCity'].touched || submitted)"
+          >
+            <ion-select
+              formControlName="bilingCity"
+              aria-label="Billing City"
+              interface="popover"
+              placeholder="Select Your City"
+            >
+              @for (city of cities; track $index) {
+              <ion-select-option [value]="city">{{ city }}</ion-select-option>
+              }
+            </ion-select>
+          </ion-item>
+          @if (checkoutControls['bilingCity'].invalid &&
+          (checkoutControls['bilingCity'].touched || submitted)) {
+          <p class="validation-msg">{{ getValidationMessage('bilingCity') }}</p>
+          }
+        </div>
+
+        <!-- Billing Address -->
+        <div>
+          <ion-item
+            class="shadow-sm rounded-4"
+            [class.invalid-item]="checkoutControls['bilingAddress'].invalid && (checkoutControls['bilingAddress'].touched || submitted)"
+          >
+            <ion-input
+              formControlName="bilingAddress"
+              class="main-color"
+              placeholder="Enter Your Billing Address*"
+            ></ion-input>
+          </ion-item>
+          @if (checkoutControls['bilingAddress'].invalid &&
+          (checkoutControls['bilingAddress'].touched || submitted)) {
+          <p class="validation-msg">
+            {{ getValidationMessage('bilingAddress') }}
+          </p>
+          }
+        </div>
+        }
+
+        <button type="submit" class="btn main-btn mx-auto">Checkout</button>
+      </ion-list>
+    </form>
+    }
+  </div>
+
+  <ion-modal
+    class="checkout-summary-modal"
+    [isOpen]="isModalOpen"
+    [backdropDismiss]="!showIframe"
+  >
+    <ng-template>
+      <div class="checkout-dialog">
+        <!-- Header -->
+        <header class="checkout-dialog__header">
+          <div class="checkout-dialog__brand">
+            <span class="checkout-dialog__brand-icon">
+              <i class="fa-solid fa-bag-shopping"></i>
+            </span>
+
+            <div>
+              <h2>Checkout</h2>
+              <p>Review your order before payment</p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="checkout-dialog__close"
+            aria-label="Close checkout"
+            (click)="isModalOpen = false"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </header>
+
+        <ion-content class="checkout-dialog__content">
+          @if (!showIframe) {
+          <div class="checkout-dialog__body">
+            <!-- Shipping Address -->
+            <section class="checkout-block">
+              <div class="checkout-block__heading">
+                <div class="checkout-block__icon">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+
+                <div>
+                  <h3>Shipping Address</h3>
+                  <p>Where should we deliver your order?</p>
+                </div>
+              </div>
+
+              <div class="checkout-address">
+                <div class="checkout-address__row">
+                  <i class="fa-solid fa-user"></i>
+                  <div>
+                    <span>Full Name</span>
+                    <strong
+                      >{{ checkoutForm.get('name')?.value || '—' }}</strong
+                    >
+                  </div>
+                </div>
+
+                <div class="checkout-address__row">
+                  <i class="fa-solid fa-envelope"></i>
+                  <div>
+                    <span>Email Address</span>
+                    <strong
+                      >{{ checkoutForm.get('email')?.value || '—' }}</strong
+                    >
+                  </div>
+                </div>
+
+                <div class="checkout-address__row">
+                  <i class="fa-solid fa-phone"></i>
+                  <div>
+                    <span>Phone Number</span>
+                    <strong
+                      >{{ checkoutForm.get('phone')?.value || '—' }}</strong
+                    >
+                  </div>
+                </div>
+
+                <div class="checkout-address__row">
+                  <i class="fa-solid fa-city"></i>
+                  <div>
+                    <span>City</span>
+                    <strong
+                      >{{ checkoutForm.get('city')?.value || '—' }}</strong
+                    >
+                  </div>
+                </div>
+
+                <div class="checkout-address__row">
+                  <i class="fa-solid fa-map-location-dot"></i>
+                  <div>
+                    <span>Address</span>
+                    <strong
+                      >{{ checkoutForm.get('address1')?.value || '—' }}</strong
+                    >
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Promo Code -->
+            <section class="checkout-block">
+              <div class="checkout-block__heading">
+                <div class="checkout-block__icon">
+                  <i class="fa-solid fa-tag"></i>
+                </div>
+
+                <div>
+                  <h3>Promo Code</h3>
+                  <p>Have a discount code?</p>
+                </div>
+              </div>
+
+              <div class="checkout-coupon">
+                <i class="fa-solid fa-ticket"></i>
+
+                <ion-input
+                  [(ngModel)]="promoCode"
+                  placeholder="Enter promo code"
+                ></ion-input>
+              </div>
+            </section>
+
+            <!-- Order Summary -->
+            <section class="checkout-order">
+              <div class="checkout-order__heading">
+                <div>
+                  <span class="checkout-order__eyebrow">YOUR PURCHASE</span>
+                  <h3>Order Summary</h3>
+                </div>
+
+                <span class="checkout-order__count">
+                  {{ count() }} item(s)
+                </span>
+              </div>
+
+              <div class="checkout-order__row">
+                <span>Shipping</span>
+                <strong>{{ shippingValue() }} EGP</strong>
+              </div>
+
+              <!-- <div class="checkout-order__row">
+                <span>Subtotal</span>
+                <strong>{{ subTotal() | number : '0.1-2' }} EGP</strong>
+              </div>
+
+              <div class="checkout-order__row">
+                <span>Taxes</span>
+                <strong>{{ tax() | number : '0.1-2' }} EGP</strong>
+              </div> -->
+
+              <div class="checkout-order__total">
+                <div>
+                  <span>Total Amount</span>
+                  <small>Final order total</small>
+                </div>
+
+                <strong>{{ totalAmount() | number : '0.1-2' }} EGP</strong>
+              </div>
+            </section>
+          </div>
+          } @if (showIframe) {
+          <div class="checkout-payment">
+            <iframe
+              [src]="iframeUrl"
+              class="checkout-payment__iframe"
+              title="Secure payment"
+            ></iframe>
+          </div>
+          }
+        </ion-content>
+
+        <!-- Footer -->
+        @if (!showIframe) {
+        <footer class="checkout-dialog__footer">
+          <div class="checkout-secure">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Secure checkout</span>
+          </div>
+
+          <button
+            type="button"
+            class="checkout-submit"
+            [disabled]="cartItems().length === 0"
+            (click)="checkout()"
+          >
+            <span>Continue to Payment</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </footer>
+        }
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

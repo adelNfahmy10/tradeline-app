@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-center fs-3 fw-semibold me-5"
+      >{{subCategory?.name}}</ion-title
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="sub-category p-3 pt-2">
+    <div
+      class="d-flex flex-wrap justify-content-center align-items-center gap-2"
+    >
+      @for (size of subCategory?.sub_category_size; track $index) {
+      <h5
+        class="size-option p-2 rounded-4 text-center"
+        [class.active]="selectedSizeId === size.id"
+        (click)="getSubCatBySize(size.id)"
+      >
+        {{size?.name}}
+      </h5>
+      }
+    </div>
+
+    @for (subCat of subCategoryProducts; track $index) {
+    <div
+      class="sub-item my-3 rounded-3"
+      [routerLink]="'/product/' + subCat.seo_slug"
+    >
+      <div class="subImg rounded-4 text-center">
+        <img
+          loading="lazy"
+          [src]="subCat.picture1 || 'assets/images/anim-logo.gif'"
+          [alt]="subCat.picture1_alt || subCat.seo_slug"
+          class="img-fluid w-100 object-fit-cover"
+        />
+      </div>
+
+      <div class="text-center p-3">
+        <h6>{{ subCat.name }}</h6>
+        <h5 class="fw-bold main-color m-0">{{subCat.price | number}} EGP</h5>
+      </div>
+    </div>
+    }
+  </div>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

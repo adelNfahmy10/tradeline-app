@@ -1,0 +1,269 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="text-center me-5 fw-bold">Bookings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="bookings">
+    <ion-segment value="sessions">
+      <ion-segment-button value="sessions" content-id="sessions">
+        <ion-label>Sessions</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="workshop" content-id="workshop">
+        <ion-label>Workshop</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-segment-view>
+      <ion-segment-content id="sessions">
+        <div class="booking-content">
+          <ion-item lines="none" class="booking-image">
+            <img
+              src="assets/images/booking-images/care.png"
+              alt="Service Booking"
+            />
+          </ion-item>
+
+          <div class="booking-info">
+            <p class="title">Service Booking System</p>
+
+            <p>
+              If your device is under the Tradeline Stores warranty program you
+              are welcome to visit our Authorised Service Centre with no prior
+              appointment.
+            </p>
+
+            <p>
+              If your device was not purchased from Tradeline Stores and is
+              covered by Apple's international warranty program, we provide the
+              service for you as well. Please book one of the available service
+              appointments below and one of our Apple certified support team
+              will be waiting to provide you with the needed service.
+            </p>
+
+            <p class="steps-title">Steps:</p>
+
+            <p class="step">1. Choose one of the empty service slots below.</p>
+
+            <p class="step">
+              2. Kindly show up at the given date and time with your device's
+              proof of purchase.
+            </p>
+
+            <p class="step">3. Make sure to have the proof of purchase.</p>
+          </div>
+
+          <form #f="ngForm" (ngSubmit)="book(f)" class="booking-form">
+            <ion-list>
+              <ion-item class="input-control" lines="none">
+                <ion-input
+                  required
+                  ngModel
+                  name="bname"
+                  placeholder="Name"
+                  clearInput
+                >
+                </ion-input>
+              </ion-item>
+
+              <ion-item class="input-control" lines="none">
+                <ion-input
+                  required
+                  type="tel"
+                  ngModel
+                  name="bphone"
+                  placeholder="Phone Number"
+                  clearInput
+                >
+                </ion-input>
+              </ion-item>
+
+              <ion-item class="input-control" lines="none">
+                <ion-input
+                  required
+                  type="email"
+                  ngModel
+                  name="bemail"
+                  placeholder="Email"
+                  clearInput
+                >
+                </ion-input>
+              </ion-item>
+
+              <ion-item class="input-control" lines="none">
+                <ion-select required ngModel name="branch" placeholder="Branch">
+                  @for (store of stores; track $index) {
+                  <ion-select-option [value]="store.id">
+                    {{ store.name }}
+                  </ion-select-option>
+                  }
+                </ion-select>
+              </ion-item>
+
+              <ion-item class="input-control" lines="none">
+                <ion-datetime
+                  required
+                  ngModel
+                  name="bdate"
+                  presentation="date"
+                  [min]="minDate"
+                  [max]="maxDate"
+                >
+                </ion-datetime>
+              </ion-item>
+
+              <ion-item class="input-control" lines="none">
+                <ion-select required ngModel name="btime" placeholder="Time">
+                  <ion-select-option value="10:00">
+                    10:00am : 11:00am
+                  </ion-select-option>
+
+                  <ion-select-option value="11:00">
+                    11:00am : 12:00pm
+                  </ion-select-option>
+
+                  <ion-select-option value="12:00">
+                    12:00pm : 01:00pm
+                  </ion-select-option>
+
+                  <ion-select-option value="01:00">
+                    01:00pm : 02:00pm
+                  </ion-select-option>
+
+                  <ion-select-option value="02:00">
+                    02:00pm : 03:00pm
+                  </ion-select-option>
+
+                  <ion-select-option value="03:00">
+                    03:00pm : 04:00pm
+                  </ion-select-option>
+
+                  <ion-select-option value="04:00">
+                    04:00pm : 05:00pm
+                  </ion-select-option>
+
+                  <ion-select-option value="05:00">
+                    05:00pm : 06:00pm
+                  </ion-select-option>
+
+                  <ion-select-option value="06:00">
+                    06:00pm : 07:00pm
+                  </ion-select-option>
+
+                  <ion-select-option value="07:00">
+                    07:00pm : 08:00pm
+                  </ion-select-option>
+
+                  <ion-select-option value="08:00">
+                    08:00pm : 09:00pm
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+
+            <ion-button type="submit" expand="block" class="book-button">
+              Book Now!
+            </ion-button>
+          </form>
+        </div>
+      </ion-segment-content>
+
+      <ion-segment-content id="workshop">
+        <div class="workshop-content">
+          <div
+            class="head-steps d-flex justify-content-between align-items-center"
+          >
+            <h6>Online Personal Session</h6>
+            <span>{{step}} of 5</span>
+          </div>
+
+          <div class="steps">
+            @if(step == 1){
+            <p>Do you need help setting up your new Apple device?</p>
+
+            <div class="lables-steps">
+              <div class="lables d-flex align-items-center gap-1 mt-3">
+                <input type="radio" id="yes" name="yes" />
+                <label for="yes">Yes</label>
+              </div>
+
+              <div class="lables d-flex align-items-center gap-1 mt-3">
+                <input type="radio" id="no" name="no" />
+                <label for="no">No</label>
+              </div>
+            </div>
+
+            <div class="next-btn mt-3">
+              <div class="btn main-btn">Next</div>
+            </div>
+            } @else if(step == 2){
+            <div class="lables-steps">
+              <div class="lables d-flex align-items-center gap-1 mt-3">
+                <input type="radio" id="expert" name="expert" />
+                <label for="expert">Expert</label>
+              </div>
+
+              <div class="lables d-flex align-items-center gap-1 mt-3">
+                <input type="radio" id="advanced" name="advanced" />
+                <label for="advanced">Advanced</label>
+              </div>
+
+              <div class="lables d-flex align-items-center gap-1 mt-3">
+                <input type="radio" id="beginner" name="beginner" />
+                <label for="beginner">Beginner</label>
+              </div>
+            </div>
+
+            <div class="my-4 border-top">
+              <p>Have you owned an Apple product previously?</p>
+
+              <div class="lables-steps">
+                <div class="lables d-flex align-items-center gap-1 mt-3">
+                  <input type="radio" id="yes" name="yes" />
+                  <label for="yes">Yes</label>
+                </div>
+
+                <div class="lables d-flex align-items-center gap-1 mt-3">
+                  <input type="radio" id="no" name="no" />
+                  <label for="no">No</label>
+                </div>
+
+                <textarea
+                  name="details"
+                  id="details"
+                  class="form-control mt-3 shadow-sm rounded-4"
+                  placeholder="What product..."
+                ></textarea>
+              </div>
+
+              <div class="next-btn d-flex align-items-center gap-2 mt-3">
+                <div class="btn main-btn">Prevous</div>
+                <div class="btn main-btn">Next</div>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </ion-segment-content>
+    </ion-segment-view>
+  </div>
+</ion-content>

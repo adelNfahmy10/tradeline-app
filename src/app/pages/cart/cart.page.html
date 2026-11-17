@@ -1,0 +1,224 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    @if(token()){
+    <ion-buttons slot="start">
+      <ion-menu-button class="d-flex justify-content-center align-items-center">
+        <div class="head-bg-icon">
+          <i class="fa-regular fa-circle-user main-color"></i>
+        </div>
+      </ion-menu-button>
+    </ion-buttons>
+    } @else {
+    <ion-buttons slot="start">
+      <div class="head-bg-icon">
+        <i class="fa-regular fa-circle-user main-color" routerLink="/auth"></i>
+      </div>
+    </ion-buttons>
+    }
+
+    <ion-title class="text-center fw-bold">Cart</ion-title>
+
+    <ion-buttons slot="end">
+      <div class="head-bg-icon" (click)="searchModal.open()">
+        <i class="fa-brands fa-sistrix main-color"></i>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="cart">
+    <ion-list lines="none">
+      @for (product of cartItems(); track $index) {
+      <ion-item-sliding>
+        <ion-item-options side="start">
+          <ion-item-option
+            color="danger"
+            (click)="deleteProductInCart(product.id)"
+          >
+            <i class="fa-regular fa-trash-can fs-2"></i>
+          </ion-item-option>
+        </ion-item-options>
+
+        <ion-item>
+          <ion-label>
+            <div class="row cart-products">
+              <div class="col-4">
+                <div
+                  class="d-flex justify-content-center align-items-center h-100"
+                >
+                  @if(product?.product_property){
+                  <img
+                    loading="lazy"
+                    [src]="product.product_property?.color?.picture"
+                    class="w-100 h-100"
+                    [alt]="product?.product?.picture1_alt"
+                  />
+                  } @else if(!product?.product_property){
+                  <img
+                    loading="lazy"
+                    [src]="product?.product?.picture1_alt"
+                    class="w-100 h-100"
+                    [alt]="product?.product?.picture1_alt"
+                  />
+                  }
+                </div>
+              </div>
+
+              <div class="col-8">
+                <h2 class="fw-bold m-0 main-color">
+                  {{product?.product?.name}}
+                </h2>
+
+                <ul class="my-2 product-details list-unstyled">
+                  @if(product?.product_property?.capacity){
+                  <li>
+                    Size:
+                    <span>{{product?.product_property?.capacity.name}}</span>
+                  </li>
+                  }
+                  <li>
+                    Color:
+                    <span> {{product?.product_property?.color?.name}}</span>
+                  </li>
+                  <li>Count : <span>{{product?.quantity}}</span></li>
+                </ul>
+
+                <h3 class="main-color fw-bold m-0">
+                  Total : {{product?.total | number}} EGP
+                  <br />
+                  @if(product?.product?.is_preorder == true){
+                  <span style="font-size: 12px" class="text-warning"
+                    >Pre Order</span
+                  >
+                  }
+                </h3>
+              </div>
+
+              <div
+                class="col-12 swipe-delete d-flex justify-content-end align-items-center gap-1 del-msg text-danger"
+              >
+                <span>swipe to delete</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </div>
+            </div>
+          </ion-label>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option
+            color="danger"
+            (click)="deleteProductInCart(product.id)"
+          >
+            <i class="fa-regular fa-trash-can fs-2"></i>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+      } @empty {
+      <div class="empty-cart text-center">
+        <div class="empty-cart-icon">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </div>
+
+        <h4 class="empty-cart-title">Your Cart Is Empty</h4>
+
+        <p class="empty-cart-text">
+          You haven't added anything to your cart yet.
+        </p>
+
+        <a routerLink="/shop" class="empty-cart-btn">
+          <span>Shop Now</span>
+
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+      }
+    </ion-list>
+
+    @if (cartItems().length) {
+    <div class="cart-details p-3 mt-3 mx-2 rounded-3">
+      <div class="mb-2 d-flex justify-content-between align-items-center">
+        <h4 class="fw-semibold fs-6 m-0">Count :</h4>
+        <h4 class="fw-bold main-color fs-6 m-0">{{count()}} Product(s)</h4>
+      </div>
+
+      <div class="mb-2 d-flex justify-content-between align-items-center">
+        <h4 class="fw-semibold fs-6 m-0">Shipping :</h4>
+        <h4 class="fw-bold main-color fs-6 m-0">{{shippingValue()}} EGP</h4>
+      </div>
+
+      <!-- <div class="mb-2 d-flex justify-content-between align-items-center">
+        <h4 class="fw-semibold fs-6 m-0">SubTotal :</h4>
+        <h4 class="fw-bold main-color fs-6 m-0">
+          {{subTotal() | number : '0.1-2'}} EGP
+        </h4>
+      </div> -->
+
+      <!-- <div class="mb-2 d-flex justify-content-between align-items-center">
+        <h4 class="fw-semibold fs-6 m-0">Taxes :</h4>
+        <h4 class="fw-bold main-color fs-6 m-0">
+          {{tax() | number : '0.1-2'}} EGP
+        </h4>
+      </div> -->
+
+      <div class="mb-2 d-flex justify-content-between align-items-center">
+        <h4 class="fw-semibold fs-6 m-0">Total :</h4>
+        <h4 class="fw-bold main-color fs-6 m-0">
+          {{totalAmount() | number : '0.1-2'}} EGP
+        </h4>
+      </div>
+
+      <div
+        class="btns mt-3 pt-3 d-flex justify-content-center align-items-center gap-1"
+      >
+        <button class="btn continue" routerLink="/shop">
+          Continue Shopping
+        </button>
+        <button
+          class="btn main-btn checkout"
+          [disabled]="cartItems().length === 0"
+          (click)="checkoutCart()"
+        >
+          Checkout
+        </button>
+      </div>
+    </div>
+    }
+
+    <div class="cart-help p-3 my-3 mx-2 rounded-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="fw-bold fs-6 m-0">Need Help</h4>
+        <div class="d-flex align-items-center gap-2">
+          <a
+            href="mailto:sales@tradelinestores.com?Subject=Contact%20Tradeline"
+            target="_blank"
+          >
+            <i class="fa-solid fa-message main-color fs-1"></i>
+          </a>
+          <a href="tel:19857">
+            <i class="fa-solid fa-phone main-color fs-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-search-modal #searchModal></app-search-modal>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

@@ -1,0 +1,468 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="tool-header text-center pt-4">
+      <picture>
+        <source
+          srcset="assets/images/auth-img/tr-white.png"
+          media="(prefers-color-scheme: dark)"
+        />
+        <img
+          loading="lazy"
+          src="assets/images/auth-img/tr.png"
+          class="w-50"
+          alt="tradeline"
+        />
+      </picture>
+
+      <ion-segment
+        class="mt-4 custom-segment"
+        value="login"
+        (ionChange)="segmentChanged($event)"
+      >
+        <ion-segment-button value="login" content-id="login">
+          Login
+        </ion-segment-button>
+
+        <ion-segment-button value="SignUp" content-id="SignUp">
+          SignUp
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="auth">
+    <ion-segment-view>
+      <ion-segment-content class="h-auto overflow-hidden" id="login">
+        <div class="login py-3">
+          <h2 class="auth-title text-center">Welcome To Tradeline</h2>
+
+          @if(forgetStep === 0){
+          <form [formGroup]="loginForm">
+            <ion-list lines="none">
+              <ion-item>
+                <ion-input
+                  formControlName="username"
+                  class="border rounded-4"
+                  type="email"
+                  placeholder="Email Address"
+                ></ion-input>
+              </ion-item>
+              @if( loginForm.get('username')?.getError('required') &&
+              this.loginForm.get('username')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Email Is Required</span
+              >
+              } @if (loginForm.get('username')?.getError('email') &&
+              this.loginForm.get('username')?.touched){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Please Enter Email Like exp@domin.com</span
+              >
+              }
+
+              <ion-item class="mt-3">
+                <ion-input
+                  formControlName="password"
+                  class="border rounded-4 px-3"
+                  type="password"
+                  placeholder="Password"
+                >
+                  <ion-input-password-toggle
+                    color="success"
+                    class="p-0"
+                    slot="end"
+                  ></ion-input-password-toggle>
+                </ion-input>
+              </ion-item>
+              @if( loginForm.get('password')?.getError('required') &&
+              this.loginForm.get('password')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Password Is Required</span
+              >
+              }
+
+              <div class="mx-4 mt-3">
+                <ion-checkbox
+                  labelPlacement="end"
+                  justify="start"
+                  formControlName="rememberMe"
+                  >Remember Me</ion-checkbox
+                >
+              </div>
+
+              <div class="text-center m-3">
+                <button
+                  class="btn main-btn w-100 rounded-4 py-2"
+                  [disabled]="loginForm.invalid"
+                  (click)="submitLogin()"
+                >
+                  Login
+                </button>
+              </div>
+
+              <p
+                class="text-start mx-4 my-2 forget-link"
+                (click)="openForgetPassword()"
+              >
+                Forget Password ?
+              </p>
+            </ion-list>
+          </form>
+          } @else if(loadingStep){
+          <form [formGroup]="forgetPasswordForm">
+            <ion-list lines="none">
+              @if(forgetStep === 1){
+              <ion-item>
+                <ion-input
+                  class="shadow-sm border rounded-3"
+                  formControlName="username"
+                  type="email"
+                  placeholder="Email Address"
+                >
+                </ion-input>
+              </ion-item>
+              @if( forgetPasswordForm.get('username')?.getError('required') &&
+              this.forgetPasswordForm.get('username')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Email Is Required</span
+              >
+              }
+              <div class="text-center m-3">
+                <button
+                  class="btn main-btn w-100 rounded-4 py-2"
+                  (click)="submitForgetPassword()"
+                >
+                  Forget Password
+                </button>
+                <!-- <ion-button class="main-btn" (click)="submitForgetPassword()">
+                      Forget Password
+                    </ion-button> -->
+              </div>
+
+              <div class="text-center">
+                <span class="back-login" (click)="backToLogin()"
+                  ><i class="fa-solid fa-arrow-left"></i> Back To Login</span
+                >
+              </div>
+              } @else if(forgetStep === 2){
+              <h6 class="px-4 m-0">Code has been sent to your email</h6>
+              <ion-item>
+                <ion-input
+                  class="border rounded-4"
+                  name="code"
+                  formControlName="code"
+                  placeholder="Reset Code"
+                >
+                </ion-input>
+              </ion-item>
+              @if( forgetPasswordForm.get('code')?.getError('required') &&
+              this.forgetPasswordForm.get('code')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Code Is Required</span
+              >
+              }
+              <div class="text-center m-3">
+                <button
+                  class="btn main-btn w-100 rounded-4 py-2"
+                  (click)="submitForgetPassword()"
+                >
+                  Submit
+                </button>
+                <!-- <ion-button class="main-btn" (click)="submitForgetPassword()">
+                      Submit
+                    </ion-button> -->
+              </div>
+
+              <div class="text-center">
+                <span class="back-login" (click)="backToLogin()"
+                  ><i class="fa-solid fa-arrow-left"></i> Back To Login</span
+                >
+              </div>
+              } @else if(forgetStep === 3){
+              <ion-item>
+                <ion-input
+                  formControlName="newPassword"
+                  class="border rounded-4 px-3"
+                  type="password"
+                  placeholder="New Password"
+                >
+                  <ion-input-password-toggle
+                    color="success"
+                    class="p-0"
+                    slot="end"
+                  ></ion-input-password-toggle>
+                </ion-input>
+              </ion-item>
+              @if( forgetPasswordForm.get('newPassword')?.getError('required')
+              && this.forgetPasswordForm.get('newPassword')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Password Is Required</span
+              >
+              }
+
+              <ion-item>
+                <ion-input
+                  formControlName="rePassword"
+                  class="border rounded-4 px-3 my-2"
+                  type="password"
+                  placeholder="Re-Password"
+                >
+                  <ion-input-password-toggle
+                    color="success"
+                    class="p-0"
+                    slot="end"
+                  ></ion-input-password-toggle>
+                </ion-input>
+              </ion-item>
+              @if( forgetPasswordForm.get('rePassword')?.getError('required') &&
+              this.forgetPasswordForm.get('rePassword')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Re-Password Is Required</span
+              >
+              } @if(forgetPasswordForm.get('newPassword')?.value !=
+              forgetPasswordForm.get('rePassword')?.value){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Password Not Match !</span
+              >
+              }
+              <div class="text-center">
+                <button
+                  class="btn main-btn w-100 rounded-4 py-2"
+                  (click)="submitForgetPassword()"
+                >
+                  Reset Password
+                </button>
+                <!-- <ion-button type="submit" class="main-btn my-3" (click)="submitForgetPassword()">
+                      Reset Password
+                    </ion-button> -->
+              </div>
+
+              <div class="text-center">
+                <span class="back-login" (click)="backToLogin()"
+                  ><i class="fa-solid fa-arrow-left"></i> Back To Login</span
+                >
+              </div>
+              }
+            </ion-list>
+          </form>
+          }
+
+          <div
+            class="social-icon d-flex justify-content-center align-items-center gap-2 my-3"
+          >
+            <a
+              href="https://www.tiktok.com/@tradelinestores?_r=1&_t=ZS-9Aji3Zm3lCe"
+              target="_blank"
+            >
+              <i class="fa-brands fa-tiktok main-color fs-5"></i>
+            </a>
+
+            <a
+              href="https://www.instagram.com/tradelinestores?psln=aGhvdTc5em45dndp"
+              target="_blank"
+            >
+              <i class="fa-brands fa-instagram main-color fs-5"></i>
+            </a>
+
+            <a href="https://www.facebook.com/Tradelinestores/" target="_blank">
+              <i class="fa-brands fa-facebook-f main-color fs-5"></i>
+            </a>
+
+            <a href="https://x.com/tradelinestores/" target="_blank">
+              <i class="fa-brands fa-x-twitter main-color fs-5"></i>
+            </a>
+
+            <a
+              href="mailto:sales@tradelinestores.com?Subject=Contact%20Tradeline"
+              target="_top"
+            >
+              <i class="fa-solid fa-envelope main-color fs-5"></i>
+            </a>
+          </div>
+
+          <div
+            class="text-center main-color d-flex justify-content-center align-items-center gap-1"
+            (click)="skipRoute()"
+          >
+            <span>Back</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </ion-segment-content>
+
+      <ion-segment-content id="SignUp">
+        <div class="signup py-3 pb-5">
+          <h2 class="auth-title text-center">Welcome To Tradeline</h2>
+
+          <form [formGroup]="signupForm">
+            <ion-list
+              lines="none"
+              class="d-flex flex-column justify-content-center gap-3"
+            >
+              <ion-item class="w-100">
+                <ion-input
+                  formControlName="firstname"
+                  class="border rounded-4"
+                  type="text"
+                  placeholder="First Name"
+                ></ion-input>
+              </ion-item>
+              @if( signupForm.get('firstname')?.getError('required') &&
+              this.signupForm.get('firstname')?.touched ){
+              <span class="text-danger px-4 fw-bold"
+                >First Name Is Required</span
+              >
+              }
+
+              <ion-item class="w-100">
+                <ion-input
+                  formControlName="lastname"
+                  class="border rounded-4"
+                  type="text"
+                  placeholder="Last Name"
+                ></ion-input>
+              </ion-item>
+              @if( signupForm.get('lastname')?.getError('required') &&
+              this.signupForm.get('lastname')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Last Name Is Required</span
+              >
+              }
+
+              <ion-item class="w-100">
+                <ion-input
+                  formControlName="email"
+                  class="border rounded-4"
+                  type="email"
+                  placeholder="Email"
+                ></ion-input>
+              </ion-item>
+              @if( signupForm.get('email')?.getError('required') &&
+              this.signupForm.get('email')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Email Is Required</span
+              >
+              }
+
+              <ion-item class="w-100">
+                <ion-input
+                  formControlName="phone"
+                  class="border rounded-4"
+                  type="phone"
+                  placeholder="Mobile Number"
+                ></ion-input>
+              </ion-item>
+              @if( signupForm.get('phone')?.getError('required') &&
+              this.signupForm.get('phone')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Mobile Is Required</span
+              >
+              }
+
+              <ion-item class="w-100">
+                <ion-input
+                  formControlName="password"
+                  class="border rounded-4 px-3"
+                  type="password"
+                  placeholder="Password"
+                >
+                  <ion-input-password-toggle
+                    color="success"
+                    class="p-0"
+                    slot="end"
+                  ></ion-input-password-toggle>
+                </ion-input>
+              </ion-item>
+              @if( signupForm.get('password')?.getError('required') &&
+              this.signupForm.get('password')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Password Is Required</span
+              >
+              }
+
+              <ion-item class="w-100">
+                <ion-input
+                  formControlName="rePassword"
+                  class="border rounded-4 px-3"
+                  type="password"
+                  placeholder="Re-Password"
+                >
+                  <ion-input-password-toggle
+                    color="success"
+                    class="p-0"
+                    slot="end"
+                  ></ion-input-password-toggle>
+                </ion-input>
+              </ion-item>
+              @if( signupForm.get('rePassword')?.getError('required') &&
+              this.signupForm.get('rePassword')?.touched ){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Re-Password Is Required</span
+              >
+              } @if(signupForm.get('rePassword')?.value !=
+              signupForm.get('password')?.value){
+              <span class="text-danger px-4 fw-bold mb-2"
+                >Password Not Match !</span
+              >
+              }
+
+              <div class="text-center m-3">
+                <button
+                  class="btn main-btn w-100 rounded-4 py-2"
+                  [disabled]="signupForm.invalid"
+                  (click)="submitSignup()"
+                >
+                  Sign Up
+                </button>
+              </div>
+
+              <!-- <ion-button class="main-btn mx-auto my-3" (click)="submitSignup()">Sign Up</ion-button> -->
+
+              <div class="tvcParagraphs d-flex flex-column gap-3 text-end px-3">
+                <p>
+                  تقديرًا لكل جنية تنفقه معنا ، قمنا بتصميم برنامج نقاط عملاء
+                  Tradeline لنقدم لك تجربة إستثنائية في التسوق وعلى مستوى عالمي
+                </p>
+
+                <p>
+                  فقط وحصريًا لعملاء تريديلاين المميزين "TVC" <br />
+                  بدون أي تكلفة إضافية، لجمع النقاط على مشترياتك، كما يمكنك
+                  استبدال نقاطك في أي متاجر Tradeline في أي وقت تشاء وبدون حدود
+                  على الإطلاق.
+                </p>
+
+                <p>
+                  سوف تحصل على نقطة TVC واحدة <br />
+                  مقابل كل 100 جنية تصرفها عند الدفع نقذًا وليس عند التقسيط
+                  <br />
+                  ستتم إضافة النقاط إلى حسابك ويمكن استخدامها بعد 30 يوم
+                </p>
+
+                <ul class="p-0 m-0 list-unstyled">
+                  <p class="m-0 mb-1">الشروط والأحكام لإستخدام تلك النقاط</p>
+                  <li>- الإستبدال مقتصر على الشخص الصادر بأسمه الفاتورة</li>
+                  <li>- وجود أصل بطاقة الرقم القومي في حالة استبدال النقاط</li>
+                  <li>- النقاط الصالحة لمدة عام من تاريخ الشراء</li>
+                </ul>
+
+                <p class="text-center m-0">
+                  By signing up, you agree with our
+                  <a href="">Terms & Conditions</a>
+                </p>
+              </div>
+            </ion-list>
+          </form>
+
+          <div
+            class="text-center main-color d-flex justify-content-center align-items-center gap-1 mt-1"
+            (click)="skipRoute()"
+          >
+            <span>Back</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </ion-segment-content>
+    </ion-segment-view>
+  </div>
+</ion-content>

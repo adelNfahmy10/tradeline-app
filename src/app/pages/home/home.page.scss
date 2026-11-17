@@ -1,0 +1,14 @@
+.image-offer,
+.image-cat {
+  box-shadow: 0 0 5px #eee;
+}
+.tvs-image {
+  span {
+    font-size: 18px;
+    font-weight: 600;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+  }
+}
+

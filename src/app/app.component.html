@@ -1,0 +1,87 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <!-- Side Menu -->
+    <ion-menu contentId="main-content" type="overlay" class="app-side-menu">
+      <ion-content>
+        <ion-list id="inbox-list">
+          <!-- User Profile -->
+          <div class="head-list">
+            <div class="user-icon">
+              <i class="fa-regular fa-circle-user"></i>
+            </div>
+
+            <ion-list-header>{{ userName }}</ion-list-header>
+
+            <div class="user-points">
+              <i class="fa-solid fa-star"></i>
+              <ion-note>Points {{ points() | number }}</ion-note>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="menu-navigation">
+            @for (p of appPages; track p) {
+            <ion-menu-toggle auto-hide="false">
+              <ion-item
+                routerDirection="root"
+                [routerLink]="[p.url]"
+                detail="false"
+                routerLinkActive="selected"
+              >
+                <ion-label>
+                  <span>{{ p.title }}</span>
+
+                  @if (p.title === 'Favorites' && favoriteCount()) {
+                  <span class="fav-count">
+                    {{ favoriteCount() | number }}
+                  </span>
+                  }
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            }
+          </div>
+
+          <!-- Account Actions -->
+          <div class="menu-account-actions">
+            <ion-menu-toggle auto-hide="false">
+              <ion-item
+                class="logout-item"
+                detail="false"
+                lines="none"
+                (click)="logout()"
+              >
+                <ion-label>Logout</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle auto-hide="false">
+              <ion-item class="delete-item" detail="false" lines="none">
+                <ion-label>Delete Account</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <!-- Main Content -->
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+    <!-- Loading Screen -->
+    <ngx-spinner
+      bdColor="rgba(0, 0, 0, .9)"
+      size="large"
+      color="#32a96b"
+      [fullScreen]="true"
+    >
+      <div class="text-center logo-spinner-container">
+        <img
+          src="assets/images/anim-logo.gif"
+          class="w-100"
+          alt="Tradeline Stores"
+        />
+      </div>
+    </ngx-spinner>
+  </ion-split-pane>
+</ion-app>

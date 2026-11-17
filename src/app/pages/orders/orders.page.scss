@@ -1,0 +1,1004 @@
+$main-color: #0e7d3f;
+$second-color: #006437;
+$danger-color: #d63838;
+
+:host {
+  color: var(--ion-text-color);
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+
+.orders-title {
+  font-size: 17px;
+  font-weight: 750;
+  text-align: center;
+  padding-inline-end: 48px;
+}
+
+/* ========================================
+   PAGE LAYOUT
+   ======================================== */
+
+.orders-content {
+  --background: var(--ion-background-color);
+}
+
+.orders-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  padding: 12px 12px 24px;
+  box-sizing: border-box;
+}
+
+.orders-list {
+  flex: 0 0 auto;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+/* ========================================
+   ORDER ITEM & CARD
+   ======================================== */
+
+.order-item {
+  --background: transparent;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  --inner-padding-top: 0;
+  --inner-padding-bottom: 0;
+  --border-width: 0;
+  --min-height: 0;
+
+  display: block;
+  width: 100%;
+  margin: 0 0 16px;
+  overflow: visible;
+}
+
+.order-item::part(native) {
+  padding: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.order-card {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 15px;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid var(--order-border, #e8ece9);
+  border-radius: 16px;
+  background: var(--order-card-bg, #ffffff);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.035);
+}
+
+/* ========================================
+   ORDER HEADER
+   ======================================== */
+
+.order-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--order-border, #e8ece9);
+}
+
+.order-reference {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.order-label {
+  color: var(--order-muted, #858b87);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 1.2px;
+}
+
+.order-id {
+  color: var(--ion-text-color);
+  font-size: 14px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   ORDER STATUS
+   ======================================== */
+
+.order-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+  max-width: 62%;
+  padding: 6px 9px;
+  border-radius: 20px;
+  background: #edf1ee;
+  color: #48544b;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-new {
+  background: #e8f4ec;
+  color: #0e7d3f;
+}
+
+.status-delivery {
+  background: #e8f0ff;
+  color: #285fbb;
+}
+
+.status-delivered {
+  background: #e1f5e8;
+  color: #087443;
+}
+
+.status-cancelled {
+  background: #ffebeb;
+  color: #d63838;
+}
+
+.status-refund {
+  background: #fff3dc;
+  color: #9a6100;
+}
+
+.status-returned {
+  background: #f0eaff;
+  color: #7042bb;
+}
+
+/* ========================================
+   ORDER GRID
+   ======================================== */
+
+.order-grid {
+  width: 100%;
+  padding: 15px 0 0;
+}
+
+.order-grid ion-row {
+  align-items: stretch;
+}
+
+.order-grid ion-col {
+  min-width: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* ========================================
+   PRODUCTS
+   ======================================== */
+
+.products-column {
+  padding-inline-start: 0 !important;
+  padding-inline-end: 10px !important;
+}
+
+.product-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  margin-bottom: 15px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.product-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 82px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid var(--order-border, #e8ece9);
+  border-radius: 10px;
+  background: var(--product-image-bg, #f7f8f7);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.product-info {
+  flex: 1;
+  min-width: 0;
+  padding-top: 2px;
+  color: var(--ion-text-color);
+  font-size: 12px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.product-name {
+  display: -webkit-box;
+  margin-bottom: 5px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.product-option {
+  margin-top: 2px;
+  color: var(--order-muted, #777e79);
+  font-size: 11px;
+}
+
+.product-quantity {
+  margin-top: 6px;
+  color: var(--order-muted, #777e79);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ========================================
+   ORDER SUMMARY
+   ======================================== */
+
+.order-summary {
+  min-width: 0;
+  padding-inline-start: 12px !important;
+  padding-inline-end: 0 !important;
+  border-inline-start: 1px solid var(--order-border, #e8ece9);
+  color: var(--ion-text-color);
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.summary-label {
+  margin-bottom: 4px;
+  color: var(--order-muted, #858b87);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.order-total {
+  color: $main-color;
+  font-family: MS-900, sans-serif;
+  font-size: clamp(15px, 4vw, 20px);
+  font-weight: 900;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+
+  span {
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 700;
+  }
+}
+
+.summary-divider {
+  height: 1px;
+  margin: 11px 0;
+  background: var(--order-border, #e8ece9);
+}
+
+.order-date {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.payment-method {
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* ========================================
+   CANCEL ORDER
+   ======================================== */
+
+.cancel-order {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  max-width: 100%;
+  margin-top: 15px;
+  padding: 7px 9px;
+  border: 1px solid #f2caca;
+  border-radius: 8px;
+  background: transparent;
+  color: $danger-color;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 650;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+
+  i {
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  &:active {
+    background: rgba(216, 61, 61, 0.08);
+  }
+}
+
+/* ========================================
+   ORDER PROGRESS
+   ======================================== */
+
+.order-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 58px;
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px solid var(--order-border, #e8ece9);
+
+  picture {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    max-height: 76px;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+}
+
+/* ========================================
+   TERMINAL STATUSES
+   ======================================== */
+
+.cancelled-banner,
+.refund-banner,
+.returned-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 750;
+
+  i {
+    flex-shrink: 0;
+    font-size: 17px;
+  }
+}
+
+.cancelled-banner {
+  background: #fff0f0;
+  color: #d63838;
+}
+
+.refund-banner {
+  background: #fff5e2;
+  color: #986000;
+}
+
+.returned-banner {
+  background: #f1eaff;
+  color: #7042bb;
+}
+
+/* ========================================
+   EMPTY ORDERS
+   ======================================== */
+
+.empty-orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 65px 22px;
+  text-align: center;
+
+  .empty-orders-icon {
+    display: grid;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    margin-bottom: 18px;
+    border-radius: 24px;
+    background: rgba(14, 125, 63, 0.09);
+    color: $main-color;
+
+    i {
+      font-size: 32px;
+    }
+  }
+
+  h3 {
+    margin: 0 0 9px;
+    color: var(--ion-text-color);
+    font-size: 19px;
+    font-weight: 750;
+  }
+
+  p {
+    max-width: 290px;
+    margin: 0;
+    color: var(--order-muted, #777e79);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+}
+
+/* ========================================
+   SHIPPING / DELIVERY INSTRUCTIONS
+   ======================================== */
+
+.delivery-instructions {
+  display: block;
+  flex: 0 0 auto;
+  width: 100%;
+  margin-top: 4px;
+  padding: 0 0 12px;
+  box-sizing: border-box;
+}
+
+.delivery-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 54px;
+  padding: 12px 15px;
+  border: 1px solid rgba(14, 125, 63, 0.22);
+  border-radius: 12px;
+  background: rgba(14, 125, 63, 0.06);
+  color: $main-color;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: start;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.2s ease, border-color 0.2s ease;
+
+  > i:first-child {
+    flex-shrink: 0;
+    font-size: 19px;
+  }
+
+  span {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .delivery-arrow {
+    flex-shrink: 0;
+    font-size: 15px;
+  }
+
+  &:active {
+    background: rgba(14, 125, 63, 0.12);
+  }
+}
+
+/* ========================================
+   FOOTER / APP TABS
+   ======================================== */
+
+.orders-footer {
+  display: block;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+  padding: 0;
+  border-top: 1px solid var(--order-border, #e8ece9);
+  background: var(--ion-background-color);
+}
+
+.orders-footer::before {
+  display: none;
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+:host-context(html.ion-palette-dark) {
+  .orders-page {
+    --order-card-bg: #1b1d1c;
+    --order-border: #343836;
+    --order-muted: #a1a9a4;
+    --product-image-bg: #252826;
+  }
+
+  .order-card {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+  }
+
+  .status-new,
+  .status-delivered {
+    background: rgba(74, 222, 128, 0.13);
+    color: #69df94;
+  }
+
+  .status-delivery {
+    background: rgba(96, 165, 250, 0.14);
+    color: #8dbbff;
+  }
+
+  .status-cancelled {
+    background: rgba(248, 113, 113, 0.13);
+    color: #ff8585;
+  }
+
+  .status-refund {
+    background: rgba(251, 191, 36, 0.13);
+    color: #ffd16a;
+  }
+
+  .status-returned {
+    background: rgba(167, 139, 250, 0.14);
+    color: #c2aaff;
+  }
+
+  .cancel-order {
+    border-color: #633535;
+    color: #ff8989;
+  }
+
+  .cancelled-banner {
+    background: rgba(248, 113, 113, 0.12);
+    color: #ff8989;
+  }
+
+  .refund-banner {
+    background: rgba(251, 191, 36, 0.12);
+    color: #ffd16a;
+  }
+
+  .returned-banner {
+    background: rgba(167, 139, 250, 0.12);
+    color: #c2aaff;
+  }
+
+  .delivery-btn {
+    background: rgba(74, 222, 128, 0.08);
+    border-color: rgba(74, 222, 128, 0.22);
+    color: #69df94;
+  }
+
+  .empty-orders .empty-orders-icon {
+    background: rgba(74, 222, 128, 0.1);
+    color: #69df94;
+  }
+
+  .orders-footer {
+    border-top-color: #343836;
+  }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 380px) {
+  .orders-page {
+    padding: 10px 8px 20px;
+  }
+
+  .order-card {
+    padding: 11px;
+    border-radius: 13px;
+  }
+
+  .order-card-header {
+    gap: 7px;
+  }
+
+  .order-status {
+    max-width: 58%;
+    padding: 5px 7px;
+    font-size: 9px;
+  }
+
+  .products-column {
+    padding-inline-end: 7px !important;
+  }
+
+  .product-row {
+    gap: 7px;
+  }
+
+  .product-image {
+    width: 60px;
+    height: 70px;
+  }
+
+  .product-name {
+    font-size: 12px;
+  }
+
+  .order-summary {
+    padding-inline-start: 8px !important;
+  }
+
+  .order-total {
+    font-size: 15px;
+  }
+
+  .cancel-order {
+    gap: 4px;
+    padding: 6px;
+    font-size: 10px;
+  }
+
+  .delivery-btn {
+    gap: 9px;
+    padding: 12px;
+    font-size: 12px;
+  }
+}
+
+/* =====================================================
+   CANCEL ORDER MODAL
+===================================================== */
+
+.cancel-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  animation: cancelOverlayIn 0.2s ease-out;
+}
+
+.cancel-modal {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+
+  padding: 30px 26px 24px;
+  border: 1px solid rgba(14, 125, 63, 0.14);
+  border-radius: 24px;
+
+  background: var(--ion-card-background, #ffffff);
+  color: var(--ion-text-color, #202124);
+
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2), 0 4px 14px rgba(0, 0, 0, 0.06);
+
+  animation: cancelModalIn 0.25s ease-out;
+
+  h3 {
+    margin: 18px 0 8px;
+    font-size: 23px;
+    font-weight: 750;
+    line-height: 1.3;
+    text-align: center;
+    letter-spacing: -0.4px;
+  }
+
+  label {
+    display: block;
+    margin: 24px 0 9px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ion-text-color, #303030);
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 125px;
+    padding: 14px 15px;
+
+    border: 1px solid var(--ion-color-step-200, #e2e5e8);
+    border-radius: 13px;
+    outline: none;
+
+    background: var(--ion-background-color, #ffffff);
+    color: var(--ion-text-color, #202124);
+
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+
+    resize: vertical;
+    box-sizing: border-box;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease,
+      background 0.2s ease;
+
+    &::placeholder {
+      color: var(--ion-color-medium, #92979d);
+      opacity: 0.8;
+    }
+
+    &:focus {
+      border-color: #0e7d3f;
+      box-shadow: 0 0 0 3px rgba(14, 125, 63, 0.1);
+    }
+  }
+}
+
+/* Icon */
+
+.cancel-modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 66px;
+  height: 66px;
+  margin: 0 auto;
+
+  border-radius: 22px;
+  background: rgba(220, 53, 69, 0.09);
+  color: #dc3545;
+
+  font-size: 27px;
+
+  i {
+    line-height: 1;
+  }
+}
+
+/* Description */
+
+.cancel-modal-description {
+  max-width: 320px;
+  margin: 0 auto;
+
+  color: var(--ion-color-medium, #777e85);
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* Validation */
+
+.cancel-error {
+  display: block;
+  margin-top: 8px;
+  color: #dc3545;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Actions */
+
+.cancel-modal-actions {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 24px;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    flex: 1;
+    min-width: 0;
+    min-height: 47px;
+    padding: 12px 14px;
+
+    border: 1px solid transparent;
+    border-radius: 12px;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+      transform 0.2s ease, opacity 0.2s ease;
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.cancel-back-btn {
+  border-color: var(--ion-color-step-200, #e1e4e7) !important;
+  background: transparent;
+  color: var(--ion-text-color, #333);
+
+  &:hover:not(:disabled) {
+    background: var(--ion-color-step-100, #f5f6f7);
+  }
+}
+
+.cancel-confirm-btn {
+  background: #dc3545;
+  color: #ffffff;
+
+  &:hover:not(:disabled) {
+    background: #c82333;
+    box-shadow: 0 5px 14px rgba(220, 53, 69, 0.2);
+  }
+
+  i {
+    font-size: 13px;
+  }
+}
+
+/* Animations */
+
+@keyframes cancelOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cancelModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Dark Mode */
+
+:host-context(html.ion-palette-dark) {
+  .cancel-overlay {
+    background: rgba(0, 0, 0, 0.75);
+  }
+
+  .cancel-modal {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: var(--ion-card-background, #1c1c1d);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+
+    textarea {
+      border-color: rgba(255, 255, 255, 0.12);
+      background: var(--ion-background-color, #121212);
+
+      &:focus {
+        border-color: #0e7d3f;
+      }
+    }
+  }
+
+  .cancel-back-btn {
+    border-color: rgba(255, 255, 255, 0.14) !important;
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.07);
+    }
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+  .cancel-overlay {
+    align-items: center;
+    padding: 16px;
+  }
+
+  .cancel-modal {
+    max-width: 100%;
+    padding: 26px 20px 20px;
+    border-radius: 21px;
+
+    h3 {
+      font-size: 21px;
+    }
+
+    textarea {
+      min-height: 115px;
+    }
+  }
+
+  .cancel-modal-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 19px;
+    font-size: 24px;
+  }
+
+  .cancel-modal-actions {
+    gap: 9px;
+
+    button {
+      min-height: 45px;
+      padding: 10px 8px;
+      font-size: 12px;
+    }
+  }
+}
+
+/* Small Screens */
+
+@media (max-width: 350px) {
+  .cancel-modal-actions {
+    flex-direction: column-reverse;
+
+    button {
+      width: 100%;
+      min-height: 46px;
+      font-size: 13px;
+    }
+  }
+}
+
+/* Reduced Motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .cancel-overlay,
+  .cancel-modal {
+    animation: none;
+  }
+
+  .cancel-modal-actions button {
+    transition: none;
+  }
+}

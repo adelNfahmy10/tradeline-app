@@ -1,0 +1,21 @@
+.header-shop{
+  box-shadow: 0 0 3px #cccccc90;
+  span{
+    box-shadow: 0 0 3px #cccccc90;
+  }
+}
+
+.item{
+  padding: 10px;
+  box-shadow: 0 0 3px #cccccc90;
+  .item-img{
+    width: 50px;
+  }
+
+  .item-content{
+    h5{
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+}

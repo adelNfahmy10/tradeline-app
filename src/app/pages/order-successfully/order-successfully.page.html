@@ -1,0 +1,120 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    @if(token()){
+    <ion-buttons slot="start">
+      <ion-menu-button class="d-flex justify-content-center align-items-center">
+        <div class="head-bg-icon">
+          <i class="fa-regular fa-circle-user main-color"></i>
+        </div>
+      </ion-menu-button>
+    </ion-buttons>
+    } @else {
+    <ion-buttons slot="start">
+      <div class="head-bg-icon">
+        <div class="head-bg-icon">
+          <i class="fa-regular fa-circle-user main-color" routerLink="/auth">
+          </i>
+        </div>
+      </div>
+    </ion-buttons>
+    }
+
+    <ion-title class="text-center fw-bold"> Explore </ion-title>
+
+    <ion-buttons slot="end">
+      <div class="head-bg-icon" (click)="searchModal.open()">
+        <i class="fa-brands fa-sistrix main-color"></i>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="success-content">
+  <div class="success-page">
+    <!-- Brand -->
+    <div class="success-brand">
+      <span class="success-brand__icon">
+        <i class="fa-solid fa-bag-shopping"></i>
+      </span>
+      <span>Tradeline Stores</span>
+    </div>
+
+    <!-- Success Illustration -->
+    <div class="success-visual">
+      <div class="success-visual__glow"></div>
+
+      <div class="success-visual__circle">
+        <i class="fa-solid fa-check"></i>
+      </div>
+
+      <span class="success-spark success-spark--one">
+        <i class="fa-solid fa-sparkles"></i>
+      </span>
+
+      <span class="success-spark success-spark--two">
+        <i class="fa-solid fa-star"></i>
+      </span>
+
+      <span class="success-spark success-spark--three">
+        <i class="fa-solid fa-plus"></i>
+      </span>
+
+      <div class="success-package">
+        <i class="fa-solid fa-box-open"></i>
+      </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message">
+      <span class="success-eyebrow">
+        <i class="fa-solid fa-circle-check"></i>
+        ORDER CONFIRMED
+      </span>
+
+      <h1>
+        Order Placed
+        <span>Successfully!</span>
+      </h1>
+
+      <p>
+        Thank you for shopping with Tradeline Stores. Your order has been placed
+        successfully. We're excited to get your items to you!
+      </p>
+    </div>
+
+    <!-- Status Card -->
+    <div class="success-status">
+      <div class="success-status__icon">
+        <i class="fa-solid fa-truck-fast"></i>
+      </div>
+
+      <div class="success-status__text">
+        <h3>What's next?</h3>
+        <p>
+          We'll take care of your order. Keep an eye out for updates on your
+          delivery.
+        </p>
+      </div>
+
+      <i class="fa-solid fa-arrow-right success-status__arrow"></i>
+    </div>
+
+    <!-- Actions -->
+    <div class="success-actions">
+      <button type="button" class="success-home-btn" routerLink="/home">
+        <span>Back to Home</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+
+      <p class="success-footer">
+        <i class="fa-solid fa-shield-halved"></i>
+        Thank you for choosing Tradeline Stores
+      </p>
+    </div>
+  </div>
+  <app-search-modal #searchModal></app-search-modal>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

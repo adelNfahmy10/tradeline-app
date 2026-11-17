@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="text-center">
+      <img
+        src="assets/images/tvc-images/tvc_new.png"
+        class="tvc-logo"
+        alt="TVC"
+      />
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="tvc-details p-3">
+    <div class="header-details border-bottom pb-3">
+      <h1 class="m-0 fw-bold">Details</h1>
+
+      <h1 class="m-0 my-2 main-color fw-bold user-name">{{ userName }}</h1>
+
+      <h5 class="m-0 mb-2 fw-semibold">
+        {{ pointsData()?.TotalPoints || 0 | number }} Points = {{
+        (pointsData()?.TotalPoints / 100) || 0 | number }} EGP
+      </h5>
+    </div>
+
+    <div class="details-info py-4">
+      <p>
+        Cuurent Balance:
+        <span class="main-color fw-semibold">
+          {{ pointsData()?.TotalPoints | number }}
+        </span>
+      </p>
+
+      <p>
+        Redeemed Points:
+        <span class="main-color fw-semibold">
+          {{ pointsData()?.CurrentBalance | number }}
+        </span>
+      </p>
+
+      <p>
+        Cuurent Valid Balance:
+        <span class="main-color fw-semibold">
+          {{ pointsData()?.CurrentValidBalance | number }}
+        </span>
+      </p>
+
+      <p>
+        Cuurent Pending Balance:
+        <span class="main-color fw-semibold">
+          {{ pointsData()?.CurrentPendingBalance | number }}
+        </span>
+      </p>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

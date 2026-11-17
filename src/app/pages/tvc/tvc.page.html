@@ -1,0 +1,94 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    @if(token()){
+    <ion-buttons slot="start">
+      <ion-menu-button class="d-flex justify-content-center align-items-center">
+        <div class="head-bg-icon">
+          <i class="fa-regular fa-circle-user main-color"></i>
+        </div>
+      </ion-menu-button>
+    </ion-buttons>
+    } @else {
+    <ion-buttons slot="start">
+      <div class="head-bg-icon">
+        <div class="head-bg-icon">
+          <i
+            class="fa-regular fa-circle-user main-color"
+            routerLink="/auth"
+          ></i>
+        </div>
+      </div>
+    </ion-buttons>
+    }
+
+    <ion-title class="text-center fw-bold">Explore</ion-title>
+
+    <ion-buttons slot="end">
+      <div class="head-bg-icon" (click)="searchModal.open()">
+        <i class="fa-brands fa-sistrix main-color"></i>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="tvc p-4 mt-4 position-relative">
+    <span class="close-btn" routerLink="/">
+      <i class="fa-solid fa-xmark"></i>
+    </span>
+
+    <!-- List Content App -->
+    <div
+      class="tvc-info p-4 text-white text-center position-relative bg-dark rounded-4"
+    >
+      <div class="logo-tvc">
+        <img
+          loading="lazy"
+          src="/assets/images/tvc-images/TVCLOGOFINALhite-01.png"
+          alt="tvc"
+          class="tvs w-100 h-100"
+        />
+      </div>
+
+      <div class="tvc-details">
+        <h1 class="fw-bold">{{userName}}</h1>
+
+        <h4 class="fst-italic">
+          {{pointsData()?.CurrentValidBalance || 0 | number}}
+          <span class="valid fw-semibold">Valid Points</span>
+        </h4>
+        <h4 class="fst-italic">
+          {{pointsData()?.CurrentPendingBalance || 0 | number}}
+          <span class="valid fw-semibold">Pending Ponts</span>
+        </h4>
+
+        <span class="view-more d-block mt-4" routerLink="/tvc-details"
+          >View More</span
+        >
+
+        <button class="btn main-btn mt-4 p-3" routerLink="/tvc-history">
+          History
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-search-modal #searchModal></app-search-modal>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

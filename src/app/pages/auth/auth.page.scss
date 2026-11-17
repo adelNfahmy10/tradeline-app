@@ -1,0 +1,83 @@
+$main-color: #0e7d3f;
+$second-color: #017943;
+
+ion-checkbox {
+  // --checkbox-background: #fff; /* قبل التحديد → أبيض */
+  --checkbox-background-checked: #0e7d3f; /* بعد التحديد → بنفسجي */
+  --border-color: #0e7d3f; /* لون البوردر */
+  --checkmark-color: #fff; /* لون الصح بعد التحديد */
+  --label-spacing: 3px;
+}
+
+ion-checkbox::part(container) {
+  border-radius: 6px;
+  border: 2px solid #0e7d3f;
+}
+
+ion-checkbox::part(label) {
+  margin-left: 6px;
+}
+
+ion-input {
+  --padding-start: 10px;
+  --border-radius: 30px;
+}
+
+.custom-segment ion-segment-button {
+  --color: #222;
+  --color-checked: #0e7d3f;
+}
+
+.auth-title {
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.forget-link {
+  font-size: 14px;
+  &:hover {
+    color: $main-color;
+  }
+}
+
+.tvcParagraphs {
+  direction: rtl;
+  p,
+  li {
+    font-size: 12px;
+    color: #222;
+  }
+  li {
+    padding: 0 15px;
+  }
+}
+
+h6 {
+  font-size: 14px;
+}
+
+.text-danger {
+  font-size: 14px;
+}
+
+.back-login {
+  cursor: pointer;
+  font-size: 14px;
+  &:hover {
+    color: $main-color;
+  }
+}
+
+input,
+textarea {
+  box-shadow: 0 5px 5px #cccccc5d;
+  border: 1px solid transparent;
+  &:focus {
+    border: 1px solid $main-color;
+    box-shadow: 0 5px 5px #0e7d3e2c;
+  }
+  &::placeholder {
+    color: #9a9a9a;
+    font-size: 14px;
+  }
+}

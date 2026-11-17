@@ -1,0 +1,61 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="text-center me-5 fw-bold">Delivery</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <div class="delivery p-3">
+    <!-- Header Image -->
+    <div class="head text-center pb-4 pt-2">
+      <img
+        class="normal-mode"
+        src="assets/images/delivery-images/shipping.png"
+        alt="Shipping"
+      />
+
+      <img
+        class="dark-mode-show"
+        src="assets/images/delivery-images/shipping-black.png"
+        alt="Shipping"
+      />
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      @for (q of deliveryData; track $index) {
+      <section class="qa-item">
+        <h3>
+          <div [innerHTML]="q.title | safeHtml"></div>
+        </h3>
+
+        <div
+          class="qa-description"
+          [innerHTML]="q.description | safeHtml"
+        ></div>
+      </section>
+      }
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

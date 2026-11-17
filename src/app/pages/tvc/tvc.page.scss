@@ -1,0 +1,41 @@
+h4 {
+  font-size: 18px;
+  color: #fff !important;
+}
+h1 {
+  font-size: 34px;
+  color: #fff !important;
+}
+.view-more {
+  text-decoration: underline;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #ffff;
+  box-shadow: 0 0 5px #aaa;
+
+  cursor: pointer;
+  font-size: 18px;
+  color: #dc3545;
+
+  border-radius: 50%;
+  transition: 0.2s ease;
+
+  z-index: 9999;
+
+  &:hover {
+    background: #fde8ea;
+    color: #b02a37;
+  }
+}

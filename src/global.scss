@@ -1,0 +1,1537 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component.
+ */
+
+/* ==========================================================================
+   IONIC CORE
+   ========================================================================== */
+
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* ==========================================================================
+   IONIC DARK MODE
+   ========================================================================== */
+
+/*
+ * IMPORTANT:
+ * We use class-based dark mode only.
+ *
+ * DO NOT enable dark.system.css
+ * because we don't want the phone/system theme to control the app.
+ */
+
+@import "@ionic/angular/css/palettes/dark.class.css";
+// @import "@ionic/angular/css/palettes/dark.system.css";
+// @import "@ionic/angular/css/palettes/dark.always.css";
+
+/* ==========================================================================
+   FONT
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+/* ==========================================================================
+   GLOBAL
+   ========================================================================== */
+
+* {
+  transition: all 0.4s ease-in-out;
+
+  &:not(i) {
+    font-family: "PT Sans", sans-serif !important;
+  }
+}
+
+.ngx-spinner-overlay.fade-out {
+  pointer-events: none !important;
+}
+
+/* ==========================================================================
+   GLOBAL APP BACKGROUND
+   ========================================================================== */
+
+/*
+ * LIGHT MODE
+ * --------------------------------------------------------------------------
+ * The entire application uses one unified background.
+ */
+
+html,
+body,
+ion-app,
+ion-router-outlet,
+ion-page {
+  background: #f7f7f7 !important;
+  color: #222;
+}
+
+body {
+  margin: 0;
+  background: #fff !important;
+}
+
+/* Ionic page content */
+
+ion-content {
+  --background: #fff !important;
+  --color: #222 !important;
+
+  background: #fff !important;
+  color: #222 !important;
+}
+
+/* ==========================================================================
+   DARK MODE
+   ========================================================================== */
+
+html.ion-palette-dark {
+  ion-segment-button {
+    --color: #fff !important;
+    --color-checked: #0e7d3f;
+    --indicator-color: #0e7d3f;
+  }
+
+  .login,
+  .signup {
+    ion-item {
+      --background: transparent !important;
+    }
+
+    .native-input.sc-ion-input-md {
+      background: transparent !important;
+    }
+
+    .tvcParagraphs {
+      p {
+        color: #eee;
+      }
+      li {
+        color: #d6d6d6;
+      }
+    }
+  }
+}
+
+html.ion-palette-dark,
+html.ion-palette-dark body,
+html.ion-palette-dark ion-app,
+html.ion-palette-dark ion-router-outlet,
+html.ion-palette-dark ion-page,
+html.ion-palette-dark .head-list {
+  background: #121212 !important;
+  color: #eee !important;
+}
+
+html.ion-palette-dark body {
+  background: #121212 !important;
+}
+
+html.ion-palette-dark ion-content {
+  --background: #121212 !important;
+  --color: #eee !important;
+
+  background: #121212 !important;
+  color: #eee !important;
+}
+
+html.ion-palette-dark .cart-details {
+  h4 {
+    color: #fff;
+  }
+}
+
+html.ion-palette-dark .term-desc {
+  span {
+    color: #eee;
+  }
+}
+
+html.ion-palette-dark .main-color {
+  color: #0e7d3f;
+}
+
+html.ion-palette-dark .subImg {
+  img {
+    box-shadow: 0 5px 5px #1e1e1e !important;
+  }
+}
+
+html.ion-palette-dark .cart-products .product-details li {
+  color: #fff;
+}
+
+html.ion-palette-dark .about-intro-content h1,
+html.ion-palette-dark .about-section h2 {
+  color: #fff !important;
+}
+
+html.ion-palette-dark .about-intro-content .intro-description,
+html.ion-palette-dark .about-feature .feature-description,
+html.ion-palette-dark .about-section .section-description {
+  color: #eee;
+}
+
+html.ion-palette-dark {
+  ion-header ion-toolbar {
+    --background: #171717 !important;
+    --color: #f1f1f1 !important;
+    --border-color: #303030 !important;
+    padding: 10px;
+  }
+
+  ion-content {
+    --background: #121212 !important;
+    --color: #f1f1f1 !important;
+  }
+
+  ion-title {
+    color: #f1f1f1 !important;
+  }
+}
+
+html.ion-palette-dark ion-modal.checkout-summary-modal {
+  --background: #121212 !important;
+  --box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5) !important;
+
+  &::part(content) {
+    border-color: #303030 !important;
+  }
+
+  .checkout-dialog {
+    --checkout-bg: #121212 !important;
+    --checkout-surface: #1b1b1b !important;
+    --checkout-border: #303030 !important;
+    --checkout-text: #f1f1f1 !important;
+    --checkout-muted: #a5a5a5 !important;
+    --checkout-green: #32a96b !important;
+
+    background: #121212 !important;
+    color: #f1f1f1 !important;
+  }
+
+  .checkout-dialog__header,
+  .checkout-dialog__footer {
+    background: #121212 !important;
+    border-color: #303030 !important;
+  }
+
+  .checkout-dialog__brand h2,
+  .checkout-block__heading h3,
+  .checkout-order__heading h3,
+  .checkout-address__row strong,
+  .checkout-order__row strong,
+  .checkout-order__total span {
+    color: #f1f1f1 !important;
+  }
+
+  .checkout-dialog__brand p,
+  .checkout-block__heading p,
+  .checkout-address__row span,
+  .checkout-order__row span,
+  .checkout-order__total small,
+  .checkout-secure {
+    color: #a5a5a5 !important;
+  }
+
+  .checkout-dialog__brand-icon {
+    background: rgba(50, 169, 107, 0.12) !important;
+    color: #32a96b !important;
+  }
+
+  .checkout-dialog__close {
+    background: #1b1b1b !important;
+    border-color: #303030 !important;
+    color: #f1f1f1 !important;
+  }
+
+  .checkout-dialog__content {
+    --background: #121212 !important;
+    --color: #f1f1f1 !important;
+  }
+
+  .checkout-block__icon,
+  .checkout-address,
+  .checkout-coupon,
+  .checkout-order {
+    background: #1b1b1b !important;
+    border-color: #303030 !important;
+  }
+
+  .checkout-block__icon,
+  .checkout-address__row > ion-icon,
+  .checkout-coupon > ion-icon,
+  .checkout-order__heading > ion-icon {
+    color: #32a96b !important;
+  }
+
+  .checkout-address__row + .checkout-address__row,
+  .checkout-order__row {
+    border-color: #303030 !important;
+  }
+
+  .checkout-coupon ion-input {
+    --background: transparent !important;
+    --color: #f1f1f1 !important;
+    --placeholder-color: #929292 !important;
+    --highlight-color-focused: #32a96b !important;
+  }
+
+  .checkout-order__eyebrow,
+  .checkout-order__total > strong {
+    color: #32a96b !important;
+  }
+
+  .checkout-order__count {
+    background: #222222 !important;
+    border-color: #383838 !important;
+    color: #b5b5b5 !important;
+  }
+
+  .checkout-submit {
+    background: #00723c !important;
+    color: #ffffff !important;
+
+    &:hover:not(:disabled) {
+      background: #0b8547 !important;
+    }
+  }
+
+  .checkout-secure ion-icon {
+    color: #32a96b !important;
+  }
+
+  .checkout-payment,
+  .checkout-payment__iframe {
+    background: #121212 !important;
+  }
+}
+
+/* =========================================
+   DARK MODE — CART
+========================================= */
+
+html.ion-palette-dark {
+  .head-bg-icon {
+    background: #222a25 !important;
+    border: 1px solid #303a33 !important;
+
+    i {
+      color: #45c781 !important;
+    }
+  }
+
+  /* Product cards */
+
+  ion-list {
+    background: transparent !important;
+  }
+
+  ion-item-sliding {
+    background: #1b1b1b !important;
+    border: 1px solid #303030 !important;
+    box-shadow: 0 5px 18px rgb(0 0 0 / 18%) !important;
+  }
+
+  ion-item {
+    --background: #1b1b1b !important;
+    --color: #f1f1f1 !important;
+    --border-color: #303030 !important;
+  }
+
+  .cart-products {
+    background: transparent !important;
+
+    .col-4 > div {
+      background: #252525 !important;
+      border: 1px solid #333333 !important;
+    }
+
+    img {
+      mix-blend-mode: normal !important;
+      filter: none !important;
+    }
+
+    h2,
+    h3,
+    .main-color {
+      color: #45c781 !important;
+    }
+
+    .product-details {
+      color: #a5a5a5 !important;
+
+      li {
+        color: #a5a5a5 !important;
+      }
+
+      span {
+        color: #ededed !important;
+      }
+    }
+
+    .swipe-delete {
+      color: #ff737d !important;
+    }
+  }
+
+  /* Swipe actions */
+
+  ion-item-options {
+    background: #1b1b1b !important;
+
+    ion-item-option {
+      --background: #b42332 !important;
+      --color: #ffffff !important;
+    }
+  }
+
+  /* Empty cart */
+
+  .empty-cart {
+    background: #1b1b1b !important;
+    border: 1px solid #303030 !important;
+    box-shadow: 0 5px 18px rgb(0 0 0 / 15%) !important;
+
+    .empty-cart-icon {
+      background: #222a25 !important;
+      border: 1px solid #303a33 !important;
+      color: #45c781 !important;
+    }
+
+    .empty-cart-title {
+      color: #f1f1f1 !important;
+    }
+
+    .empty-cart-text {
+      color: #a5a5a5 !important;
+    }
+
+    .empty-cart-btn {
+      background: #087642 !important;
+      color: #ffffff !important;
+
+      &:hover {
+        background: #0a8a4d !important;
+      }
+    }
+  }
+
+  /* Order summary */
+
+  .cart-details {
+    background: #1b1b1b !important;
+    border: 1px solid #303030 !important;
+    box-shadow: 0 5px 20px rgb(0 0 0 / 18%) !important;
+
+    h4 {
+      color: #dedede !important;
+    }
+
+    .main-color {
+      color: #45c781 !important;
+    }
+
+    > div:nth-last-child(2) {
+      border-top-color: #383838 !important;
+
+      h4 {
+        color: #ffffff !important;
+      }
+
+      .main-color {
+        color: #45c781 !important;
+      }
+    }
+  }
+
+  /* Summary buttons */
+
+  .cart-details .btns {
+    border-top-color: #303030 !important;
+
+    .continue {
+      background: #252525 !important;
+      border: 1px solid #414141 !important;
+      color: #45c781 !important;
+
+      &:hover {
+        background: #2d2d2d !important;
+      }
+    }
+
+    .checkout {
+      background: #087642 !important;
+      border: 1px solid #087642 !important;
+      color: #ffffff !important;
+
+      &:hover:not(:disabled) {
+        background: #0a8a4d !important;
+      }
+
+      &:disabled {
+        background: #303030 !important;
+        border-color: #303030 !important;
+        color: #777777 !important;
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  /* Need Help */
+
+  .cart-help {
+    background: #1b1b1b !important;
+    border: 1px solid #303030 !important;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 12%) !important;
+
+    h4 {
+      color: #f1f1f1 !important;
+    }
+
+    a {
+      background: #222a25 !important;
+      border: 1px solid #303a33 !important;
+
+      i {
+        color: #45c781 !important;
+      }
+
+      &:hover {
+        background: #29372e !important;
+      }
+    }
+  }
+}
+
+/* =========================================
+   ORDER SUCCESSFULLY - DARK MODE
+========================================= */
+
+html.ion-palette-dark {
+  ion-content.success-content {
+    --background: #121212 !important;
+    --color: #f1f1f1 !important;
+  }
+
+  .success-page {
+    background: #121212 !important;
+    color: #f1f1f1 !important;
+  }
+
+  .success-brand {
+    color: #f1f1f1 !important;
+
+    .success-brand__icon {
+      background: #087642 !important;
+      color: #ffffff !important;
+    }
+  }
+
+  .success-visual {
+    .success-visual__glow {
+      background: rgba(50, 169, 107, 0.16) !important;
+    }
+
+    .success-visual__circle {
+      background: linear-gradient(145deg, #254b35 0%, #192d21 100%) !important;
+
+      border: 1px solid #356b4a !important;
+      color: #56d68b !important;
+
+      box-shadow: 0 0 0 12px rgba(50, 169, 107, 0.06),
+        0 18px 45px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .success-package {
+      background: #242424 !important;
+      border-color: #383838 !important;
+      color: #45c781 !important;
+    }
+
+    .success-spark {
+      color: #45c781 !important;
+    }
+  }
+
+  .success-message {
+    .success-eyebrow {
+      background: rgba(50, 169, 107, 0.12) !important;
+      border-color: rgba(50, 169, 107, 0.2) !important;
+      color: #45c781 !important;
+    }
+
+    h1 {
+      color: #f1f1f1 !important;
+
+      span {
+        color: #45c781 !important;
+      }
+    }
+
+    p {
+      color: #b0b0b0 !important;
+    }
+  }
+
+  .success-status {
+    background: #1b1b1b !important;
+    border-color: #303030 !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15) !important;
+
+    .success-status__icon {
+      background: rgba(50, 169, 107, 0.12) !important;
+      color: #45c781 !important;
+    }
+
+    .success-status__text {
+      h3 {
+        color: #f1f1f1 !important;
+      }
+
+      p {
+        color: #b0b0b0 !important;
+      }
+    }
+
+    .success-status__arrow {
+      color: #909090 !important;
+    }
+  }
+
+  .success-home-btn {
+    background: #087642 !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 24px rgba(0, 114, 60, 0.22) !important;
+
+    &:hover {
+      background: #0a8a4d !important;
+    }
+
+    &:disabled {
+      background: #303030 !important;
+      color: #888888 !important;
+    }
+  }
+
+  .success-footer {
+    color: #a5a5a5 !important;
+
+    i {
+      color: #45c781 !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   GLOBAL HTML ELEMENTS
+   ========================================================================== */
+
+html,
+body {
+  min-height: 100%;
+}
+
+main,
+article,
+section {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #222;
+}
+
+p {
+  color: #555;
+}
+
+a {
+  color: #0e7d3f;
+}
+
+ul,
+ol {
+  color: inherit;
+}
+
+/* Dark */
+
+html.ion-palette-dark {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #fff;
+  }
+
+  p {
+    color: #d0d0d0;
+  }
+
+  a {
+    color: #32a96b;
+  }
+
+  ul,
+  ol {
+    color: #eee;
+  }
+}
+
+/* ==========================================================================
+   IMAGES
+   ========================================================================== */
+
+.image-offer,
+.image-cat {
+  box-shadow: 0 0 3px #cccccc90;
+}
+
+/* ==========================================================================
+   MAIN COLOR
+   ========================================================================== */
+
+.main-color {
+  color: #0e7d3f;
+}
+
+/* ==========================================================================
+   MAIN BUTTON
+   ========================================================================== */
+
+.main-btn {
+  background-color: #0e7d3f !important;
+  color: #fff !important;
+  border-radius: 30px;
+  font-weight: 700;
+  width: 70%;
+
+  &:hover {
+    background-color: #006437 !important;
+  }
+
+  &:disabled {
+    background-color: #0e7d3eb5 !important;
+  }
+}
+
+/* ==========================================================================
+   ION HEADER
+   ========================================================================== */
+
+ion-header {
+  box-shadow: none !important;
+  border: none;
+  ion-toolbar {
+    --background: var(--ion-toolbar-background, var(--cart-card));
+    --color: var(--ion-text-color);
+    --border-width: 0;
+    --min-height: 80px;
+  }
+
+  ion-title {
+    font-size: 18px;
+    letter-spacing: -0.3px;
+  }
+
+  .head-bg-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #eaf5ee;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+
+    i {
+      font-size: 19px;
+      &.fa-circle-user {
+        font-size: 24px;
+      }
+    }
+
+    &:active {
+      transform: scale(0.94);
+    }
+  }
+
+  ion-menu-button {
+    --color: var(--cart-green);
+    width: 42px;
+    height: 42px;
+  }
+}
+
+ion-toolbar {
+  --background: #f7f7f7 !important;
+  --color: #222 !important;
+
+  background: #f7f7f7 !important;
+
+  box-shadow: none !important;
+}
+
+ion-title {
+  font-size: 24px !important;
+  color: #222 !important;
+}
+
+/* ==========================================================================
+   ION FOOTER / TABS
+   ========================================================================== */
+
+ion-footer,
+.tabs {
+  border-top-left-radius: 30px !important;
+  border-top-right-radius: 30px !important;
+
+  background: #f7f7f7 !important;
+}
+
+html.ion-palette-dark {
+  ion-footer,
+  .tabs {
+    background: #121212 !important;
+  }
+}
+
+/* ==========================================================================
+   HEADER ICON
+   ========================================================================== */
+
+.head-bg-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+
+  padding: 20px;
+
+  box-shadow: 0 0 5px #dcdcdc;
+
+  margin: 0 6px;
+
+  i {
+    font-size: 26px;
+    font-weight: normal;
+  }
+}
+
+/* Dark */
+
+html.ion-palette-dark {
+  .head-bg-icon {
+    box-shadow: 0 0 5px #000;
+  }
+}
+
+/* ==========================================================================
+   BOOTSTRAP BACKGROUND OVERRIDES
+   ========================================================================== */
+
+/*
+ * Bootstrap utilities can otherwise introduce white backgrounds
+ * inside the application.
+ */
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-light {
+  background-color: #f7f7f7 !important;
+}
+
+.bg-body {
+  background-color: #fff !important;
+}
+
+/* Dark */
+
+html.ion-palette-dark {
+  .bg-white {
+    background-color: #121212 !important;
+  }
+
+  .bg-light {
+    background-color: #121212 !important;
+  }
+
+  .bg-body {
+    background-color: #121212 !important;
+  }
+}
+
+/* ==========================================================================
+   ALERT WRAPPER
+   ========================================================================== */
+
+.alert-wrapper.sc-ion-alert-md {
+  border-radius: 16px !important;
+  overflow: hidden !important;
+
+  /* Options */
+
+  .alert-radio-button.select-interface-option {
+    --color: #00723c;
+
+    color: #00723c !important;
+  }
+
+  /* Hide radio bullet */
+
+  .alert-radio-button.select-interface-option .alert-radio-icon {
+    border: none !important;
+    background: transparent !important;
+
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  /* Hide inner radio circle */
+
+  .alert-radio-button.select-interface-option .alert-radio-inner {
+    display: none !important;
+  }
+
+  /* Selected option text */
+
+  .alert-radio-label {
+    padding-left: 35px !important;
+
+    font-size: 12px !important;
+  }
+
+  .alert-radio-button.select-interface-option[aria-checked="true"]
+    .alert-radio-label {
+    color: #00723c !important;
+    font-weight: 600;
+  }
+
+  /* Selected check */
+
+  .alert-radio-button.select-interface-option[aria-checked="true"]
+    .alert-radio-icon::after {
+    content: "✓";
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+
+    color: #00723c;
+
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  /* Cancel + OK */
+
+  .alert-button-group {
+    justify-content: center;
+
+    .alert-button {
+      color: #00723c !important;
+    }
+
+    .alert-button-inner {
+      color: #00723c !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   CANCEL + OK BUTTONS
+   ========================================================================== */
+
+.alert-button-group.sc-ion-alert-md {
+  display: flex !important;
+
+  width: 100% !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  .alert-button.sc-ion-alert-md {
+    flex: 1 1 50% !important;
+
+    width: 50% !important;
+    max-width: 50% !important;
+    min-width: 50% !important;
+
+    margin: 0 !important;
+    padding: 13px 0 !important;
+
+    justify-content: center !important;
+    text-align: center !important;
+
+    color: #00723c !important;
+  }
+
+  /* Divider between Cancel & OK */
+
+  .alert-button.sc-ion-alert-md:first-child {
+    border-right: 1px solid #e0e0e0 !important;
+  }
+
+  .alert-button-inner.sc-ion-alert-md {
+    width: 100% !important;
+
+    justify-content: center !important;
+
+    color: #00723c !important;
+  }
+}
+
+/* Dark Alert */
+
+html.ion-palette-dark {
+  .alert-wrapper.sc-ion-alert-md {
+    background: #1b1b1b !important;
+    color: #eee !important;
+
+    .alert-radio-label {
+      color: #eee !important;
+    }
+
+    .alert-radio-button.select-interface-option {
+      --color: #32a96b;
+
+      color: #32a96b !important;
+    }
+
+    .alert-radio-button.select-interface-option[aria-checked="true"]
+      .alert-radio-label {
+      color: #32a96b !important;
+    }
+
+    .alert-radio-button.select-interface-option[aria-checked="true"]
+      .alert-radio-icon::after {
+      color: #32a96b;
+    }
+
+    .alert-button-group {
+      .alert-button,
+      .alert-button-inner {
+        color: #32a96b !important;
+      }
+    }
+  }
+
+  .alert-button-group.sc-ion-alert-md {
+    .alert-button.sc-ion-alert-md {
+      color: #32a96b !important;
+    }
+
+    .alert-button.sc-ion-alert-md:first-child {
+      border-right-color: #333 !important;
+    }
+
+    .alert-button-inner.sc-ion-alert-md {
+      color: #32a96b !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   MOBILE TOASTR
+   ========================================================================== */
+
+.toast-container {
+  width: 100% !important;
+
+  max-width: none !important;
+
+  padding: 0 14px !important;
+
+  pointer-events: none;
+
+  &.toast-top-center {
+    top: calc(env(safe-area-inset-top) + 12px) !important;
+
+    left: 0 !important;
+    right: 0 !important;
+  }
+}
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+
+.toast-container .ngx-toastr {
+  position: relative;
+
+  width: 100% !important;
+  max-width: 390px !important;
+
+  min-height: 64px;
+
+  margin: 0 auto 10px !important;
+
+  padding: 13px 42px 13px 62px !important;
+
+  display: flex;
+  align-items: center;
+
+  border-radius: 17px !important;
+
+  background: #ffffff !important;
+
+  color: #252525 !important;
+
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+
+  background-image: none !important;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12), 0 3px 10px rgba(0, 0, 0, 0.05) !important;
+
+  opacity: 1 !important;
+
+  font-family: inherit;
+
+  font-size: 13.5px;
+  font-weight: 500;
+
+  line-height: 1.45;
+
+  overflow: hidden;
+
+  pointer-events: auto;
+
+  animation: toast-slide-down 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   TOAST LEFT ACCENT
+   ========================================================================== */
+
+.toast-container .ngx-toastr::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 4px;
+}
+
+/* ==========================================================================
+   TOAST ICON
+   ========================================================================== */
+
+.toast-container .ngx-toastr::after {
+  position: absolute;
+
+  left: 16px;
+  top: 50%;
+
+  width: 34px;
+  height: 34px;
+
+  transform: translateY(-50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   SUCCESS
+   ========================================================================== */
+
+.toast-container .ngx-toastr.toast-success::before {
+  background: #00723c !important;
+}
+
+.toast-container .ngx-toastr.toast-success::after {
+  content: "✓" !important;
+
+  color: #00723c !important;
+
+  background: rgba(0, 114, 60, 0.1) !important;
+}
+
+/* ==========================================================================
+   ERROR
+   ========================================================================== */
+
+.toast-container .ngx-toastr.toast-error::before {
+  background: #dc3545 !important;
+}
+
+.toast-container .ngx-toastr.toast-error::after {
+  content: "!" !important;
+
+  color: #dc3545 !important;
+
+  background: rgba(220, 53, 69, 0.1) !important;
+}
+
+/* ==========================================================================
+   WARNING
+   ========================================================================== */
+
+.toast-container .ngx-toastr.toast-warning::before {
+  background: #e08a00 !important;
+}
+
+.toast-container .ngx-toastr.toast-warning::after {
+  content: "!" !important;
+
+  color: #e08a00 !important;
+
+  background: rgba(224, 138, 0, 0.1) !important;
+}
+
+/* ==========================================================================
+   INFO
+   ========================================================================== */
+
+.toast-container .ngx-toastr.toast-info::before {
+  background: #2563eb !important;
+}
+
+.toast-container .ngx-toastr.toast-info::after {
+  content: "i" !important;
+
+  color: #2563eb !important;
+
+  background: rgba(37, 99, 235, 0.1) !important;
+}
+
+/* ==========================================================================
+   TOAST CLOSE BUTTON
+   ========================================================================== */
+
+.toast-container .ngx-toastr .toast-close-button {
+  position: absolute !important;
+
+  right: 9px !important;
+  top: 50% !important;
+
+  width: 27px;
+  height: 27px;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  transform: translateY(-50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 0 !important;
+
+  border-radius: 50%;
+
+  background: transparent !important;
+
+  color: #777 !important;
+
+  font-family: Arial, sans-serif !important;
+
+  font-size: 18px !important;
+  font-weight: 300 !important;
+
+  line-height: 1 !important;
+
+  text-shadow: none !important;
+
+  opacity: 0.6 !important;
+
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.toast-container .ngx-toastr .toast-close-button:hover {
+  background: #f4f4f4 !important;
+
+  opacity: 1 !important;
+}
+
+/* ==========================================================================
+   TOAST PROGRESS BAR
+   ========================================================================== */
+
+.toast-container .ngx-toastr .toast-progress {
+  position: absolute !important;
+
+  left: 4px !important;
+  bottom: 0 !important;
+
+  width: calc(100% - 4px) !important;
+
+  height: 2px !important;
+
+  border-radius: 0 0 17px 0;
+
+  background: #00723c !important;
+
+  opacity: 0.65;
+
+  transform: none !important;
+}
+
+/* SUCCESS PROGRESS */
+
+.toast-container .ngx-toastr.toast-success .toast-progress {
+  background: #00723c !important;
+}
+
+/* ERROR PROGRESS */
+
+.toast-container .ngx-toastr.toast-error .toast-progress {
+  background: #dc3545 !important;
+}
+
+/* WARNING PROGRESS */
+
+.toast-container .ngx-toastr.toast-warning .toast-progress {
+  background: #e08a00 !important;
+}
+
+/* INFO PROGRESS */
+
+.toast-container .ngx-toastr.toast-info .toast-progress {
+  background: #2563eb !important;
+}
+
+/* ==========================================================================
+   DARK TOAST
+   ========================================================================== */
+
+html.ion-palette-dark {
+  .toast-container .ngx-toastr {
+    background: #1b1b1b !important;
+
+    color: #eee !important;
+
+    border-color: rgba(255, 255, 255, 0.08) !important;
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 3px 10px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .toast-container .ngx-toastr .toast-close-button {
+    color: #aaa !important;
+  }
+
+  .toast-container .ngx-toastr .toast-close-button:hover {
+    background: #292929 !important;
+  }
+}
+
+/* ==========================================================================
+   TOAST ANIMATION
+   ========================================================================== */
+
+@keyframes toast-slide-down {
+  from {
+    opacity: 0;
+
+    transform: translateY(-20px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   MOBILE TOAST
+   ========================================================================== */
+
+@media (max-width: 576px) {
+  .toast-container {
+    padding: 0 10px !important;
+
+    &.toast-top-center {
+      top: calc(env(safe-area-inset-top) + 9px) !important;
+    }
+  }
+
+  .toast-container .ngx-toastr {
+    width: 100% !important;
+
+    max-width: none !important;
+
+    min-height: 60px;
+
+    padding: 12px 40px 12px 59px !important;
+
+    border-radius: 16px !important;
+
+    font-size: 13px;
+
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.11), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  .toast-container .ngx-toastr::before {
+    width: 3px;
+  }
+
+  .toast-container .ngx-toastr::after {
+    left: 13px;
+
+    width: 34px;
+    height: 34px;
+
+    font-size: 17px;
+  }
+
+  .toast-container .ngx-toastr .toast-close-button {
+    right: 6px !important;
+
+    width: 27px;
+    height: 27px;
+  }
+}
+
+/* ==========================================================================
+   REFRESHER
+   ========================================================================== */
+
+.tradeline-refresher {
+  --color: #00723c;
+  --background: transparent;
+
+  ion-refresher-content {
+    --color: #00723c;
+    --background: transparent;
+
+    font-weight: 700;
+  }
+}
+
+/* Dark refresher */
+
+html.ion-palette-dark {
+  .tradeline-refresher {
+    --color: #32a96b;
+    --background: transparent;
+
+    ion-refresher-content {
+      --color: #32a96b;
+      --background: transparent;
+    }
+  }
+}
+
+/* ==========================================================================
+   DARK GLOBAL FORM / CARD SUPPORT
+   ========================================================================== */
+
+html.ion-palette-dark {
+  input,
+  textarea,
+  select {
+    background-color: #1b1b1b !important;
+    color: #eee !important;
+    border-color: #333 !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #999 !important;
+  }
+
+  .form-control,
+  .form-select {
+    background-color: #1b1b1b !important;
+    color: #eee !important;
+    border-color: #333 !important;
+  }
+
+  .form-control::placeholder {
+    color: #999 !important;
+  }
+
+  .card {
+    background-color: #1b1b1b !important;
+    color: #eee !important;
+    border-color: #333 !important;
+  }
+
+  .list-group-item {
+    background-color: #1b1b1b !important;
+    color: #eee !important;
+    border-color: #333 !important;
+  }
+
+  .dropdown-menu {
+    background-color: #1b1b1b !important;
+    border-color: #333 !important;
+  }
+
+  .dropdown-item {
+    color: #eee !important;
+  }
+
+  .dropdown-item:hover {
+    background-color: #292929 !important;
+  }
+
+  .accordion-item {
+    background-color: #1b1b1b !important;
+    color: #eee !important;
+    border-color: #333 !important;
+  }
+
+  .accordion-button {
+    background-color: #1b1b1b !important;
+    color: #eee !important;
+  }
+
+  .accordion-button:not(.collapsed) {
+    background-color: #202020 !important;
+    color: #fff !important;
+  }
+}

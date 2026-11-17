@@ -1,0 +1,33 @@
+<div class="tabs w-100 rounded-top-4 w-100 py-1">
+    <!-- Tabs -->
+    <ul class="tab-list d-flex justify-content-evenly aling-items-center text-center list-unstyled mb-0 py-3">
+
+      <li class="tab-item d-flex flex-column justify-content-center align-items-center gap-2" routerLink="/home" routerLinkActive="active">
+        <i class="fa-solid fa-compass"></i>
+        <span>Explore</span>
+      </li>
+
+      <li class="tab-item d-flex flex-column justify-content-center align-items-center gap-2" routerLink="/shop" routerLinkActive="active">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Shop</span>
+      </li>
+
+      <li class="tab-item d-flex flex-column justify-content-center align-items-center gap-2" routerLink="/notification" routerLinkActive="active">
+        <i class="fa-regular fa-bell"></i>
+        <span>Notifications</span>
+      </li>
+
+      <li class="tab-item d-flex flex-column justify-content-center align-items-center gap-2" routerLink="/support" routerLinkActive="active">
+        <i class="fa-solid fa-gear"></i>
+        <span>Support</span>
+      </li>
+
+      <li class="tab-item position-relative d-flex flex-column justify-content-center align-items-center gap-2" routerLink="/cart" routerLinkActive="active">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span>Cart</span>
+        <span class="cart-count position-absolute text-center text-white rounded-circle fw-bold">{{cartCount() || 0}}</span>
+      </li>
+
+    </ul>
+
+  </div>

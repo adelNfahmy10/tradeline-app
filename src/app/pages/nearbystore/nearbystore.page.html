@@ -1,0 +1,129 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="text-center me-5 fw-bold">Nearby Store</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="nearbystore">
+    @for (store of stores(); track $index) {
+    <ion-card class="mb-4 rounded-4">
+      <img
+        (click)="openMap(store.coordinates)"
+        loading="lazy"
+        [src]="store.picture"
+        class="img_premuim"
+        loading="lazy"
+        [alt]="store.picture_alt || (store.name_ar ? store.name_ar : store.name_en)"
+      />
+
+      <ion-card-header (click)="openMap(store.coordinates)">
+        <ion-card-title>
+          <h2>{{ store.name }}</h2>
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="d-flex align-items-center gap-2">
+          <i class="fa-solid fa-location-dot fs-2 text-success"></i>
+
+          <div class="store-details">
+            <span>{{ store.city }}</span>
+
+            @if (store.distance !== null && store.distance !== undefined) {
+            <span> - {{ store.distance | number:'1.2-2' }} Km away </span>
+            }
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    } @empty {
+    <div
+      class="empty-state text-center d-flex flex-column align-items-center justify-content-center"
+    >
+      @if (loading()) {
+      <ion-icon name="navigate-outline" class="empty-state-icon"></ion-icon>
+
+      <p class="empty-state-text">
+        Detecting your location...
+        <br />
+        Finding nearby stores.
+      </p>
+      } @else if (locationStatus() === 'services-disabled') {
+      <ion-icon name="location-outline" class="empty-state-icon"></ion-icon>
+
+      <p class="empty-state-text">
+        Your location services are turned off.
+        <br />
+        Please enable Location to find nearby stores.
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-success location-settings-btn"
+        (click)="openLocationSettings()"
+      >
+        Enable Location
+      </button>
+      } @else if (locationStatus() === 'permission-denied') {
+      <ion-icon name="lock-closed-outline" class="empty-state-icon"></ion-icon>
+
+      <p class="empty-state-text">
+        Location permission is required.
+        <br />
+        Please allow location access for Tradeline.
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-success location-settings-btn"
+        (click)="openLocationSettings()"
+      >
+        Location Settings
+      </button>
+      } @else if (locationStatus() === 'error') {
+      <ion-icon name="alert-circle-outline" class="empty-state-icon"></ion-icon>
+
+      <p class="empty-state-text">
+        Unable to detect your location.
+        <br />
+        Please try again.
+      </p>
+
+      <button
+        type="button"
+        class="btn btn-success location-settings-btn"
+        (click)="handleManualRetry()"
+      >
+        Try Again
+      </button>
+      } @else if (locationStatus() === 'ready') {
+      <ion-icon name="storefront-outline" class="empty-state-icon"></ion-icon>
+
+      <p class="empty-state-text">No nearby stores found.</p>
+      }
+    </div>
+    }
+  </div>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

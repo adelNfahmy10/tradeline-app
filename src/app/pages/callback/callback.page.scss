@@ -1,0 +1,16 @@
+$main-color: #0e7d3f;
+$second-color: #006437;
+
+input, textarea{
+  box-shadow: 0 5px 5px #cccccc5d;
+  border: 1px solid transparent;
+  &:focus{
+    border: 1px solid $main-color;
+    box-shadow: 0 5px 5px #0e7d3e2c;
+  }
+  &::placeholder{
+    color: #9a9a9a;
+    font-size: 14px;
+  }
+}
+

@@ -1,0 +1,155 @@
+
+// $main-color: #0e7d3f;
+// ion-segment {
+//   --background: #f4f6f5;
+//    padding: 4px;
+//    border-radius: 12px;
+
+//   ion-segment-button {
+//     --color: #6b7280;
+//      --color-checked: #{$main-color};
+//     //  --indicator-color: #ffffff;
+//      min-height: 42px;
+//      border-radius: 9px;
+//      font-weight: 600;
+//      position: relative;
+//      &::part(indicator-background) {
+//       border: 1.5px solid $main-color;
+//       border-radius: 9px;
+//     }
+//   }
+// }
+
+$main-color: #0e7d3f;
+
+.bookings {
+  padding: 16px;
+
+  ion-segment {
+    --background: #f2f4f3;
+
+    padding: 4px;
+    border-radius: 12px;
+
+    ion-segment-button {
+      --color: $main-color;
+      --color-checked: #0e7d3f;
+
+      min-height: 42px;
+      border-radius: 9px;
+
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+  }
+
+  ion-segment-view {
+    margin-top: 20px;
+  }
+}
+
+.booking-content {
+  padding-bottom: 30px;
+}
+
+.booking-image {
+  --background: transparent;
+  margin-bottom: 16px;
+
+  img {
+    width: 100%;
+    max-width: 180px;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.booking-info {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.7;
+
+  .title {
+    color: #222;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .steps-title {
+    color: #222;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .step {
+    margin: 4px 0;
+  }
+}
+
+.booking-form {
+  margin-top: 20px;
+
+  ion-list {
+    background: transparent;
+  }
+
+  .input-control {
+    --background: #f7f8f8;
+    --border-color: transparent;
+    --highlight-color-focused: #{$main-color};
+
+    margin-bottom: 10px;
+    border-radius: 10px;
+
+    ion-input,
+    ion-select,
+    ion-datetime {
+      --padding-start: 12px;
+      --padding-end: 12px;
+      font-size: 14px;
+    }
+  }
+
+  .book-button {
+    --background: #{$main-color};
+    --background-activated: #096b35;
+    --background-hover: #096b35;
+
+    --border-radius: 10px;
+
+    margin-top: 18px;
+
+    font-weight: 600;
+    text-transform: none;
+  }
+}
+
+.workshop-content {
+
+  h2 {
+    margin-bottom: 8px;
+    color: #222;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: #777;
+  }
+
+  textarea{
+    &:focus{
+      border-color: #ccc;
+      outline: none;
+    }
+  }
+
+  .next-btn{
+    button{
+      width: fit-content !important;
+    }
+  }
+}

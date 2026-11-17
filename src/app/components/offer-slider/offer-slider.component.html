@@ -1,0 +1,31 @@
+@if (offerBanners().length) {
+  <!-- Offers Banners Section -->
+  <div class="offer-banners px-2">
+    <h2 class="fw-bold px-2 mb-0">Offers</h2>
+
+    <swiper-container
+      class="mySwiper w-100 h-100 px-1 my-2"
+      slides-per-view="2"
+      space-between="10"
+      free-mode="true"
+    >
+      @for (offer of offerBanners(); track $index) {
+        <swiper-slide
+          [routerLink]="offer?.product ? '/product/' + offer?.product : '/shop'"
+          class="d-flex justify-content-center align-items-center text-center rounded-3"
+        >
+          <div class="image-offer rounded-3">
+            <img
+              loading="lazy"
+              class="rounded-3 w-100 h-100 object-fit-cover"
+              [src]="offer?.mobile_picture"
+              [alt]="offer?.title"
+            />
+          </div>
+        </swiper-slide>
+      }
+    </swiper-container>
+  </div>
+} @else {
+  <!-- <app-skeleton-reload></app-skeleton-reload> -->
+}

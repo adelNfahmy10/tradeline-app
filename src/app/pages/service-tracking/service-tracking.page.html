@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    @if(token()){
+    <ion-buttons slot="start">
+      <ion-menu-button class="d-flex justify-content-center align-items-center">
+        <div class="head-bg-icon">
+          <i class="fa-regular fa-circle-user main-color"></i>
+        </div>
+      </ion-menu-button>
+    </ion-buttons>
+    } @else {
+    <ion-buttons slot="start">
+      <div class="head-bg-icon">
+        <i class="fa-regular fa-circle-user main-color" routerLink="/auth"></i>
+      </div>
+    </ion-buttons>
+    }
+
+    <ion-title class="text-center">
+      <picture>
+        <source
+          srcset="assets/images/support-images/care-white.png"
+          media="(prefers-color-scheme: dark)"
+        />
+
+        <img
+          src="assets/images/support-images/care.png"
+          class="tvc-logo"
+          alt="TVC"
+        />
+      </picture>
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <div class="head-bg-icon" (click)="searchModal.open()">
+        <i class="fa-brands fa-sistrix main-color"></i>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="service-tracking p-3">
+    <div class="tracking-image text-center">
+      <picture>
+        <source
+          srcset="assets/images/support-images/service-tracking-black.png"
+          media="(prefers-color-scheme: dark)"
+        />
+
+        <img
+          loading="lazy"
+          src="assets/images/support-images/service-tracking.png"
+          class="tracking-logo"
+          alt="Service Tracking"
+        />
+      </picture>
+    </div>
+
+    <div class="tracking-desc px-3">
+      <p>
+        Tradeline authorizes you to use this customer self tracking system to
+        track the status of any service tickets you have registered with
+        Tradeline’s Authorised Service Centre.
+      </p>
+
+      <p>
+        Please enter your 4 digit maintenance code and your registered phone
+        number.
+      </p>
+    </div>
+
+    <div class="tracking-form px-3">
+      <form class="d-flex gap-3">
+        <div class="tracking-inputs">
+          <input
+            type="text"
+            inputmode="numeric"
+            maxlength="4"
+            placeholder="Maintenance Code"
+            aria-label="Maintenance Code"
+          />
+
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            aria-label="Phone Number"
+          />
+        </div>
+
+        <button type="submit">Track Now!</button>
+      </form>
+    </div>
+  </div>
+
+  <app-search-modal #searchModal></app-search-modal>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

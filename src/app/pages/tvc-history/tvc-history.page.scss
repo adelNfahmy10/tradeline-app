@@ -1,0 +1,25 @@
+ion-row {
+  border-bottom: 1px solid #e0e0e0; // خط بين الصفوف
+}
+
+ion-col {
+  display: flex;
+  align-items: center;
+  span{
+    font-size: 12px;
+  }
+}
+
+ion-toolbar {
+  position: relative;
+
+  .tvc-logo {
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 120px;
+    height: auto;
+  }
+}

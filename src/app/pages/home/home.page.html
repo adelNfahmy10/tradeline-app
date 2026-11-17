@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    @if(token()){
+    <ion-buttons slot="start">
+      <ion-menu-button class="d-flex justify-content-center align-items-center">
+        <div class="head-bg-icon">
+          <i class="fa-regular fa-circle-user main-color"></i>
+        </div>
+      </ion-menu-button>
+    </ion-buttons>
+    } @else {
+    <ion-buttons slot="start">
+      <div class="head-bg-icon">
+        <i class="fa-regular fa-circle-user main-color" routerLink="/auth"> </i>
+      </div>
+    </ion-buttons>
+    }
+
+    <ion-title class="text-center fw-bold"> Explore </ion-title>
+
+    <ion-buttons slot="end">
+      <div class="head-bg-icon" (click)="searchModal.open()">
+        <i class="fa-brands fa-sistrix main-color"></i>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="home">
+    <!-- Offers -->
+    <app-offer-slider></app-offer-slider>
+
+    <!-- Categories -->
+    <app-categories-slider></app-categories-slider>
+
+    <!-- TVC -->
+    <div class="tvs-image position-relative my-3" routerLink="/tvc">
+      <img
+        loading="lazy"
+        src="/assets/images/home/tvc-banner-new.png"
+        alt="tvc"
+        class="tvs w-100 h-100"
+      />
+
+      <span class="position-absolute text-white">
+        {{ points() | number }} Points
+      </span>
+    </div>
+
+    <!-- Products -->
+    <app-list-items-home></app-list-items-home>
+  </div>
+
+  <!-- Search -->
+  <app-search-modal #searchModal></app-search-modal>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

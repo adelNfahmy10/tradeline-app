@@ -1,0 +1,34 @@
+$main-color: #0e7d3f;
+
+.tabs {
+  z-index: 999;
+  // background-color: #fff;
+
+  .tab-item {
+    color: #3b543e;
+    transition: all 0.4s ease-in-out;
+    font-weight: 500;
+    i {
+      font-size: 28px;
+      color: #3b543e;
+    }
+    span {
+      font-size: 10px;
+      &.cart-count {
+        top: -10px;
+        right: -5px;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        background-color: $main-color;
+      }
+    }
+    &.active {
+      color: $main-color;
+      font-weight: 800;
+      i {
+        color: $main-color;
+      }
+    }
+  }
+}

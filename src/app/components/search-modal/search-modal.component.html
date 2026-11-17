@@ -1,0 +1,139 @@
+<ion-modal
+  #modal
+  class="search-modal"
+  [initialBreakpoint]="0.75"
+  [breakpoints]="[0.5, 0.75, 1]"
+  [backdropBreakpoint]="0.25"
+  (didDismiss)="onModalDismiss()"
+>
+  <ng-template>
+    <ion-content [scrollY]="true" class="search-modal-content">
+      <div class="search-container">
+        <!-- HEADER -->
+        <div class="search-header mt-2">
+          <div class="search-heading">
+            <h2>Find your product</h2>
+            <p>Search products from our collection</p>
+          </div>
+
+          <div class="search-heading-icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass search-input-icon"></i>
+
+          <ion-searchbar
+            #searchbar
+            placeholder="Search products..."
+            [debounce]="0"
+            [animated]="true"
+            (ionInput)="onSearch($event)"
+            (click)="modal.setCurrentBreakpoint(1)"
+          ></ion-searchbar>
+        </div>
+
+        <!-- LOADING -->
+        @if (isSearching) {
+        <div class="search-loading">
+          <ion-spinner name="crescent"></ion-spinner>
+          <span>Finding the best matches...</span>
+        </div>
+        }
+
+        <!-- RESULTS -->
+        @if (!isSearching && searchResults.length > 0) {
+        <div class="results-header">
+          <div>
+            <h3>Search results</h3>
+            <p>Products matching your search</p>
+          </div>
+
+          <span class="results-count">
+            {{ searchResults.length }}
+          </span>
+        </div>
+
+        <div class="search-results">
+          @for (product of searchResults; track product.id) {
+          <button
+            type="button"
+            class="search-product-card"
+            (click)="goToProduct(product?.seo_slug)"
+          >
+            <!-- PRODUCT IMAGE -->
+            <div class="product-image-wrapper">
+              @if (product?.first_image) {
+              <img
+                loading="lazy"
+                [src]="product.first_image"
+                [alt]="product?.name"
+              />
+              } @else {
+              <i class="fa-regular fa-image image-placeholder"></i>
+              }
+            </div>
+
+            <!-- PRODUCT INFO -->
+            <div class="product-info">
+              <h4>{{ product?.name }}</h4>
+
+              @if (product?.product_code) {
+              <span class="product-code">
+                Code: {{ product.product_code }}
+              </span>
+              }
+
+              <div class="product-bottom">
+                <span class="product-price">
+                  {{ product?.price | number }} <small>EGP</small>
+                </span>
+
+                @if (product?.availability?.trim()) {
+                <span
+                  class="product-availability"
+                  [class.out-of-stock]="
+                    product?.availability?.toLowerCase() === 'out of stock'
+                  "
+                >
+                  <span class="availability-dot"></span>
+
+                  {{
+                    product?.availability?.toLowerCase() === "out of stock"
+                      ? "Out of stock"
+                      : "Available"
+                  }}
+                </span>
+                }
+              </div>
+            </div>
+
+            <!-- ARROW -->
+            <div class="product-arrow">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </div>
+          </button>
+          }
+        </div>
+        }
+
+        <!-- EMPTY STATE -->
+        @if (!isSearching && searchResults.length === 0) {
+        <div class="search-empty-state">
+          <div class="empty-icon mb-3">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+
+          <h3>No products found</h3>
+          <p>
+            Try another keyword or check your spelling to find what you're
+            looking for.
+          </p>
+        </div>
+        }
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

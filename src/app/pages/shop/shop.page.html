@@ -1,0 +1,86 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    @if(token()){
+    <ion-buttons slot="start">
+      <ion-menu-button class="d-flex justify-content-center align-items-center">
+        <div class="head-bg-icon">
+          <i class="fa-regular fa-circle-user main-color"></i>
+        </div>
+      </ion-menu-button>
+    </ion-buttons>
+    } @else {
+    <ion-buttons slot="start">
+      <div class="head-bg-icon">
+        <i class="fa-regular fa-circle-user main-color" routerLink="/auth"></i>
+      </div>
+    </ion-buttons>
+    }
+
+    <ion-title class="text-center fw-bold">Shop</ion-title>
+
+    <ion-buttons slot="end">
+      <div class="head-bg-icon" (click)="searchModal.open()">
+        <i class="fa-brands fa-sistrix main-color"></i>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="shop">
+    <div
+      class="header-shop px-4 py-2 mx-2 mt-3 d-flex justify-content-between align-items-center rounded-4"
+      routerLink="/nearbystore"
+    >
+      <h4>Find nearest store</h4>
+      <span
+        class="d-flex justify-content-center align-items-center p-2 rounded-circle"
+      >
+        <i class="fa-solid fa-location-dot main-color"></i>
+      </span>
+    </div>
+
+    <div class="categories p-2 py-4 d-flex flex-column gap-3">
+      @for (cat of categories(); track $index) {
+      <div
+        class="item d-flex justify-content-start align-items-center gap-3 p-3 rounded-4"
+        [routerLink]="'/categories/' + cat.seo_slug"
+      >
+        <div class="item-img">
+          <img
+            loading="lazy"
+            [src]="cat.picture"
+            class="w-100"
+            [alt]="cat.picture_alt"
+          />
+        </div>
+
+        <div class="item-content">
+          <h5 class="m-0">{{cat.name}}</h5>
+        </div>
+      </div>
+      } @empty {
+      <!-- <app-skeleton-reload /> -->
+      }
+    </div>
+  </div>
+
+  <app-search-modal #searchModal></app-search-modal>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

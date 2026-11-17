@@ -1,0 +1,46 @@
+/* =========================
+   HEADER
+========================= */
+.head {
+  text-align: center;
+  img {
+    width: 80%;
+  }
+  .dark-mode-show {
+    display: none;
+  }
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content {
+  padding: 0 20px 40px;
+}
+
+.qa-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.qa-item:first-child {
+  padding-top: 0;
+}
+
+.qa-item h3 {
+  margin: 0 0 5px;
+  color: #1d1d1f;
+  font-size: 16px ;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #0e7d3f;
+}
+
+.qa-description {
+  color: #6e6e73;
+  font-size: 14px;
+  line-height: 1.75;
+
+}

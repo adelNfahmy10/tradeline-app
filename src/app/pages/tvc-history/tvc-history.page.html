@@ -1,0 +1,98 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="text-center">
+      <picture>
+        <source
+          srcset="assets/images/tvc-images/TVCLOGOFINALhite-01.png"
+          media="(prefers-color-scheme: dark)"
+        />
+
+        <img
+          src="assets/images/tvc-images/tvc_new.png"
+          class="tvc-logo"
+          alt="TVC"
+        />
+      </picture>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="history p-3">
+    <div class="header-history rounded-3">
+      <h1 class="m-0 fw-bold">History</h1>
+      <h1 class="m-0 my-2 main-color fw-bold user-name">{{userName}}</h1>
+      <h5 class="main-color m-0 mb-2">
+        Total Points: {{pointsData()?.TotalPoints || 0 | number}} Points
+      </h5>
+    </div>
+
+    <!-- Table Header -->
+    <ion-row class="ion-text-bold ion-padding-vertical header-table">
+      <ion-col size="3">
+        <span>Invoice Number</span>
+      </ion-col>
+      <ion-col size="3">
+        <span>Points</span>
+      </ion-col>
+      <ion-col size="3">
+        <span>Redeemed Points</span>
+      </ion-col>
+      <ion-col size="3" class="ion-text-center">
+        <span>Status</span>
+      </ion-col>
+    </ion-row>
+
+    <!-- Table Data -->
+    @for (item of pointsHistory; track $index) {
+    <ion-row class="ion-padding-vertical body-table">
+      <ion-col size="3">
+        <span>{{ item.LoyaltyCardsInvoiceNumber }}</span>
+      </ion-col>
+      <ion-col size="3">
+        <span>{{ item.LoyaltyCardsInvoicePoints || 0 | number }}</span>
+      </ion-col>
+      <ion-col size="3">
+        <span>{{ item.LoyaltyCardsInvoiceRedeemedPoints || 0 | number }}</span>
+      </ion-col>
+      <ion-col size="3" class="ion-text-center">
+        <span
+          [ngClass]="{
+              'text-success': item.LoyaltyCardsInvoicePointsStatus === 'valid',
+              'text-warning': item.LoyaltyCardsInvoicePointsStatus === 'Pending',
+              'text-danger':
+                item.LoyaltyCardsInvoicePointsStatus !== 'valid' &&
+                item.LoyaltyCardsInvoicePointsStatus !== 'Pending'
+            }"
+        >
+          {{ item.LoyaltyCardsInvoicePointsStatus }}<br />
+          {{ item.ValidationDate | date:'dd.MM.yyyy' }}
+        </span>
+      </ion-col>
+    </ion-row>
+    } @empty {
+    <p class="text-center my-3">History is Empty</p>
+    }
+  </div>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>

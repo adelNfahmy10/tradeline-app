@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="text-center me-5 fw-bold">Shop</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Pull To Refresh -->
+  <ion-refresher
+    slot="fixed"
+    class="tradeline-refresher"
+    (ionRefresh)="handleRefresh($event)"
+  >
+    <ion-refresher-content
+      pullingIcon="chevron-down-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <section class="list-itmes pb-3">
+    <div class="container">
+      <h2 class="fw-bold h1 px-3 py-4 m-0">{{categories?.name}}</h2>
+      <div class="items d-flex flex-column gap-3">
+        @for (subCat of categories?.cat_subcategories; track $index) {
+        <div
+          class="item d-flex justify-content-start align-items-center gap-3 p-3 rounded-4"
+          [routerLink]="'/sub-categories/' +  subCat.seo_slug"
+        >
+          <div class="item-img">
+            <img
+              [src]="subCat.picture"
+              [alt]="subCat.picture_alt || subCat.seo_slug"
+            />
+          </div>
+
+          <div class="item-content">
+            <h5 class="m-0 mb-1">{{ subCat.name }}</h5>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+</ion-content>
+
+<ion-footer>
+  <app-tabs></app-tabs>
+</ion-footer>
