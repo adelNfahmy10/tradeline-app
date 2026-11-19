@@ -674,14 +674,10 @@ export class CheckoutPage implements OnInit {
   }
 
   async closeModalInPayment(): Promise<void> {
-    if (this.iframeUrl) {
-      this._Router.navigate(['/shop']);
-    } else {
-      this._Router.navigate(['/cart']);
-    }
     this.showIframe = false;
     this.iframeUrl = null;
     await this.checkoutModal.dismiss();
     this.isModalOpen = false;
+    this._Router.navigate(['/shop']);
   }
 }
