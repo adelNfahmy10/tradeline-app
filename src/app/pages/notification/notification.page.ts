@@ -10,6 +10,7 @@ import {
   IonMenuButton,
   IonFooter,
   IonRefresher,
+  IonMenuToggle,
   IonRefresherContent,
 } from '@ionic/angular/standalone';
 import { NotificationService } from 'src/core/services/notification/notification-service';
@@ -35,6 +36,7 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
     IonTitle,
     IonToolbar,
     CommonModule,
+    IonMenuToggle,
     FormsModule,
     IonMenuButton,
     TabsComponent,
@@ -50,7 +52,7 @@ export class NotificationPage {
 
   token = this._AuthService.token;
   notifications: Signal<any[]> = computed(() =>
-    this._NotificationSerives.notifications(),
+    this._NotificationSerives.notifications()
   );
 
   handleRefresh(event: any) {

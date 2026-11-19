@@ -1,194 +1,224 @@
+:host {
+  --about-bg: #f7faf8;
+  --about-card-bg: #ffffff;
+  --about-border: #e5ece7;
+  --about-heading: #202923;
+  --about-text: #68736c;
+  --about-accent: #0e7d3f;
+  --about-soft: #edf7f0;
+  --about-shadow: 0 4px 18px rgba(20, 60, 35, 0.06);
+
+  ion-content {
+    --background: var(--about-bg);
+  }
+
+  ion-toolbar {
+    --background: var(--ion-toolbar-background);
+    --color: var(--ion-text-color);
+  }
+}
+
+:host-context(html.ion-palette-dark) {
+  --about-bg: #121713;
+  --about-card-bg: #1b211d;
+  --about-border: #303a33;
+  --about-heading: #f1f5f2;
+  --about-text: #a5b0a8;
+  --about-accent: #32a96b;
+  --about-soft: #1c3027;
+  --about-shadow: 0 4px 18px rgba(0, 0, 0, 0.16);
+}
+
+/* Main Container */
 .about-us {
-  padding: 10px 4px 40px;
-}
-
-/* =====================================
-   MAIN INTRO
-===================================== */
-
-.about-intro {
-  margin-bottom: 40px;
-}
-
-.about-image {
-  width: 100%;
-  height: 230px;
-  overflow: hidden;
-  border-radius: 18px;
-  margin-bottom: 24px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-}
-
-.about-intro-content {
-  padding: 0 4px;
-}
-
-.eyebrow {
-  display: inline-block;
-  margin-bottom: 10px;
-
-  color: #00723c;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-.about-intro h1 {
-  margin: 0 0 16px;
-
-  color: #1d1d1f;
-  font-size: 32px;
-  line-height: 1.15;
-  font-weight: 700;
-  letter-spacing: -0.7px;
-}
-
-.intro-description {
-  color: #6e6e73;
-  font-size: 15px;
-  line-height: 1.8;
-
-  white-space: pre-line;
-}
-
-
-/* =====================================
-   FEATURE IMAGE
-===================================== */
-
-.about-feature {
-  margin: 0 0 42px;
-}
-
-.about-feature img {
-  width: 100%;
-  max-height: 280px;
-  object-fit: cover;
-
-  display: block;
-
-  border-radius: 18px;
-  margin-bottom: 18px;
-}
-
-.feature-description {
-  padding: 0 4px;
-
-  color: #6e6e73;
-  font-size: 14px;
-  line-height: 1.75;
-}
-
-
-/* =====================================
-   SIMPLE SECTIONS
-===================================== */
-
-.about-section {
   display: flex;
-  gap: 16px;
-
-  padding: 24px 4px;
-
-  border-top: 1px solid #e5e5e5;
+  flex-direction: column;
+  gap: 18px;
+  padding: 16px;
+  padding-bottom: 28px;
+  color: var(--about-text);
 }
 
-.section-number {
-  flex: 0 0 30px;
-
-  color: #00723c;
-
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-.section-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.section-content h2 {
-  margin: 0 0 10px;
-
-  color: #1d1d1f;
-
-  font-size: 19px;
-  line-height: 1.3;
-  font-weight: 700;
-  letter-spacing: -0.2px;
-}
-
-.section-description {
-  color: #6e6e73;
-
-  font-size: 14px;
-  line-height: 1.75;
-
-  white-space: pre-line;
-}
-
-
-/* =====================================
-   MOBILE
-===================================== */
-
-@media (max-width: 576px) {
-
-  .about-us {
-    padding: 8px 2px 30px;
-  }
+/* Intro Section */
+.about-intro {
+  overflow: hidden;
+  background: var(--about-card-bg);
+  border: 1px solid var(--about-border);
+  border-radius: 20px;
+  box-shadow: var(--about-shadow);
 
   .about-image {
-    height: 190px;
-    border-radius: 16px;
-    margin-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+      max-height: 260px;
+      object-fit: cover;
+    }
   }
 
-  .about-intro {
-    margin-bottom: 32px;
+  .about-intro-content {
+    padding: 22px 18px;
   }
 
-  .about-intro h1 {
-    font-size: 28px;
+  .about-eyebrow {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: var(--about-accent);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+  }
+
+  h1 {
+    margin: 0 0 14px;
+    color: var(--about-heading);
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.4;
   }
 
   .intro-description {
     font-size: 14px;
-    line-height: 1.75;
+    line-height: 1.9;
+  }
+}
+
+/* Image Feature */
+.about-feature {
+  overflow: hidden;
+  background: var(--about-card-bg);
+  border: 1px solid var(--about-border);
+  border-radius: 20px;
+  box-shadow: var(--about-shadow);
+
+  .feature-image {
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+      max-height: 240px;
+      object-fit: cover;
+    }
   }
 
-  .about-feature {
-    margin-bottom: 32px;
+  .feature-description {
+    padding: 18px;
+    font-size: 14px;
+    line-height: 1.9;
+  }
+}
+
+/* Text Section */
+.about-section {
+  padding: 20px 18px;
+  background: var(--about-card-bg);
+  border: 1px solid var(--about-border);
+  border-radius: 18px;
+  box-shadow: var(--about-shadow);
+
+  .section-content {
+    h2 {
+      position: relative;
+      margin: 0 0 16px;
+      padding-inline-start: 14px;
+      color: var(--about-heading);
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.5;
+
+      &::before {
+        position: absolute;
+        top: 3px;
+        bottom: 3px;
+        inset-inline-start: 0;
+        width: 4px;
+        content: "";
+        background: var(--about-accent);
+        border-radius: 5px;
+      }
+    }
+
+    .section-description {
+      font-size: 14px;
+      line-height: 1.9;
+    }
+  }
+}
+
+/* Content generated from API */
+.intro-description,
+.feature-description,
+.section-description {
+  color: var(--about-text);
+
+  p {
+    margin: 0 0 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
-  .about-feature img {
-    max-height: 220px;
-    border-radius: 16px;
+  h2,
+  h3,
+  h4 {
+    margin: 18px 0 10px;
+    color: var(--about-heading);
+    font-weight: 700;
   }
 
+  ul,
+  ol {
+    padding-inline-start: 22px;
+    margin: 10px 0;
+  }
+
+  li {
+    margin-bottom: 7px;
+  }
+
+  strong,
+  b {
+    color: var(--about-heading);
+    font-weight: 700;
+  }
+
+  a {
+    color: var(--about-accent);
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+}
+
+/* Small Screens */
+@media (max-width: 360px) {
+  .about-us {
+    padding: 12px;
+    gap: 14px;
+  }
+
+  .about-intro {
+    .about-intro-content {
+      padding: 18px 15px;
+    }
+
+    h1 {
+      font-size: 21px;
+    }
+  }
+
+  .about-feature .feature-description,
   .about-section {
-    gap: 12px;
-    padding: 20px 2px;
-  }
-
-  .section-number {
-    flex-basis: 26px;
-    font-size: 12px;
-  }
-
-  .section-content h2 {
-    font-size: 17px;
-  }
-
-  .section-description {
-    font-size: 13.5px;
-    line-height: 1.7;
+    padding: 16px;
   }
 }

@@ -14,7 +14,8 @@
     <div class="payment-checkbox mb-3">
       <h4 class="main-color fw-semibold px-3 mb-1">Payment Methods</h4>
       <div class="payment-list p-3">
-        @for (pm of payments_arr_avail; track $index) { @if (pm?.is_allowed) {
+        @if (hasPaymobPayment) { @for (pm of payments_arr_avail; track pm?.code)
+        { @if (pm?.is_allowed && pm?.code === 555) {
         <label class="payment-item d-flex align-items-center pb-2">
           <input
             type="radio"
@@ -24,6 +25,52 @@
             (change)="onPaymentChange(pm?.code)"
           />
 
+          <img [src]="pm?.image" alt="Paymob" />
+          Online Payment
+        </label>
+        } } } @else {
+        <div class="payment-unavailable">
+          <div class="payment-unavailable__icon">
+            <i class="fa-solid fa-store"></i>
+          </div>
+
+          <span class="payment-unavailable__brand"> TRADELINE STORES </span>
+
+          <h5>Online Payment Coming Soon</h5>
+
+          <p>
+            We're currently updating our online payment service to give you a
+            better shopping experience.
+          </p>
+
+          <div class="payment-unavailable__note">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>Please check back again shortly.</span>
+          </div>
+
+          <button
+            type="button"
+            class="payment-unavailable__btn"
+            (click)="goToShop()"
+          >
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Shop
+          </button>
+        </div>
+        }
+        <!-- @for (pm of payments_arr_avail; track $index) { @if (pm?.is_allowed) {
+        <label class="payment-item d-flex align-items-center pb-2">
+          <input
+            type="radio"
+            name="paymentMethod"
+            [value]="pm?.code"
+            [checked]="selectedPaymentMethod === pm?.code"
+            (change)="onPaymentChange(pm?.code)"
+          />
+
+          @if(pm?.code == 555){
+
+          }
           @switch(pm?.code){ @case(0) {
           <img [src]="pm?.image" alt="Credit Card on delivery" />
           Credit Card on delivery } @case(1) {
@@ -61,20 +108,33 @@
           <img [src]="pm?.image" alt="NBE Installment Direct" />
           NBE Installment Direct } @case(555) {
           <img [src]="pm?.image" alt="paymob" />
-          ValU | Apple Pay | Online Payment } @case(556) {
+          Online Payment } @case(556) {
           <img [src]="pm?.image" alt="Souhoola 12m" />
           Souhoola 12m 0% interest 0% downpaymet 0% admin fees (machine on
           delivery) } @case(206) {
           <img [src]="pm?.image" alt="valU 12m" />
           valU 12m 0% interest 0% downpaymet (Payment Link will be sent via SMS)
-          } @default { {{ pm?.name }} } }
-        </label>
-        } } @empty {
+          } @default { {{ pm?.name }} } } </label
+        >} } @empty {
         <div class="text-center">
           <ion-spinner name="dots"></ion-spinner>
           <h6 class="mt-1">Loading Available Payment Method....</h6>
         </div>
-        }
+        } @if ( !payments_arr_avail?.length && !hasAvailablePaymentMethods) {
+        <div class="no-payment-methods">
+          <div class="no-payment-icon">
+            <i class="fa-solid fa-wallet"></i>
+          </div>
+
+          <div class="no-pa yment-content">
+            <h6>No Payment Methods Available</h6>
+            <p>
+              Sorry, there are currently no payment methods available. Please
+              try again later.
+            </p>
+          </div>
+        </div>
+        } -->
       </div>
     </div>
 
@@ -280,7 +340,8 @@
   <ion-modal
     class="checkout-summary-modal"
     [isOpen]="isModalOpen"
-    [backdropDismiss]="!showIframe"
+    [backdropDismiss]="false"
+    [canDismiss]="!showIframe"
   >
     <ng-template>
       <div class="checkout-dialog">
@@ -301,7 +362,7 @@
             type="button"
             class="checkout-dialog__close"
             aria-label="Close checkout"
-            (click)="isModalOpen = false"
+            (click)="closeModalInPayment()"
           >
             <i class="fa-solid fa-xmark"></i>
           </button>

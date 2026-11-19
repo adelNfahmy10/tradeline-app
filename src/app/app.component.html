@@ -1,86 +1,121 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
+    @if (token()) {
     <!-- Side Menu -->
-    <ion-menu contentId="main-content" type="overlay" class="app-side-menu">
+    <ion-menu
+      contentId="main-content"
+      type="overlay"
+      side="start"
+      class="app-side-menu"
+    >
       <ion-content>
         <ion-list id="inbox-list">
           <!-- User Profile -->
           <div class="head-list">
-            <div class="user-icon">
-              <i class="fa-regular fa-circle-user"></i>
+            <div class="profile-avatar">
+              <ion-icon name="person-outline"></ion-icon>
             </div>
 
-            <ion-list-header>{{ userName }}</ion-list-header>
+            <div class="profile-info">
+              <span class="profile-eyebrow">TRADELINE STORES</span>
 
-            <div class="user-points">
-              <i class="fa-solid fa-star"></i>
-              <ion-note>Points {{ points() | number }}</ion-note>
+              <ion-list-header>
+                {{ userName || "Welcome Back" }}
+              </ion-list-header>
+
+              <div class="user-points">
+                <ion-icon name="star-outline"></ion-icon>
+                <ion-note> {{ points() | number }} Points </ion-note>
+              </div>
             </div>
           </div>
 
           <!-- Navigation -->
-          <div class="menu-navigation">
-            @for (p of appPages; track p) {
-            <ion-menu-toggle auto-hide="false">
-              <ion-item
-                routerDirection="root"
-                [routerLink]="[p.url]"
-                detail="false"
-                routerLinkActive="selected"
-              >
-                <ion-label>
-                  <span>{{ p.title }}</span>
+          <div class="menu-section">
+            <span class="menu-section-title">MENU</span>
+
+            <div class="menu-navigation">
+              @for (p of appPages; track p.url) {
+              <ion-menu-toggle auto-hide="true">
+                <ion-item
+                  button
+                  detail="false"
+                  lines="none"
+                  [routerLink]="[p.url]"
+                  routerDirection="root"
+                  routerLinkActive="selected"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                >
+                  <ion-icon slot="start" [name]="p.icon"></ion-icon>
+
+                  <ion-label>
+                    <span>{{ p.title }}</span>
+
+                    @if (p.title === 'Favorites' && favoriteCount()) {
+                    <span class="fav-count">
+                      {{ favoriteCount() | number }}
+                    </span>
+                    }
+                  </ion-label>
 
                   @if (p.title === 'Favorites' && favoriteCount()) {
-                  <span class="fav-count">
-                    {{ favoriteCount() | number }}
+                  <span class="sr-only">
+                    {{ favoriteCount() }} favorite items
                   </span>
                   }
-                </ion-label>
-              </ion-item>
-            </ion-menu-toggle>
-            }
+                </ion-item>
+              </ion-menu-toggle>
+              }
+            </div>
           </div>
 
           <!-- Account Actions -->
           <div class="menu-account-actions">
-            <ion-menu-toggle auto-hide="false">
+            <span class="menu-section-title">ACCOUNT</span>
+
+            <ion-menu-toggle auto-hide="true">
               <ion-item
-                class="logout-item"
+                button
                 detail="false"
                 lines="none"
+                class="logout-item"
                 (click)="logout()"
               >
+                <ion-icon slot="start" name="log-out-outline"></ion-icon>
+
                 <ion-label>Logout</ion-label>
               </ion-item>
             </ion-menu-toggle>
 
-            <ion-menu-toggle auto-hide="false">
-              <ion-item class="delete-item" detail="false" lines="none">
-                <ion-label>Delete Account</ion-label>
-              </ion-item>
-            </ion-menu-toggle>
+            <ion-item detail="false" lines="none" class="delete-item">
+              <ion-icon slot="start" name="trash-outline"></ion-icon>
+
+              <ion-label>Delete Account</ion-label>
+            </ion-item>
+          </div>
+
+          <!-- Footer -->
+          <div class="menu-footer">
+            <span>TRADELINE STORES</span>
+            <span>Shopping made easier.</span>
           </div>
         </ion-list>
       </ion-content>
     </ion-menu>
+    }
 
     <!-- Main Content -->
     <ion-router-outlet id="main-content"></ion-router-outlet>
 
     <!-- Loading Screen -->
     <ngx-spinner
-      bdColor="rgba(0, 0, 0, .9)"
+      bdColor="rgba(0, 0, 0, .88)"
       size="large"
       color="#32a96b"
       [fullScreen]="true"
     >
-      <div class="text-center logo-spinner-container">
-        <img
-          src="assets/images/anim-logo.gif"
-          class="w-100"
-          alt="Tradeline Stores"
-        />
+      <div class="logo-spinner-container">
+        <img src="assets/images/anim-logo.gif" alt="Tradeline Stores" />
       </div>
     </ngx-spinner>
   </ion-split-pane>

@@ -1,10 +1,12 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="shop-header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
 
-    <ion-title class="text-center me-5 fw-bold">Shop</ion-title>
+    <ion-title class="text-center fw-bold me-5">
+      {{ categories?.name }}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,29 +20,45 @@
     <ion-refresher-content
       pullingIcon="chevron-down-outline"
       refreshingSpinner="crescent"
-    >
-    </ion-refresher-content>
+    ></ion-refresher-content>
   </ion-refresher>
-  
-  <section class="list-itmes pb-3">
+
+  <section class="subcategory-page">
     <div class="container">
-      <h2 class="fw-bold h1 px-3 py-4 m-0">{{categories?.name}}</h2>
-      <div class="items d-flex flex-column gap-3">
+      <!-- Category Title -->
+      <div class="subcategory-heading">
+        <span class="subcategory-eyebrow">EXPLORE COLLECTION</span>
+        <h2 class="subcategory-title">{{ categories?.name }}</h2>
+        <span class="subcategory-accent"></span>
+      </div>
+
+      <!-- Subcategories -->
+      <div class="subcategory-list">
         @for (subCat of categories?.cat_subcategories; track $index) {
         <div
-          class="item d-flex justify-content-start align-items-center gap-3 p-3 rounded-4"
-          [routerLink]="'/sub-categories/' +  subCat.seo_slug"
+          class="subcategory-item"
+          [routerLink]="'/sub-categories/' + subCat.seo_slug"
         >
-          <div class="item-img">
+          <div class="subcategory-image">
+            @if(subCat.picture){
             <img
               [src]="subCat.picture"
               [alt]="subCat.picture_alt || subCat.seo_slug"
             />
+            } @else {
+            <img
+              loading="lazy"
+              src="assets/images/anim-logo.gif"
+              alt="Tradeline Stores"
+            />
+            }
           </div>
 
-          <div class="item-content">
-            <h5 class="m-0 mb-1">{{ subCat.name }}</h5>
+          <div class="subcategory-content">
+            <h5>{{ subCat.name }}</h5>
           </div>
+
+          <i class="fa-solid fa-chevron-right subcategory-arrow"></i>
         </div>
         }
       </div>

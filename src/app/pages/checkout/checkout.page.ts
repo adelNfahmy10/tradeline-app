@@ -5,6 +5,7 @@ import {
   inject,
   OnInit,
   signal,
+  ViewChild,
   WritableSignal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -217,7 +218,7 @@ export class CheckoutPage implements OnInit {
       code: 555,
       is_allowed: true,
       name: 'paymob',
-      image: 'assets/images/checkout-image/Apple_Pay-Logo.wine.png',
+      image: 'assets/images/checkout-image/online-payment-logo.png',
     },
     {
       code: 556,
@@ -437,6 +438,7 @@ export class CheckoutPage implements OnInit {
                   });
 
                   this.payments_arr_avail = deletedHiddenPayment2;
+                  console.log(this.payments_arr_avail);
                 }
               }
             });
@@ -445,6 +447,22 @@ export class CheckoutPage implements OnInit {
       },
       error: (err) => console.error('Failed to load payment methods:', err),
     });
+  }
+
+  get hasAvailablePaymentMethods(): boolean {
+    return this.payments_arr_avail?.some((pm) => pm?.is_allowed) ?? false;
+  }
+
+  get hasPaymobPayment(): boolean {
+    return (
+      this.payments_arr_avail?.some(
+        (pm) => pm?.is_allowed && Number(pm?.code) === 555
+      ) ?? false
+    );
+  }
+
+  goToShop(): void {
+    this._Router.navigate(['/shop']);
   }
 
   // ================= Form Checkout =================
@@ -582,22 +600,42 @@ export class CheckoutPage implements OnInit {
   }
 
   checkout(): void {
+    if (!this.order) return;
+
     this.order.promotion = this.promoCode;
 
     this._CheckoutService.addOrder(this.order).subscribe({
       next: (res) => {
+        this._ToastrService.success('Order created successfully!');
+
+        // Paymob
+        if (this.selectedPaymentMethod === 555) {
+          if (!res?.slug) {
+            this._ToastrService.error('Payment session not found!');
+            return;
+          }
+
+          this.slugPayment(res.slug, 555);
+          return;
+        }
+
+        // Other payment methods
+        this.isModalOpen = false;
+
         this.checkoutForm.reset();
         this.orderForm.reset();
         this.cartItems.set([]);
         this.showForms = false;
-        this._ToastrService.success('Order placed successfully!');
+
         this._Router.navigate(['/order-successfully']);
-        if (res.slug && this.selectedPaymentMethod !== 0) {
-          this.slugPayment(res.slug, this.selectedPaymentMethod);
-        }
       },
+
       error: (err) => {
-        this._ToastrService.error(err.error?.detail);
+        console.error('Checkout Error:', err);
+
+        this._ToastrService.error(
+          err.error?.detail || 'Failed to create order!'
+        );
       },
     });
   }
@@ -605,40 +643,45 @@ export class CheckoutPage implements OnInit {
   // ================= Paymob =================
   iframeUrl: SafeResourceUrl | null = null;
   showIframe = false;
-  slugPayment(slug: string, method: any): void {
-    // Reset iframe state
+  @ViewChild(IonModal) checkoutModal!: IonModal;
+
+  slugPayment(slug: string, method: number): void {
     this.showIframe = false;
     this.iframeUrl = null;
 
-    // حاليًا Paymob فقط
-    if (method == 555) {
-      this._CheckoutService.getPaymobData(slug).subscribe({
-        next: (res: any) => {
-          if (!res?.iframe_url) {
-            return;
-          }
+    if (method !== 555) return;
 
-          this.iframeUrl = this._DomSanitizer.bypassSecurityTrustResourceUrl(
-            res.iframe_url
-          );
+    this._CheckoutService.getPaymobData(slug).subscribe({
+      next: (res: any) => {
+        if (!res?.iframe_url) {
+          this._ToastrService.error('Payment URL not found!');
+          return;
+        }
 
-          // ⚠️ مهم جدًا مع Ionic
-          setTimeout(() => {
-            this.showIframe = true;
-          });
-        },
+        this.iframeUrl = this._DomSanitizer.bypassSecurityTrustResourceUrl(
+          res.iframe_url
+        );
 
-        error: (err) => {
-          this._ToastrService.error('Failed to load payment iframe.');
-        },
-      });
-    }
+        this.showIframe = true;
+      },
+
+      error: (err) => {
+        console.error('Paymob Error:', err);
+
+        this._ToastrService.error('Failed to load payment page!');
+      },
+    });
   }
 
-  closeModalInPayment(): void {
-    this.isModalOpen = false;
+  async closeModalInPayment(): Promise<void> {
+    if (this.iframeUrl) {
+      this._Router.navigate(['/shop']);
+    } else {
+      this._Router.navigate(['/cart']);
+    }
     this.showIframe = false;
     this.iframeUrl = null;
-    this._Router.navigate(['/cart']);
+    await this.checkoutModal.dismiss();
+    this.isModalOpen = false;
   }
 }

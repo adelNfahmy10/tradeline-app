@@ -1,14 +1,106 @@
-.image-offer,
-.image-cat {
-  box-shadow: 0 0 5px #eee;
-}
+/* =========================================
+   TVC BANNER
+========================================= */
 .tvs-image {
+  overflow: hidden;
+  border-radius: 14px;
+
+  .tvs {
+    display: block;
+    object-fit: cover;
+  }
+
   span {
-    font-size: 18px;
-    font-weight: 600;
+    position: absolute;
     top: 50%;
     right: 30px;
     transform: translateY(-50%);
+
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+
+    color: #fff;
+    text-shadow: 0 1px 5px rgb(0 0 0 / 35%);
   }
 }
 
+/* =========================================
+  HEADER
+========================================= */
+
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-background-color);
+    --color: var(--ion-text-color);
+    --border-color: transparent;
+    --min-height: 60px;
+    padding: 12px;
+  }
+
+  ion-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  ion-buttons {
+    display: flex;
+    align-items: center;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+    padding: 0;
+
+    background: var(--header-icon-bg);
+    border: 1px solid var(--header-icon-border);
+    border-radius: 14px;
+
+    font-size: 17px;
+
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    transition: background 0.2s ease, transform 0.2s ease,
+      border-color 0.2s ease;
+
+    &:active {
+      transform: scale(0.94);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--main-color);
+      outline-offset: 3px;
+    }
+  }
+}
+
+/* =========================================
+   LIGHT MODE
+========================================= */
+
+:host-context(html:not(.ion-palette-dark)) {
+  --header-icon-bg: #edf7f0;
+  --header-icon-border: #dceee2;
+  .header-icon-button {
+    color: #0e7d3f;
+  }
+}
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+:host-context(html.ion-palette-dark) {
+  --header-icon-bg: #1c3027;
+  --header-icon-border: #2b4939;
+  .header-icon-button {
+    color: #32a96b;
+  }
+}

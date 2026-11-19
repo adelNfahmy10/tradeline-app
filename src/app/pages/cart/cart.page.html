@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     @if(token()){
     <ion-buttons slot="start">
@@ -22,6 +22,48 @@
       <div class="head-bg-icon" (click)="searchModal.open()">
         <i class="fa-brands fa-sistrix main-color"></i>
       </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- User Account -->
+    <ion-buttons slot="start">
+      @if (token()) {
+      <ion-menu-toggle>
+        <button
+          type="button"
+          class="header-icon-button"
+          aria-label="Open account menu"
+        >
+          <i class="fa-solid fa-user"></i>
+        </button>
+      </ion-menu-toggle>
+      } @else {
+      <button
+        type="button"
+        class="header-icon-button"
+        routerLink="/auth"
+        aria-label="Login"
+      >
+        <i class="fa-solid fa-user"></i>
+      </button>
+      }
+    </ion-buttons>
+
+    <!-- Page Title -->
+    <ion-title class="text-center fw-bold"> Cart </ion-title>
+
+    <!-- Search -->
+    <ion-buttons slot="end">
+      <button
+        type="button"
+        class="header-icon-button"
+        (click)="searchModal.open()"
+        aria-label="Search"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -149,7 +191,7 @@
     </ion-list>
 
     @if (cartItems().length) {
-    <div class="cart-details p-3 mt-3 mx-2 rounded-3">
+    <div class="cart-details p-3 mt-3 rounded-3">
       <div class="mb-2 d-flex justify-content-between align-items-center">
         <h4 class="fw-semibold fs-6 m-0">Count :</h4>
         <h4 class="fw-bold main-color fs-6 m-0">{{count()}} Product(s)</h4>
@@ -198,7 +240,7 @@
     </div>
     }
 
-    <div class="cart-help p-3 my-3 mx-2 rounded-3">
+    <div class="cart-help p-3 my-3 rounded-3">
       <div class="d-flex justify-content-between align-items-center">
         <h4 class="fw-bold fs-6 m-0">Need Help</h4>
         <div class="d-flex align-items-center gap-2">

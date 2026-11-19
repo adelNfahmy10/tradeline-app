@@ -1,26 +1,124 @@
-.notification{
+.notification {
   text-align: right;
   direction: rtl;
 }
-.item{
+.item {
   padding: 10px;
   box-shadow: 0 0 3px #cccccc90;
   flex-direction: row-reverse;
-  i{
+  i {
     font-size: 28px;
   }
 
-  .item-content{
-    h4{
+  .item-content {
+    h4 {
       font-size: 16px;
       font-weight: 500;
     }
-    p{
+    p {
       font-size: 14px;
     }
-    span{
+    span {
       font-size: 12px;
       color: #666;
     }
+  }
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-background-color);
+    --color: var(--ion-text-color);
+    --border-width: 0;
+    --min-height: 60px;
+
+    padding: 12px;
+  }
+
+  ion-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  ion-buttons {
+    display: flex;
+    align-items: center;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+    padding: 0;
+
+    background: var(--header-icon-bg);
+    border: 1px solid var(--header-icon-border);
+    border-radius: 14px;
+
+    color: var(--main-color);
+    font-size: 17px;
+
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    transition: background 0.2s ease, transform 0.2s ease,
+      border-color 0.2s ease;
+
+    &:active {
+      transform: scale(0.94);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--main-color);
+      outline-offset: 3px;
+    }
+  }
+}
+
+/* =========================================
+   LIGHT MODE
+========================================= */
+
+:host-context(html:not(.ion-palette-dark)) {
+  --shop-icon-bg: #edf7f0;
+  --shop-icon-border: #dceee2;
+  // --shop-image-bg: #f6f8f6;
+
+  --header-icon-bg: #edf7f0;
+  --header-icon-border: #dceee2;
+
+  .header-shop .store-icon,
+  .header-icon-button {
+    color: #0e7d3f;
+  }
+}
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+:host-context(html.ion-palette-dark) {
+  --shop-icon-bg: #1c3027;
+  --shop-icon-border: #2b4939;
+  // --shop-image-bg: #202b25;
+
+  --header-icon-bg: #1c3027;
+  --header-icon-border: #2b4939;
+
+  .header-shop {
+    border: 0;
+  }
+
+  .header-shop .store-icon,
+  .header-icon-button {
+    color: #32a96b;
   }
 }

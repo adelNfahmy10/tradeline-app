@@ -11,6 +11,7 @@ import {
   IonFooter,
   IonRefresher,
   IonRefresherContent,
+  IonMenuToggle,
 } from '@ionic/angular/standalone';
 import { AuthService } from 'src/core/services/auth/auth-service';
 import { PointsService } from 'src/core/services/points/points-service';
@@ -39,6 +40,7 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
     TabsComponent,
     RouterLink,
     SearchModalComponent,
+    IonMenuToggle,
   ],
 })
 export class TvcPage {

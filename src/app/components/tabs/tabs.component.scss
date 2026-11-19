@@ -1,34 +1,259 @@
-$main-color: #0e7d3f;
+:host {
+  display: block;
+
+  --tabs-bg: #ffffff;
+  --tabs-text: #929b94;
+  --tabs-active: #0e7d3f;
+  --tabs-pill-bg: #e8f5ed;
+  --tabs-pill-glow: rgba(14, 125, 63, 0.22);
+  --tabs-border: rgba(14, 125, 63, 0.07);
+  --tabs-shadow: 0 -5px 25px rgba(0, 0, 0, 0.07);
+}
 
 .tabs {
+  position: relative;
   z-index: 999;
-  // background-color: #fff;
+  width: 100%;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  .tab-item {
-    color: #3b543e;
-    transition: all 0.4s ease-in-out;
-    font-weight: 500;
-    i {
-      font-size: 28px;
-      color: #3b543e;
-    }
-    span {
-      font-size: 10px;
-      &.cart-count {
-        top: -10px;
-        right: -5px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-        background-color: $main-color;
+  background: var(--tabs-bg);
+  border: 1px solid var(--tabs-border);
+  border-bottom: 0;
+  // border-radius: 12px 12px 0 0;
+  box-shadow: var(--tabs-shadow);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  padding: 8px 4px max(8px, env(safe-area-inset-bottom));
+
+  .tab-list {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    min-height: 66px;
+    padding: 4px 0;
+    margin: 0;
+
+    /* Sliding Indicator */
+    .tab-indicator {
+      position: absolute;
+      z-index: 0;
+
+      top: 50%;
+      inset-inline-start: 0;
+
+      width: 20%;
+      height: 54px;
+
+      border-radius: 17px;
+
+      background: linear-gradient(
+        135deg,
+        var(--tabs-pill-bg),
+        rgba(14, 125, 63, 0.18)
+      );
+      border: 1px solid rgba(14, 125, 63, 0.1);
+      box-shadow: 0 6px 18px var(--tabs-pill-glow);
+
+      opacity: 0;
+      pointer-events: none;
+      will-change: transform;
+
+      transition: transform 0.55s cubic-bezier(0.34, 1.25, 0.64, 1),
+        opacity 0.25s ease, background 0.3s ease;
+
+      &.visible {
+        opacity: 1;
       }
     }
-    &.active {
-      color: $main-color;
-      font-weight: 800;
+
+    .tab-item {
+      position: relative;
+      z-index: 1;
+
+      flex: 0 0 20%;
+      min-width: 0;
+      height: 58px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+
+      color: var(--tabs-text);
+      text-decoration: none;
+      cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+      transition: color 0.3s ease !important;
+
       i {
-        color: $main-color;
+        width: 28px;
+        height: 28px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 26px;
+
+        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+          color 0.3s ease !important;
+      }
+
+      /* Label يظهر بس في التاب النشط */
+      > .tab-label {
+        font-size: 10px;
+        line-height: 1;
+        font-weight: 500;
+        white-space: nowrap;
+
+        opacity: 0;
+        max-height: 0;
+        margin-top: 0;
+        transform: translateY(4px);
+        overflow: hidden;
+
+        transition: opacity 0.3s ease, transform 0.35s ease,
+          max-height 0.35s ease, margin-top 0.35s ease, color 0.3s ease !important;
+      }
+
+      &.active {
+        color: var(--tabs-active);
+
+        i {
+          color: var(--tabs-active);
+          transform: translateY(-2px) scale(1.08);
+          animation: icon-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        > .tab-label {
+          opacity: 1;
+          max-height: 12px;
+          margin-top: 5px;
+          transform: none;
+          color: var(--tabs-active);
+          font-weight: 800;
+        }
+      }
+
+      /* Press feedback */
+      &:active {
+        i {
+          transform: scale(0.9);
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          inset: 6px;
+          border-radius: 16px;
+          background: var(--tabs-active);
+          opacity: 0.08;
+          pointer-events: none;
+        }
+      }
+
+      .cart-count {
+        position: absolute;
+        top: 2px;
+        inset-inline-start: calc(50% + 8px);
+
+        min-width: 18px;
+        height: 18px;
+        padding: 0 4px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #ffffff;
+        background: #e53935;
+        border: 2px solid var(--tabs-bg);
+        border-radius: 50px;
+
+        font-size: 9px;
+        font-weight: 800;
+        line-height: 1;
+
+        animation: badge-bump 0.35s ease;
       }
     }
+  }
+}
+
+@keyframes icon-pop {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-5px) scale(1.2);
+  }
+  100% {
+    transform: translateY(-2px) scale(1.08);
+  }
+}
+
+@keyframes badge-bump {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Dark Mode */
+:host-context(html.ion-palette-dark) {
+  --tabs-bg: #191e1b;
+  --tabs-text: #9ba69e;
+  --tabs-active: #55c987;
+  --tabs-pill-bg: #243b2d;
+  --tabs-pill-glow: rgba(85, 201, 135, 0.25);
+  --tabs-border: rgba(255, 255, 255, 0.06);
+  --tabs-shadow: 0 -5px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Small Screens */
+// @media (max-width: 360px) {
+//   .tabs {
+//     padding-inline: 2px;
+
+//     .tab-list {
+//       .tab-item {
+//         i {
+//           font-size: 18px;
+//         }
+
+//         > .tab-label {
+//           font-size: 9px;
+//         }
+//       }
+
+//       .tab-indicator {
+//         height: 51px;
+//         border-radius: 15px;
+//       }
+//     }
+//   }
+// }
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .tabs,
+  .tabs * {
+    transition: none !important;
+    animation: none !important;
   }
 }

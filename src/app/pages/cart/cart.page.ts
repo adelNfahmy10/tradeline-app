@@ -24,6 +24,7 @@ import {
   IonFooter,
   IonRefresher,
   IonRefresherContent,
+  IonMenuToggle,
 } from '@ionic/angular/standalone';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
 import { CartService } from 'src/core/services/cart/cart-service';
@@ -33,6 +34,7 @@ import { Subscription } from 'rxjs';
 import { SearchModalComponent } from 'src/app/components/search-modal/search-modal.component';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalRefreshService } from 'src/core/services/global-refresh/global-refresh-service';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-cart',
@@ -40,6 +42,7 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
   styleUrls: ['./cart.page.scss'],
   standalone: true,
   imports: [
+    IonMenuToggle,
     IonRefresherContent,
     IonRefresher,
     IonFooter,

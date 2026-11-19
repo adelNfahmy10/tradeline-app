@@ -32,13 +32,18 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="auth">
+  <div class="auth auth-page">
     <ion-segment-view>
       <ion-segment-content class="h-auto overflow-hidden" id="login">
         <div class="login py-3">
-          <h2 class="auth-title text-center">Welcome To Tradeline</h2>
-
           @if(forgetStep === 0){
+          <div class="auth-heading">
+            <span class="auth-eyebrow">TRADELINE STORES</span>
+            <h2 class="auth-title">Welcome To Tradeline</h2>
+            <p class="auth-subtitle">
+              Sign in to your account and enjoy a better shopping experience.
+            </p>
+          </div>
           <form [formGroup]="loginForm">
             <ion-list lines="none">
               <ion-item>
@@ -64,7 +69,7 @@
               <ion-item class="mt-3">
                 <ion-input
                   formControlName="password"
-                  class="border rounded-4 px-3"
+                  class="border rounded-4"
                   type="password"
                   placeholder="Password"
                 >
@@ -101,15 +106,76 @@
                 </button>
               </div>
 
-              <p
-                class="text-start mx-4 my-2 forget-link"
+              <span
+                class="text-start mx-4 forget-link"
                 (click)="openForgetPassword()"
               >
                 Forget Password ?
-              </p>
+              </span>
             </ion-list>
           </form>
+
+          <div class="social-icon">
+            <a
+              href="https://www.tiktok.com/@tradelinestores?_r=1&_t=ZS-9Aji3Zm3lCe"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+            >
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+
+            <a
+              href="https://www.instagram.com/tradelinestores?psln=aGhvdTc5em45dndp"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+
+            <a
+              href="https://www.facebook.com/Tradelinestores/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+
+            <a
+              href="https://x.com/tradelinestores/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X"
+            >
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+
+            <a
+              href="mailto:sales@tradelinestores.com?Subject=Contact%20Tradeline"
+              aria-label="Email"
+            >
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+          </div>
+
+          <div class="auth-back" (click)="skipRoute()">
+            <span class="back-icon">
+              <i class="fa-solid fa-arrow-left"></i>
+            </span>
+            <span class="back-text">Back to Home</span>
+          </div>
+
           } @else if(loadingStep){
+          <div class="auth-heading">
+            <span class="auth-eyebrow">ACCOUNT RECOVERY</span>
+            <h2 class="auth-title">Forgot Password?</h2>
+            <p class="auth-subtitle">
+              No worries! Enter your email address and we'll help you reset your
+              password.
+            </p>
+          </div>
           <form [formGroup]="forgetPasswordForm">
             <ion-list lines="none">
               @if(forgetStep === 1){
@@ -135,15 +201,13 @@
                 >
                   Forget Password
                 </button>
-                <!-- <ion-button class="main-btn" (click)="submitForgetPassword()">
-                      Forget Password
-                    </ion-button> -->
               </div>
 
-              <div class="text-center">
-                <span class="back-login" (click)="backToLogin()"
-                  ><i class="fa-solid fa-arrow-left"></i> Back To Login</span
-                >
+              <div class="auth-back" (click)="backToLogin()">
+                <span class="back-icon">
+                  <i class="fa-solid fa-arrow-left"></i>
+                </span>
+                <span class="back-text">Back to Login</span>
               </div>
               } @else if(forgetStep === 2){
               <h6 class="px-4 m-0">Code has been sent to your email</h6>
@@ -169,21 +233,19 @@
                 >
                   Submit
                 </button>
-                <!-- <ion-button class="main-btn" (click)="submitForgetPassword()">
-                      Submit
-                    </ion-button> -->
               </div>
 
-              <div class="text-center">
-                <span class="back-login" (click)="backToLogin()"
-                  ><i class="fa-solid fa-arrow-left"></i> Back To Login</span
-                >
+              <div class="auth-back" (click)="backToLogin()">
+                <span class="back-icon">
+                  <i class="fa-solid fa-arrow-left"></i>
+                </span>
+                <span class="back-text">Back to Login</span>
               </div>
               } @else if(forgetStep === 3){
               <ion-item>
                 <ion-input
                   formControlName="newPassword"
-                  class="border rounded-4 px-3"
+                  class="border rounded-4"
                   type="password"
                   placeholder="New Password"
                 >
@@ -204,7 +266,7 @@
               <ion-item>
                 <ion-input
                   formControlName="rePassword"
-                  class="border rounded-4 px-3 my-2"
+                  class="border rounded-4 my-2"
                   type="password"
                   placeholder="Re-Password"
                 >
@@ -233,68 +295,31 @@
                 >
                   Reset Password
                 </button>
-                <!-- <ion-button type="submit" class="main-btn my-3" (click)="submitForgetPassword()">
-                      Reset Password
-                    </ion-button> -->
               </div>
 
-              <div class="text-center">
-                <span class="back-login" (click)="backToLogin()"
-                  ><i class="fa-solid fa-arrow-left"></i> Back To Login</span
-                >
+              <div class="auth-back" (click)="backToLogin()">
+                <span class="back-icon">
+                  <i class="fa-solid fa-arrow-left"></i>
+                </span>
+                <span class="back-text">Back to Login</span>
               </div>
               }
             </ion-list>
           </form>
           }
-
-          <div
-            class="social-icon d-flex justify-content-center align-items-center gap-2 my-3"
-          >
-            <a
-              href="https://www.tiktok.com/@tradelinestores?_r=1&_t=ZS-9Aji3Zm3lCe"
-              target="_blank"
-            >
-              <i class="fa-brands fa-tiktok main-color fs-5"></i>
-            </a>
-
-            <a
-              href="https://www.instagram.com/tradelinestores?psln=aGhvdTc5em45dndp"
-              target="_blank"
-            >
-              <i class="fa-brands fa-instagram main-color fs-5"></i>
-            </a>
-
-            <a href="https://www.facebook.com/Tradelinestores/" target="_blank">
-              <i class="fa-brands fa-facebook-f main-color fs-5"></i>
-            </a>
-
-            <a href="https://x.com/tradelinestores/" target="_blank">
-              <i class="fa-brands fa-x-twitter main-color fs-5"></i>
-            </a>
-
-            <a
-              href="mailto:sales@tradelinestores.com?Subject=Contact%20Tradeline"
-              target="_top"
-            >
-              <i class="fa-solid fa-envelope main-color fs-5"></i>
-            </a>
-          </div>
-
-          <div
-            class="text-center main-color d-flex justify-content-center align-items-center gap-1"
-            (click)="skipRoute()"
-          >
-            <span>Back</span>
-            <i class="fa-solid fa-arrow-right"></i>
-          </div>
         </div>
       </ion-segment-content>
 
       <ion-segment-content id="SignUp">
         <div class="signup py-3 pb-5">
-          <h2 class="auth-title text-center">Welcome To Tradeline</h2>
-
+          <div class="auth-heading">
+            <span class="auth-eyebrow">JOIN TRADELINE</span>
+            <h2 class="auth-title">Create Your Account</h2>
+            <p class="auth-subtitle">
+              Join Tradeline and unlock exclusive rewards, special offers, and a
+              better shopping experience.
+            </p>
+          </div>
           <form [formGroup]="signupForm">
             <ion-list
               lines="none"
@@ -349,7 +374,8 @@
                 <ion-input
                   formControlName="phone"
                   class="border rounded-4"
-                  type="phone"
+                  type="tel"
+                  inputmode="tel"
                   placeholder="Mobile Number"
                 ></ion-input>
               </ion-item>
@@ -363,7 +389,7 @@
               <ion-item class="w-100">
                 <ion-input
                   formControlName="password"
-                  class="border rounded-4 px-3"
+                  class="border rounded-4"
                   type="password"
                   placeholder="Password"
                 >
@@ -384,7 +410,7 @@
               <ion-item class="w-100">
                 <ion-input
                   formControlName="rePassword"
-                  class="border rounded-4 px-3"
+                  class="border rounded-4"
                   type="password"
                   placeholder="Re-Password"
                 >
@@ -419,47 +445,85 @@
 
               <!-- <ion-button class="main-btn mx-auto my-3" (click)="submitSignup()">Sign Up</ion-button> -->
 
-              <div class="tvcParagraphs d-flex flex-column gap-3 text-end px-3">
-                <p>
-                  تقديرًا لكل جنية تنفقه معنا ، قمنا بتصميم برنامج نقاط عملاء
-                  Tradeline لنقدم لك تجربة إستثنائية في التسوق وعلى مستوى عالمي
-                </p>
+              <div class="tvc-card">
+                <div class="tvc-header">
+                  <div class="tvc-icon">
+                    <i class="fa-solid fa-crown"></i>
+                  </div>
 
-                <p>
-                  فقط وحصريًا لعملاء تريديلاين المميزين "TVC" <br />
-                  بدون أي تكلفة إضافية، لجمع النقاط على مشترياتك، كما يمكنك
-                  استبدال نقاطك في أي متاجر Tradeline في أي وقت تشاء وبدون حدود
-                  على الإطلاق.
-                </p>
+                  <div class="tvc-heading">
+                    <span>TRADELINE REWARDS</span>
+                    <h3>برنامج نقاط TVC</h3>
+                  </div>
+                </div>
 
-                <p>
-                  سوف تحصل على نقطة TVC واحدة <br />
-                  مقابل كل 100 جنية تصرفها عند الدفع نقذًا وليس عند التقسيط
-                  <br />
-                  ستتم إضافة النقاط إلى حسابك ويمكن استخدامها بعد 30 يوم
-                </p>
+                <div class="tvc-content">
+                  <p>
+                    تقديرًا لكل جنيه تنفقه معنا، صممنا برنامج نقاط عملاء
+                    Tradeline لنقدم لك تجربة استثنائية في التسوق وعلى مستوى
+                    عالمي.
+                  </p>
 
-                <ul class="p-0 m-0 list-unstyled">
-                  <p class="m-0 mb-1">الشروط والأحكام لإستخدام تلك النقاط</p>
-                  <li>- الإستبدال مقتصر على الشخص الصادر بأسمه الفاتورة</li>
-                  <li>- وجود أصل بطاقة الرقم القومي في حالة استبدال النقاط</li>
-                  <li>- النقاط الصالحة لمدة عام من تاريخ الشراء</li>
-                </ul>
+                  <p>
+                    فقط وحصريًا لعملاء تريديلاين المميزين <strong>TVC</strong>،
+                    وبدون أي تكلفة إضافية، يمكنك جمع النقاط على مشترياتك
+                    واستبدالها في أي من متاجر Tradeline في أي وقت تشاء وبدون
+                    حدود.
+                  </p>
 
-                <p class="text-center m-0">
-                  By signing up, you agree with our
-                  <a href="">Terms & Conditions</a>
-                </p>
+                  <div class="tvc-points">
+                    <div class="points-icon">
+                      <i class="fa-solid fa-gift"></i>
+                    </div>
+
+                    <div>
+                      <h4>كيف تجمع نقاطك؟</h4>
+                      <p>
+                        تحصل على <strong>نقطة TVC واحدة</strong> مقابل كل
+                        <strong>100 جنيه</strong> تنفقها عند الدفع نقدًا وليس
+                        بالتقسيط.
+                      </p>
+                      <p>
+                        تُضاف النقاط إلى حسابك ويمكن استخدامها بعد 30 يومًا.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="tvc-terms">
+                    <h4>
+                      <i class="fa-solid fa-circle-info"></i>
+                      الشروط والأحكام
+                    </h4>
+
+                    <ul>
+                      <li>الاستبدال مقتصر على الشخص الصادر باسمه الفاتورة.</li>
+                      <li>
+                        يشترط وجود أصل بطاقة الرقم القومي عند استبدال النقاط.
+                      </li>
+                      <li>النقاط صالحة لمدة عام من تاريخ الشراء.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="tvc-footer">
+                  <p>
+                    By signing up, you agree to our
+                    <a
+                      href="https://tradelinestores.com/policies/privacy-policy"
+                      target="_blank"
+                      >Terms & Conditions</a
+                    >
+                  </p>
+                </div>
               </div>
             </ion-list>
           </form>
 
-          <div
-            class="text-center main-color d-flex justify-content-center align-items-center gap-1 mt-1"
-            (click)="skipRoute()"
-          >
-            <span>Back</span>
-            <i class="fa-solid fa-arrow-right"></i>
+          <div class="auth-back" (click)="skipRoute()">
+            <span class="back-icon">
+              <i class="fa-solid fa-arrow-left"></i>
+            </span>
+            <span class="back-text">Back to Home</span>
           </div>
         </div>
       </ion-segment-content>

@@ -12,6 +12,7 @@ import {
   IonFooter,
   IonRefresher,
   IonRefresherContent,
+  IonMenuToggle,
 } from '@ionic/angular/standalone';
 import { AuthService } from 'src/core/services/auth/auth-service';
 import { SkeletonReloadPage } from '../skeleton-reload/skeleton-reload.page';
@@ -41,6 +42,7 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
     TabsComponent,
     RouterLink,
     SearchModalComponent,
+    IonMenuToggle,
   ],
 })
 export class SupportPage {

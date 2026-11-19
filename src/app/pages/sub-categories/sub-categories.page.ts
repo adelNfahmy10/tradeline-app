@@ -1,6 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import {
   IonContent,
   IonHeader,
@@ -8,14 +10,26 @@ import {
   IonToolbar,
   IonButtons,
   IonBackButton,
-  IonSpinner,
   IonFooter,
   IonRefresher,
   IonRefresherContent,
 } from '@ionic/angular/standalone';
-import { CategoriesService } from 'src/core/services/categories/categories-service';
+
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { filter, map, switchMap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+import { EMPTY, Subject } from 'rxjs';
+
+import {
+  catchError,
+  distinctUntilChanged,
+  finalize,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+
+import { CategoriesService } from 'src/core/services/categories/categories-service';
 import { SkeletonReloadPage } from '../skeleton-reload/skeleton-reload.page';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
 import { GlobalRefreshService } from 'src/core/services/global-refresh/global-refresh-service';
@@ -43,88 +57,163 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
   ],
 })
 export class SubCategoriesPage implements OnInit {
-  private _CategoriesService = inject(CategoriesService);
-  private _ActivatedRoute = inject(ActivatedRoute);
+  private readonly _CategoriesService = inject(CategoriesService);
+  private readonly _ActivatedRoute = inject(ActivatedRoute);
   private readonly _GlobalRefreshService = inject(GlobalRefreshService);
-  private _Router = inject(Router);
+  private readonly _Router = inject(Router);
+  private readonly _DestroyRef = inject(DestroyRef);
 
-  subCategory: any;
-  SubSizeId: any;
+  private readonly productRequests$ = new Subject<{
+    slug: string;
+    sizeId: number | null;
+  }>();
+
+  subCategory: any = null;
+
+  SubSizeId: number | null = null;
+  selectedSizeId: number | null = null;
+
   subCategoryProducts: any[] = [];
-  selectedSizeId: any = null;
+
+  isLoading = false;
+  isCategoryLoading = false;
+  errorMessage = '';
 
   ngOnInit(): void {
+    this.listenToProductRequests();
     this.getSubCategory();
   }
 
-  handleRefresh(event: any) {
+  // Get Sub Category
+  getSubCategory(): void {
+    this._ActivatedRoute.paramMap
+      .pipe(
+        map((params) => params.get('subName')),
+        distinctUntilChanged(),
+
+        switchMap((name) => {
+          if (!name) {
+            this.subCategory = null;
+            this.subCategoryProducts = [];
+            this.errorMessage = 'Subcategory not found.';
+            return EMPTY;
+          }
+
+          this.isCategoryLoading = true;
+          this.isLoading = true;
+          this.errorMessage = '';
+
+          return this._CategoriesService.getSubCategoriesByName(name).pipe(
+            tap((res: any) => {
+              this.subCategory = res;
+
+              const firstSize =
+                this.subCategory?.sub_category_size?.[0]?.id ?? null;
+
+              this.SubSizeId = firstSize;
+              this.selectedSizeId = firstSize;
+
+              this.subCategoryProducts = [];
+
+              this.productRequests$.next({
+                slug: this.subCategory.seo_slug,
+                sizeId: firstSize,
+              });
+            }),
+
+            catchError((error) => {
+              console.error('Error loading subcategory:', error);
+
+              this.subCategory = null;
+              this.subCategoryProducts = [];
+              this.errorMessage =
+                'Unable to load subcategory. Please try again.';
+
+              return EMPTY;
+            }),
+
+            finalize(() => {
+              this.isCategoryLoading = false;
+            })
+          );
+        }),
+
+        takeUntilDestroyed(this._DestroyRef)
+      )
+      .subscribe();
+  }
+
+  // Listen To Product Requests
+  private listenToProductRequests(): void {
+    this.productRequests$
+      .pipe(
+        switchMap(({ slug, sizeId }) => {
+          this.isLoading = true;
+          this.errorMessage = '';
+
+          return this._CategoriesService
+            .getSubCategoryBySize(slug, 10, 1, sizeId)
+            .pipe(
+              catchError((error) => {
+                console.error('Error loading products:', error);
+
+                this.subCategoryProducts = [];
+                this.errorMessage =
+                  'Unable to load products. Please try again.';
+
+                return EMPTY;
+              }),
+
+              finalize(() => {
+                this.isLoading = false;
+              })
+            );
+        }),
+
+        takeUntilDestroyed(this._DestroyRef)
+      )
+      .subscribe({
+        next: (res: any) => {
+          this.subCategoryProducts = res?.results || [];
+
+          // Automatic Navigation When Only One Product Exists
+          if (
+            !this.subCategory?.sub_category_size?.length &&
+            this.subCategoryProducts.length === 1
+          ) {
+            const product = this.subCategoryProducts[0];
+
+            this._Router.navigate(['/product', product.seo_slug], {
+              replaceUrl: true,
+            });
+          }
+        },
+      });
+  }
+
+  // Select Size
+  getSubCatBySize(sizeId: number): void {
+    if (!this.subCategory?.seo_slug || this.selectedSizeId === sizeId) {
+      return;
+    }
+
+    this.SubSizeId = sizeId;
+    this.selectedSizeId = sizeId;
+
+    this.subCategoryProducts = [];
+
+    this.productRequests$.next({
+      slug: this.subCategory.seo_slug,
+      sizeId,
+    });
+  }
+
+  // Pull To Refresh
+  handleRefresh(event: any): void {
     this._GlobalRefreshService.refresh();
 
     setTimeout(() => {
       event.target.complete();
     }, 1500);
-  }
-
-  getSubCategory(): void {
-    this._ActivatedRoute.paramMap
-      .pipe(
-        map((params) => params.get('subName')),
-        filter((name) => !!name),
-        switchMap((name: any) =>
-          this._CategoriesService.getSubCategoriesByName(name)
-        ),
-        switchMap((res: any) => {
-          this.subCategory = res;
-          this.SubSizeId = this.subCategory?.sub_category_size?.[0]?.id;
-          this.selectedSizeId = this.SubSizeId;
-
-          return this._CategoriesService.getSubCategoryBySize(
-            this.subCategory.seo_slug,
-            10,
-            1,
-            this.SubSizeId
-          );
-        })
-      )
-      .subscribe({
-        next: (res: any) => {
-          this.subCategoryProducts = res.results || [];
-
-          if (
-            !this.subCategory?.sub_category_size?.length &&
-            this.subCategoryProducts.length === 1
-          ) {
-            const product = this.subCategoryProducts[0];
-            this._Router.navigate(['/product', product.seo_slug], {
-              replaceUrl: true,
-            });
-            return;
-          }
-        },
-      });
-  }
-
-  getSubCatBySize(sizeId: any): void {
-    this.SubSizeId = sizeId;
-    this.selectedSizeId = sizeId;
-    this.subCategoryProducts = [];
-    this._CategoriesService
-      .getSubCategoryBySize(this.subCategory.seo_slug, 10, 1, this.SubSizeId)
-      .subscribe({
-        next: (res: any) => {
-          this.subCategoryProducts = res.results || [];
-          // Sub Category
-          if (
-            !this.subCategory?.sub_category_size?.length &&
-            this.subCategoryProducts.length === 1
-          ) {
-            const product = this.subCategoryProducts[0];
-            this._Router.navigate(['/product', product.seo_slug], {
-              replaceUrl: true,
-            });
-            return;
-          }
-        },
-      });
   }
 }

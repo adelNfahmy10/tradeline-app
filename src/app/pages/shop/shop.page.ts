@@ -1,25 +1,26 @@
-import { Component, computed, inject, Signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+
 import {
   IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
   IonButtons,
-  IonMenuButton,
-  IonCardTitle,
+  IonMenuToggle,
   IonFooter,
   IonRefresher,
   IonRefresherContent,
 } from '@ionic/angular/standalone';
+
 import { AuthService } from 'src/core/services/auth/auth-service';
 import { CategoriesService } from 'src/core/services/categories/categories-service';
-import { TabsComponent } from 'src/app/components/tabs/tabs.component';
-import { SkeletonReloadPage } from '../skeleton-reload/skeleton-reload.page';
-import { RouterLink } from '@angular/router';
-import { SearchModalComponent } from 'src/app/components/search-modal/search-modal.component';
 import { GlobalRefreshService } from 'src/core/services/global-refresh/global-refresh-service';
+
+import { TabsComponent } from 'src/app/components/tabs/tabs.component';
+import { SearchModalComponent } from 'src/app/components/search-modal/search-modal.component';
+import { SkeletonReloadPage } from '../skeleton-reload/skeleton-reload.page';
 
 @Component({
   selector: 'app-shop',
@@ -27,38 +28,40 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
   styleUrls: ['./shop.page.scss'],
   standalone: true,
   imports: [
-    IonRefresherContent,
-    IonRefresher,
-    IonFooter,
-    IonButtons,
+    CommonModule,
+    RouterLink,
+
+    // Ionic
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
-    CommonModule,
-    FormsModule,
-    IonMenuButton,
+    IonButtons,
+    IonMenuToggle,
+    IonFooter,
+    IonRefresher,
+    IonRefresherContent,
+
+    // Components
     TabsComponent,
-    SkeletonReloadPage,
-    RouterLink,
     SearchModalComponent,
+    SkeletonReloadPage,
   ],
 })
 export class ShopPage {
-  private readonly _AuthService = inject(AuthService);
-  private readonly _CategoriesService = inject(CategoriesService);
-  private readonly _GlobalRefreshService = inject(GlobalRefreshService);
-  
-  categories: Signal<any[]> = computed(() =>
-    this._CategoriesService.catBanners(),
-  );
-  token = this._AuthService.token;
+  private readonly authService = inject(AuthService);
+  private readonly categoriesService = inject(CategoriesService);
+  private readonly globalRefreshService = inject(GlobalRefreshService);
 
-  handleRefresh(event: any) {
-    this._GlobalRefreshService.refresh();
+  readonly token = this.authService.token;
+
+  readonly categories = computed(() => this.categoriesService.catBanners());
+
+  handleRefresh(event: CustomEvent): void {
+    this.globalRefreshService.refresh();
 
     setTimeout(() => {
-      event.target.complete();
+      (event.target as HTMLIonRefresherElement).complete();
     }, 1500);
   }
 }

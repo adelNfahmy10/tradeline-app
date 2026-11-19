@@ -116,6 +116,7 @@
 
 .payment-checkbox > h4,
 .checkform > h4 {
+  margin: 0;
   padding-left: 2px !important;
   margin-bottom: 12px !important;
   font-weight: 750 !important;
@@ -166,7 +167,7 @@
 
 .payment-item img {
   display: block;
-  width: 36px;
+  width: 60px;
   height: 28px;
   flex: 0 0 36px;
   object-fit: contain;
@@ -203,9 +204,9 @@
   font-size: 16px;
   font-weight: 750;
 }
-
 .checkout ion-item {
-  --background: var(--checkout-surface);
+  --background: none !important;
+
   --color: var(--checkout-text);
   --border-color: var(--checkout-border);
   --inner-border-width: 0;
@@ -242,38 +243,38 @@
   padding: 8px 0 0 !important;
 }
 
-.checkform > ion-list {
-  gap: 10px !important;
-}
+// .checkform > ion-list {
+//   gap: 10px !important;
+// }
 
-.checkform ion-item {
-  --background: var(--checkout-surface);
-  --border-color: transparent;
-  --inner-border-width: 0;
-  --highlight-color-focused: var(--checkout-green);
-  --padding-start: 14px;
-  --padding-end: 12px;
-  --min-height: 50px;
+// .checkform ion-item {
+//   --background: var(--checkout-surface);
+//   --border-color: transparent;
+//   --inner-border-width: 0;
+//   --highlight-color-focused: var(--checkout-green);
+//   --padding-start: 14px;
+//   --padding-end: 12px;
+//   --min-height: 50px;
 
-  border: 1px solid var(--checkout-border);
-  border-radius: 12px !important;
-  box-shadow: none !important;
-  transition: border-color 0.2s ease;
-}
+//   border: 1px solid var(--checkout-border);
+//   border-radius: 12px !important;
+//   box-shadow: none !important;
+//   transition: border-color 0.2s ease;
+// }
 
-.checkform ion-item:focus-within {
-  border-color: var(--checkout-green);
-}
+// .checkform ion-item:focus-within {
+//   border-color: var(--checkout-green);
+// }
 
-.checkform ion-input,
-.checkform ion-select {
-  --color: var(--checkout-text);
-  --placeholder-color: var(--checkout-muted);
-  --placeholder-opacity: 1;
+// .checkform ion-input,
+// .checkform ion-select {
+//   --color: var(--checkout-text);
+//   --placeholder-color: var(--checkout-muted);
+//   --placeholder-opacity: 1;
 
-  font-size: 13px;
-  font-weight: 450;
-}
+//   font-size: 13px;
+//   font-weight: 450;
+// }
 
 .checkform ion-select {
   width: 100%;
@@ -556,7 +557,7 @@ ion-modal.checkout-summary-modal iframe {
 }
 
 :host-context(html.ion-palette-dark) .checkout ion-item {
-  --background: var(--checkout-surface);
+  --background: #1b1b1b !important;
   --color: var(--checkout-text);
   --border-color: var(--checkout-border);
 }
@@ -652,12 +653,6 @@ ion-modal.checkout-summary-modal iframe {
     font-size: 12px;
   }
 
-  .payment-item img {
-    width: 32px;
-    height: 25px;
-    flex-basis: 32px;
-  }
-
   .checkform > ion-list {
     gap: 9px !important;
   }
@@ -740,59 +735,59 @@ html.ion-palette-dark {
   }
 
   /* Ionic Form Controls */
-  ion-item {
-    --background: #1b1b1b;
-    --color: #eee;
-    --border-color: #333;
-  }
+  // ion-item {
+  //   --background: #1b1b1b;
+  //   --color: #eee;
+  //   --border-color: #333;
+  // }
 
-  ion-input,
-  ion-textarea,
-  ion-select {
-    --background: #1b1b1b;
-    --color: #eee;
-    --placeholder-color: #999;
-    --highlight-color-focused: #32a96b;
-  }
+  // ion-input,
+  // ion-textarea,
+  // ion-select {
+  //   --background: #1b1b1b;
+  //   --color: #eee;
+  //   --placeholder-color: #999;
+  //   --highlight-color-focused: #32a96b;
+  // }
 
-  input,
-  textarea,
-  select,
-  .form-control,
-  .form-select {
-    background-color: #1b1b1b;
-    color: #eee;
-    border-color: #333;
-  }
+  // input,
+  // textarea,
+  // select,
+  // .form-control,
+  // .form-select {
+  //   background-color: #1b1b1b;
+  //   color: #eee;
+  //   border-color: #333;
+  // }
 
-  input::placeholder,
-  textarea::placeholder {
-    color: #999;
-  }
+  // input::placeholder,
+  // textarea::placeholder {
+  //   color: #999;
+  // }
 
-  ion-radio {
-    --color: #777;
-    --color-checked: #32a96b;
-  }
+  // ion-radio {
+  //   --color: #777;
+  //   --color-checked: #32a96b;
+  // }
 
-  ion-checkbox {
-    --checkbox-background: #1b1b1b;
-    --checkbox-background-checked: #00723c;
-    --border-color: #555;
-    --border-color-checked: #00723c;
-    --checkmark-color: #fff;
-  }
+  // ion-checkbox {
+  //   --checkbox-background: #1b1b1b;
+  //   --checkbox-background-checked: #00723c;
+  //   --border-color: #555;
+  //   --border-color-checked: #00723c;
+  //   --checkmark-color: #fff;
+  // }
 
-  /* Installments */
-  ion-list {
-    background: transparent;
-  }
+  // /* Installments */
+  // ion-list {
+  //   background: transparent;
+  // }
 
-  ion-list ion-item {
-    --background: #1b1b1b;
-    --color: #eee;
-    --border-color: #333;
-  }
+  // ion-list ion-item {
+  //   --background: #1b1b1b;
+  //   --color: #eee;
+  //   --border-color: #333;
+  // }
 
   /* Summary & Pricing */
   .price-summary,
@@ -1218,17 +1213,18 @@ ion-modal.checkout-summary-modal {
   /* Payment iframe */
 
   .checkout-payment {
+    width: 100%;
     height: 100%;
-    min-height: 0;
+    min-height: 500px;
     background: var(--checkout-bg);
   }
 
   .checkout-payment__iframe {
-    display: block;
     width: 100%;
     height: 100%;
-    min-height: 500px;
+    min-height: 650px;
     border: 0;
+    display: block;
     background: var(--checkout-bg);
   }
 }
@@ -1287,4 +1283,148 @@ ion-modal.checkout-summary-modal {
 .toggle-biling {
   border-color: var(--ion-color-primary) !important;
   color: var(--ion-color-primary);
+}
+
+.payment-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 15px;
+  gap: 10px;
+
+  ion-spinner {
+    --color: #e85d45;
+    width: 30px;
+    height: 30px;
+  }
+
+  h6 {
+    margin: 0;
+    color: #7b8492;
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
+.no-payment-methods {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background: #f8f9fb;
+  border: 1px solid #e8ebf0;
+  border-radius: 12px;
+
+  .no-payment-icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff0ed;
+    color: #e85d45;
+    border-radius: 10px;
+    font-size: 20px;
+  }
+
+  .no-payment-content {
+    h6 {
+      margin: 0 0 5px;
+      color: #252b36;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      color: #7b8492;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+  }
+}
+
+.payment-unavailable {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 22px;
+  margin: 12px 0;
+  // border: 1px solid var(--ion-color-step-150);
+  border-radius: 20px;
+  // background: var(--ion-card-background);
+
+  &__icon {
+    width: 76px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 22px;
+    background: rgba(var(--ion-color-primary-rgb), 0.1);
+    color: var(--ion-color-primary);
+    font-size: 30px;
+    margin-bottom: 18px;
+  }
+
+  &__brand {
+    color: var(--ion-color-primary);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  h5 {
+    color: var(--ion-text-color);
+    font-size: 17px;
+    font-weight: 800;
+    margin: 0 0 10px;
+  }
+
+  p {
+    color: var(--ion-color-medium);
+    font-size: 13px;
+    line-height: 1.7;
+    max-width: 290px;
+    margin: 0;
+  }
+
+  &__note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(var(--ion-color-primary-rgb), 0.07);
+    color: var(--ion-color-primary);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  &__btn {
+    width: 100%;
+    max-width: 260px;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 24px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--ion-color-primary);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    transition: opacity 0.2s ease;
+
+    &:active {
+      opacity: 0.8;
+    }
+  }
 }

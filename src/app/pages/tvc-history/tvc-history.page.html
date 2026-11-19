@@ -13,7 +13,7 @@
 
         <img
           src="assets/images/tvc-images/tvc_new.png"
-          class="tvc-logo"
+          class="tvc-header-logo me-5"
           alt="TVC"
         />
       </picture>
@@ -22,7 +22,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- Pull To Refresh -->
   <ion-refresher
     slot="fixed"
     class="tradeline-refresher"
@@ -31,66 +30,110 @@
     <ion-refresher-content
       pullingIcon="chevron-down-outline"
       refreshingSpinner="crescent"
-    >
-    </ion-refresher-content>
+    ></ion-refresher-content>
   </ion-refresher>
 
-  <div class="history p-3">
-    <div class="header-history rounded-3">
-      <h1 class="m-0 fw-bold">History</h1>
-      <h1 class="m-0 my-2 main-color fw-bold user-name">{{userName}}</h1>
-      <h5 class="main-color m-0 mb-2">
-        Total Points: {{pointsData()?.TotalPoints || 0 | number}} Points
-      </h5>
+  <section class="history-page">
+    <!-- History Heading -->
+    <div class="history-heading">
+      <span class="history-eyebrow">TRADELINE STORES</span>
+      <h2>Points History</h2>
+      <p>Keep track of your loyalty transactions</p>
     </div>
 
-    <!-- Table Header -->
-    <ion-row class="ion-text-bold ion-padding-vertical header-table">
-      <ion-col size="3">
-        <span>Invoice Number</span>
-      </ion-col>
-      <ion-col size="3">
-        <span>Points</span>
-      </ion-col>
-      <ion-col size="3">
-        <span>Redeemed Points</span>
-      </ion-col>
-      <ion-col size="3" class="ion-text-center">
-        <span>Status</span>
-      </ion-col>
-    </ion-row>
+    <!-- Summary Card -->
+    <div class="history-summary">
+      <div class="history-summary__icon">
+        <i class="fa-solid fa-coins"></i>
+      </div>
 
-    <!-- Table Data -->
-    @for (item of pointsHistory; track $index) {
-    <ion-row class="ion-padding-vertical body-table">
-      <ion-col size="3">
-        <span>{{ item.LoyaltyCardsInvoiceNumber }}</span>
-      </ion-col>
-      <ion-col size="3">
-        <span>{{ item.LoyaltyCardsInvoicePoints || 0 | number }}</span>
-      </ion-col>
-      <ion-col size="3">
-        <span>{{ item.LoyaltyCardsInvoiceRedeemedPoints || 0 | number }}</span>
-      </ion-col>
-      <ion-col size="3" class="ion-text-center">
-        <span
-          [ngClass]="{
-              'text-success': item.LoyaltyCardsInvoicePointsStatus === 'valid',
-              'text-warning': item.LoyaltyCardsInvoicePointsStatus === 'Pending',
-              'text-danger':
-                item.LoyaltyCardsInvoicePointsStatus !== 'valid' &&
-                item.LoyaltyCardsInvoicePointsStatus !== 'Pending'
-            }"
-        >
-          {{ item.LoyaltyCardsInvoicePointsStatus }}<br />
-          {{ item.ValidationDate | date:'dd.MM.yyyy' }}
-        </span>
-      </ion-col>
-    </ion-row>
-    } @empty {
-    <p class="text-center my-3">History is Empty</p>
-    }
-  </div>
+      <div class="history-summary__info">
+        <span>Total Points Balance</span>
+        <h3>
+          {{ pointsData()?.TotalPoints || 0 | number }}
+          <small>Points</small>
+        </h3>
+      </div>
+    </div>
+
+    <!-- Transactions -->
+    <div class="history-transactions">
+      <div class="history-section-title">
+        <h4>Transactions</h4>
+        <span>{{ pointsHistory?.length || 0 }} Records</span>
+      </div>
+
+      @for (item of pointsHistory; track $index) {
+      <div class="history-item">
+        <div class="history-item__header">
+          <div class="history-item__invoice">
+            <div class="history-item__icon">
+              <i class="fa-solid fa-receipt"></i>
+            </div>
+
+            <div>
+              <span class="history-item__label">Invoice Number</span>
+              <strong>{{ item.LoyaltyCardsInvoiceNumber }}</strong>
+            </div>
+          </div>
+
+          <span
+            class="history-status"
+            [ngClass]="{
+                'history-status--valid':
+                  item.LoyaltyCardsInvoicePointsStatus?.toLowerCase() === 'valid',
+                'history-status--pending':
+                  item.LoyaltyCardsInvoicePointsStatus?.toLowerCase() === 'pending',
+                'history-status--other':
+                  item.LoyaltyCardsInvoicePointsStatus?.toLowerCase() !== 'valid' &&
+                  item.LoyaltyCardsInvoicePointsStatus?.toLowerCase() !== 'pending'
+              }"
+          >
+            {{ item.LoyaltyCardsInvoicePointsStatus }}
+          </span>
+        </div>
+
+        <div class="history-item__divider"></div>
+
+        <div class="history-item__details">
+          <div class="history-data">
+            <span>Earned Points</span>
+            <strong>
+              {{ item.LoyaltyCardsInvoicePoints || 0 | number }}
+            </strong>
+          </div>
+
+          <div class="history-data">
+            <span>Redeemed Points</span>
+            <strong>
+              {{ item.LoyaltyCardsInvoiceRedeemedPoints || 0 | number }}
+            </strong>
+          </div>
+        </div>
+
+        <div class="history-item__date">
+          <span>
+            <i class="fa-regular fa-calendar"></i>
+            Validation Date: @if (item.ValidationDate) { {{ item.ValidationDate
+            | date: 'dd.MM.yyyy' }} } @else {
+            <span class="date-unavailable">Not Available</span>
+            }
+          </span>
+        </div>
+      </div>
+      } @empty {
+      <div class="history-empty">
+        <div class="history-empty__icon">
+          <i class="fa-solid fa-receipt"></i>
+        </div>
+
+        <h4>No Transactions Yet</h4>
+
+        <p>Your loyalty points transactions will appear here once available.</p>
+      </div>
+      }
+    </div>
+  </section>
 </ion-content>
 
 <ion-footer>

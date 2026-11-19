@@ -5,17 +5,23 @@
     </ion-buttons>
 
     <ion-title class="text-center">
-      <img
-        src="assets/images/tvc-images/tvc_new.png"
-        class="tvc-logo"
-        alt="TVC"
-      />
+      <picture>
+        <source
+          srcset="assets/images/tvc-images/TVCLOGOFINALhite-01.png"
+          media="(prefers-color-scheme: dark)"
+        />
+        <img
+          loading="lazy"
+          src="assets/images/tvc-images/tvc_new.png"
+          class="tvc-header-logo me-5"
+          alt="tradeline TVC"
+        />
+      </picture>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- Pull To Refresh -->
   <ion-refresher
     slot="fixed"
     class="tradeline-refresher"
@@ -24,52 +30,89 @@
     <ion-refresher-content
       pullingIcon="chevron-down-outline"
       refreshingSpinner="crescent"
-    >
-    </ion-refresher-content>
+    ></ion-refresher-content>
   </ion-refresher>
 
-  <div class="tvc-details p-3">
-    <div class="header-details border-bottom pb-3">
-      <h1 class="m-0 fw-bold">Details</h1>
-
-      <h1 class="m-0 my-2 main-color fw-bold user-name">{{ userName }}</h1>
-
-      <h5 class="m-0 mb-2 fw-semibold">
-        {{ pointsData()?.TotalPoints || 0 | number }} Points = {{
-        (pointsData()?.TotalPoints / 100) || 0 | number }} EGP
-      </h5>
+  <section class="tvc-details-page">
+    <!-- Page Heading -->
+    <div class="details-heading">
+      <span class="details-eyebrow">TRADELINE STORES</span>
+      <h2>Points Details</h2>
+      <p>Track your rewards and points balance</p>
     </div>
 
-    <div class="details-info py-4">
-      <p>
-        Cuurent Balance:
-        <span class="main-color fw-semibold">
-          {{ pointsData()?.TotalPoints | number }}
-        </span>
-      </p>
+    <!-- Total Points Card -->
+    <div class="total-points-card">
+      <div class="total-points-card__icon">
+        <i class="fa-solid fa-wallet"></i>
+      </div>
 
-      <p>
-        Redeemed Points:
-        <span class="main-color fw-semibold">
-          {{ pointsData()?.CurrentBalance | number }}
-        </span>
-      </p>
+      <span class="total-points-card__label">Total Points Balance</span>
 
-      <p>
-        Cuurent Valid Balance:
-        <span class="main-color fw-semibold">
-          {{ pointsData()?.CurrentValidBalance | number }}
-        </span>
-      </p>
+      <h1>{{ pointsData()?.TotalPoints || 0 | number }}</h1>
 
-      <p>
-        Cuurent Pending Balance:
-        <span class="main-color fw-semibold">
-          {{ pointsData()?.CurrentPendingBalance | number }}
+      <div class="total-points-card__value">
+        <i class="fa-solid fa-coins"></i>
+        <span>
+          Equivalent to
+          <strong>
+            {{ (pointsData()?.TotalPoints / 100) || 0 | number }} EGP
+          </strong>
         </span>
-      </p>
+      </div>
     </div>
-  </div>
+
+    <!-- Points Breakdown -->
+    <div class="points-breakdown">
+      <div class="section-heading">
+        <h4>Balance Overview</h4>
+        <span>Your points summary</span>
+      </div>
+
+      <div class="balance-item">
+        <div class="balance-item__icon balance-item__icon--redeemed">
+          <i class="fa-solid fa-gift"></i>
+        </div>
+
+        <div class="balance-item__content">
+          <span>Redeemed Points</span>
+          <strong> {{ pointsData()?.CurrentBalance || 0 | number }} </strong>
+        </div>
+
+        <i class="fa-solid fa-chevron-right balance-item__arrow"></i>
+      </div>
+
+      <div class="balance-item">
+        <div class="balance-item__icon balance-item__icon--valid">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div class="balance-item__content">
+          <span>Current Valid Balance</span>
+          <strong>
+            {{ pointsData()?.CurrentValidBalance || 0 | number }}
+          </strong>
+        </div>
+
+        <i class="fa-solid fa-chevron-right balance-item__arrow"></i>
+      </div>
+
+      <div class="balance-item">
+        <div class="balance-item__icon balance-item__icon--pending">
+          <i class="fa-regular fa-clock"></i>
+        </div>
+
+        <div class="balance-item__content">
+          <span>Current Pending Balance</span>
+          <strong>
+            {{ pointsData()?.CurrentPendingBalance || 0 | number }}
+          </strong>
+        </div>
+
+        <i class="fa-solid fa-chevron-right balance-item__arrow"></i>
+      </div>
+    </div>
+  </section>
 </ion-content>
 
 <ion-footer>

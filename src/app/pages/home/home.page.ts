@@ -1,6 +1,7 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+
 import {
   IonContent,
   IonHeader,
@@ -9,20 +10,19 @@ import {
   IonButtons,
   IonMenuButton,
   IonFooter,
-  IonModal,
   IonRefresher,
   IonRefresherContent,
+  IonMenuToggle,
 } from '@ionic/angular/standalone';
+
 import { OfferSliderComponent } from 'src/app/components/offer-slider/offer-slider.component';
-import { SkeletonReloadPage } from '../skeleton-reload/skeleton-reload.page';
 import { CategoriesSliderComponent } from 'src/app/components/categories-slider/categories-slider.component';
 import { ListItemsHomeComponent } from 'src/app/components/list-items-home/list-items-home.component';
-import { AuthService } from 'src/core/services/auth/auth-service';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
-import { RouterLink } from '@angular/router';
-import { MenuController } from '@ionic/angular';
-import { PointsService } from 'src/core/services/points/points-service';
 import { SearchModalComponent } from 'src/app/components/search-modal/search-modal.component';
+
+import { AuthService } from 'src/core/services/auth/auth-service';
+import { PointsService } from 'src/core/services/points/points-service';
 import { GlobalRefreshService } from 'src/core/services/global-refresh/global-refresh-service';
 
 @Component({
@@ -31,39 +31,42 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
   styleUrls: ['./home.page.scss'],
   standalone: true,
   imports: [
-    IonRefresherContent,
-    IonRefresher,
-    IonFooter,
-    IonButtons,
+    CommonModule,
+    RouterLink,
+
+    // Ionic
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
-    CommonModule,
-    FormsModule,
+    IonButtons,
+    IonMenuButton,
+    IonFooter,
+    IonRefresher,
+    IonRefresherContent,
+    IonMenuToggle,
+
+    // Components
     OfferSliderComponent,
     CategoriesSliderComponent,
     ListItemsHomeComponent,
-    IonMenuButton,
     TabsComponent,
-    RouterLink,
     SearchModalComponent,
   ],
 })
 export class HomePage {
-  private readonly _AuthService = inject(AuthService);
-  private readonly _PointsService = inject(PointsService);
-  private readonly _GlobalRefreshService = inject(GlobalRefreshService);
+  private readonly authService = inject(AuthService);
+  private readonly pointsService = inject(PointsService);
+  private readonly globalRefreshService = inject(GlobalRefreshService);
 
-  token = this._AuthService.token;
-  points =
-    this._PointsService.points || localStorage.getItem('userTradelinePoints');
+  readonly token = this.authService.token;
+  readonly points = this.pointsService.points;
 
-  handleRefresh(event: any) {
-    this._GlobalRefreshService.refresh();
+  handleRefresh(event: CustomEvent): void {
+    this.globalRefreshService.refresh();
 
     setTimeout(() => {
-      event.target.complete();
+      (event.target as HTMLIonRefresherElement).complete();
     }, 1500);
   }
 }

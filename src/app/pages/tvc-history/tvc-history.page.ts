@@ -44,7 +44,7 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
 export class TvcHistoryPage implements OnInit {
   private readonly _AuthService = inject(AuthService);
   private readonly _PointsService = inject(PointsService);
-private readonly _GlobalRefreshService = inject(GlobalRefreshService);
+  private readonly _GlobalRefreshService = inject(GlobalRefreshService);
   token = this._AuthService.token;
   pointsData = this._PointsService.pointsData;
   pointsHistory: any[] = [];
@@ -63,6 +63,7 @@ private readonly _GlobalRefreshService = inject(GlobalRefreshService);
           .subscribe({
             next: (res) => {
               this.pointsHistory = res.data;
+              console.log(this.pointsHistory);
             },
           });
       },

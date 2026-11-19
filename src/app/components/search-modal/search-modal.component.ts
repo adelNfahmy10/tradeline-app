@@ -1,26 +1,25 @@
-import { Component, inject, ViewChild } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { DecimalPipe } from '@angular/common';
+import { Component, DestroyRef, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
+  IonContent,
   IonModal,
   IonSearchbar,
-  IonContent,
   IonSpinner,
-  IonList,
-  IonItem,
-  IonThumbnail,
-  IonLabel,
 } from '@ionic/angular/standalone';
-import { SearchService } from 'src/core/services/search/search-service';
 import {
   Subject,
-  debounceTime,
+  catchError,
   distinctUntilChanged,
-  switchMap,
-  takeUntil,
+  finalize,
+  map,
   of,
+  switchMap,
+  timer,
 } from 'rxjs';
 import { Router } from '@angular/router';
-import { DecimalPipe } from '@angular/common';
+
+import { SearchService } from 'src/core/services/search/search-service';
 
 @Component({
   selector: 'app-search-modal',
@@ -31,23 +30,25 @@ import { DecimalPipe } from '@angular/common';
 export class SearchModalComponent {
   private readonly _SearchService = inject(SearchService);
   private readonly _Router = inject(Router);
+  private readonly _DestroyRef = inject(DestroyRef);
 
   @ViewChild('modal') modal!: IonModal;
   @ViewChild('searchbar') searchbar!: HTMLIonSearchbarElement;
 
-  private searchSubject = new Subject<string>();
-  private destroy$ = new Subject<void>();
+  private readonly searchSubject = new Subject<string>();
+
   searchResults: any[] = [];
   isSearching = false;
 
   constructor() {
     this.searchSubject
       .pipe(
-        debounceTime(800),
+        map((word) => word.trim()),
         distinctUntilChanged(),
 
         switchMap((word) => {
-          if (!word.trim()) {
+          // Empty search
+          if (!word) {
             this.searchResults = [];
             this.isSearching = false;
 
@@ -56,50 +57,53 @@ export class SearchModalComponent {
 
           this.isSearching = true;
 
-          return this._SearchService.autoSearch(word);
+          // Debounce + cancel previous request immediately
+          return timer(400).pipe(
+            switchMap(() => this._SearchService.autoSearch(word)),
+
+            map((response) => response?.results ?? response ?? []),
+
+            catchError((error) => {
+              console.error('Search error:', error);
+              return of([]);
+            }),
+
+            finalize(() => {
+              this.isSearching = false;
+            })
+          );
         }),
 
-        takeUntil(this.destroy$)
+        takeUntilDestroyed(this._DestroyRef)
       )
-      .subscribe({
-        next: (response) => {
-          this.isSearching = false;
-
-          console.log('Search response:', response);
-
-          this.searchResults = response?.results ?? response ?? [];
-        },
-
-        error: (error) => {
-          this.isSearching = false;
-
-          console.error('Search error:', error);
-
-          this.searchResults = [];
-        },
+      .subscribe((results) => {
+        this.searchResults = results;
       });
   }
 
-  onSearch(event: any) {
-    const value = event.detail.value || '';
+  onSearch(event: any): void {
+    const value = event?.detail?.value ?? '';
     this.searchSubject.next(value);
   }
 
-  async open() {
+  async open(): Promise<void> {
     this.searchResults = [];
     this.isSearching = false;
+
+    this.searchSubject.next('');
 
     await this.modal.present();
   }
 
-  async close() {
+  async close(): Promise<void> {
     await this.modal.dismiss();
   }
 
-  async onModalDismiss() {
+  onModalDismiss(): void {
     this.searchResults = [];
     this.isSearching = false;
 
+    // Cancel any pending search or active request
     this.searchSubject.next('');
 
     if (this.searchbar) {
@@ -108,7 +112,9 @@ export class SearchModalComponent {
   }
 
   async goToProduct(slug: string): Promise<void> {
-    // امسح الداتا فورًا
+    if (!slug) return;
+
+    // Clear search data
     this.searchResults = [];
     this.isSearching = false;
 
@@ -118,15 +124,10 @@ export class SearchModalComponent {
       this.searchbar.value = '';
     }
 
-    // اقفل الـ modal
+    // Close modal first
     await this.modal.dismiss();
 
-    // روح للـ product
+    // Navigate to product
     await this._Router.navigate(['/product', slug]);
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

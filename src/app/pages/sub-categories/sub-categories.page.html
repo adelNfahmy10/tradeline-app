@@ -1,11 +1,12 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="shop-header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title class="text-center fs-3 fw-semibold me-5"
-      >{{subCategory?.name}}</ion-title
-    >
+
+    <ion-title class="text-center fw-bold me-5">
+      {{ subCategory?.name || 'Shop' }}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -19,46 +20,91 @@
     <ion-refresher-content
       pullingIcon="chevron-down-outline"
       refreshingSpinner="crescent"
-    >
-    </ion-refresher-content>
+    ></ion-refresher-content>
   </ion-refresher>
 
-  <div class="sub-category p-3 pt-2">
-    <div
-      class="d-flex flex-wrap justify-content-center align-items-center gap-2"
-    >
-      @for (size of subCategory?.sub_category_size; track $index) {
-      <h5
-        class="size-option p-2 rounded-4 text-center"
-        [class.active]="selectedSizeId === size.id"
-        (click)="getSubCatBySize(size.id)"
-      >
-        {{size?.name}}
-      </h5>
-      }
-    </div>
-
-    @for (subCat of subCategoryProducts; track $index) {
-    <div
-      class="sub-item my-3 rounded-3"
-      [routerLink]="'/product/' + subCat.seo_slug"
-    >
-      <div class="subImg rounded-4 text-center">
-        <img
-          loading="lazy"
-          [src]="subCat.picture1 || 'assets/images/anim-logo.gif'"
-          [alt]="subCat.picture1_alt || subCat.seo_slug"
-          class="img-fluid w-100 object-fit-cover"
-        />
+  <section class="products-page container-fluid">
+    <!-- Size Selector -->
+    @if (subCategory?.sub_category_size?.length) {
+    <div class="size-section mb-4">
+      <div class="section-heading mb-3">
+        <h3>Available Sizes</h3>
+        <span>Select your preferred size</span>
       </div>
 
-      <div class="text-center p-3">
-        <h6>{{ subCat.name }}</h6>
-        <h5 class="fw-bold main-color m-0">{{subCat.price | number}} EGP</h5>
+      <div class="size-list d-flex flex-wrap align-items-center gap-2">
+        @for (size of subCategory?.sub_category_size; track size.id) {
+        <button
+          type="button"
+          class="size-option"
+          [class.active]="selectedSizeId === size.id"
+          [attr.aria-pressed]="selectedSizeId === size.id"
+          (click)="getSubCatBySize(size.id)"
+        >
+          {{ size.name }}
+        </button>
+        }
       </div>
     </div>
     }
-  </div>
+
+    <!-- Products -->
+    <div class="products-section">
+      @if(subCategoryProducts.length){
+      <div class="section-heading mb-3">
+        <h3>Explore Products</h3>
+        <span>Discover our collection</span>
+      </div>
+      }
+
+      <div class="row g-3">
+        @for (subCat of subCategoryProducts; track subCat.seo_slug) {
+        <div class="col-12">
+          <article
+            class="product-card d-flex align-items-center"
+            [routerLink]="'/product/' + subCat.seo_slug"
+          >
+            <!-- Product Image -->
+            <div class="product-image flex-shrink-0">
+              <img
+                loading="lazy"
+                [src]="subCat.picture1 || 'assets/images/anim-logo.gif'"
+                [alt]="subCat.picture1_alt || subCat.name"
+              />
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info flex-grow-1">
+              <h4 class="product-name">{{ subCat.name }}</h4>
+
+              <div class="product-price">
+                <span>{{ subCat.price | number }}</span>
+                <small>EGP</small>
+              </div>
+            </div>
+
+            <!-- Arrow -->
+            <i class="fa-solid fa-chevron-right product-arrow"></i>
+          </article>
+        </div>
+        } @empty {
+        <div class="col-12">
+          <div class="empty-products">
+            <div class="empty-icon">
+              <i class="fa-solid fa-box-open"></i>
+            </div>
+
+            <h5>No Products Available</h5>
+            <p>
+              We couldn't find any products for this selection. Try choosing
+              another size to explore more products.
+            </p>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </section>
 </ion-content>
 
 <ion-footer>
