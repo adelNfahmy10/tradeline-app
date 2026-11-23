@@ -7468,6 +7468,10 @@ html:not(.ion-palette-dark) .tradeline-refresher ion-refresher-content {
   --background: transparent !important;
 }
 
+html:not(.ion-palette-dark) .auth-page ion-item {
+  --background: transparent !important;
+}
+
 /* Disabled controls remain visibly disabled in both modes */
 
 html:not(.ion-palette-dark) button:disabled,
