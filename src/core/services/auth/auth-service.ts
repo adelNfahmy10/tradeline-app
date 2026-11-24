@@ -4,6 +4,7 @@ import { from, Observable, tap } from 'rxjs';
 import { Preferences } from '@capacitor/preferences';
 import { environment } from 'src/environments/environment.prod';
 import { PointsService } from '../points/points-service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +44,8 @@ export class AuthService {
     return this._HttpClient.post(`${environment.baseUrl}users/login/`, data);
   }
 
+  private readonly _ToastrService = inject(ToastrService)
+
   // Logout
   logout(): void {
     this.token.set(null);
@@ -57,6 +60,7 @@ export class AuthService {
     localStorage.removeItem('userTradelinePoints')
     this.points.set(0);
     Preferences.remove({ key: 'tradelineToken' });
+    this._ToastrService.success('Signed out successfully!');
   }
 
   // Set token

@@ -153,15 +153,21 @@ export class AuthPage {
               progressBar: true,
               progressAnimation: 'increasing',
               closeButton: true,
-              positionClass: 'toast-top-right',
               tapToDismiss: true,
             }
           );
+          
+          // this._ToastrService.success(`Welcome, ${localStorage.getItem('userName')}`);
+
           this._Router.navigate(['/home']);
           this.loginForm.reset();
         },
         error: (err) => {
           console.error('Login flow failed', err);
+
+          this._ToastrService.error(
+            'Unable to sign in. Please check your credentials and try again.'
+          );
         },
       });
   }

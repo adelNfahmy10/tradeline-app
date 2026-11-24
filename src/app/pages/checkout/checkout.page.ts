@@ -218,7 +218,7 @@ export class CheckoutPage implements OnInit {
       code: 555,
       is_allowed: true,
       name: 'paymob',
-      image: 'assets/images/checkout-image/online-payment-logo.png',
+      image: 'assets/images/checkout-image/Apple_Pay-Logo.wine.png',
     },
     {
       code: 556,
@@ -438,6 +438,7 @@ export class CheckoutPage implements OnInit {
                   });
 
                   this.payments_arr_avail = deletedHiddenPayment2;
+                  this.isPaymentsLoading = false;
                   console.log(this.payments_arr_avail);
                 }
               }
@@ -460,6 +461,8 @@ export class CheckoutPage implements OnInit {
       ) ?? false
     );
   }
+
+  isPaymentsLoading = true;
 
   goToShop(): void {
     this._Router.navigate(['/shop']);
@@ -678,6 +681,6 @@ export class CheckoutPage implements OnInit {
     this.iframeUrl = null;
     await this.checkoutModal.dismiss();
     this.isModalOpen = false;
-    this._Router.navigate(['/shop']);
+    this._Router.navigate(['/cart']);
   }
 }

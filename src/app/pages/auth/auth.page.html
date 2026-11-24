@@ -17,6 +17,7 @@
       <ion-segment
         class="mt-4 custom-segment"
         value="login"
+        mode="md"
         (ionChange)="segmentChanged($event)"
       >
         <ion-segment-button value="login" content-id="login">
@@ -34,7 +35,7 @@
 <ion-content [fullscreen]="true">
   <div class="auth auth-page">
     <ion-segment-view>
-      <ion-segment-content class="h-auto overflow-hidden" id="login">
+      <ion-segment-content id="login" class="auth-segment-content">
         <div class="login py-3">
           @if(forgetStep === 0){
           <div class="auth-heading">
@@ -310,7 +311,7 @@
         </div>
       </ion-segment-content>
 
-      <ion-segment-content id="SignUp">
+      <ion-segment-content id="SignUp" class="auth-segment-content">
         <div class="signup py-3 pb-5">
           <div class="auth-heading">
             <span class="auth-eyebrow">JOIN TRADELINE</span>

@@ -1,34 +1,53 @@
+
 :host {
   display: block;
 
+  --tabs-green: #00723c;
+  --tabs-green-light: #eaf5ee;
+
   --tabs-bg: #ffffff;
   --tabs-text: #929b94;
-  --tabs-active: #0e7d3f;
-  --tabs-pill-bg: #e8f5ed;
-  --tabs-pill-glow: rgba(14, 125, 63, 0.22);
-  --tabs-border: rgba(14, 125, 63, 0.07);
-  --tabs-shadow: 0 -5px 25px rgba(0, 0, 0, 0.07);
+  --tabs-active: var(--tabs-green);
+
+  --tabs-border: rgba(0, 114, 60, 0.07);
+
+  --tabs-shadow:
+    0 6px 28px rgba(0, 0, 0, 0.09),
+    0 2px 6px rgba(0, 0, 0, 0.035);
+
+  transition: all .3s;
 }
+
+/* =====================================
+   Floating Navigation Container
+===================================== */
 
 .tabs {
   position: relative;
   z-index: 999;
-  width: 100%;
-  min-height: 100px;
+
+  width: calc(100% - 20px);
+  min-height: 88px;
+
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
+  padding: 8px 5px;
 
   background: var(--tabs-bg);
+
   border: 1px solid var(--tabs-border);
-  border-bottom: 0;
-  // border-radius: 12px 12px 0 0;
+  border-radius: 26px;
+
   box-shadow: var(--tabs-shadow);
 
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 
-  padding: 8px 4px max(8px, env(safe-area-inset-bottom));
+  /* =====================================
+     Navigation List
+  ===================================== */
 
   .tab-list {
     position: relative;
@@ -37,11 +56,15 @@
     align-items: center;
 
     width: 100%;
-    min-height: 66px;
-    padding: 4px 0;
-    margin: 0;
+    min-height: 72px;
 
-    /* Sliding Indicator */
+    margin: 0;
+    padding: 0;
+
+    /* =====================================
+       Active Indicator
+    ===================================== */
+
     .tab-indicator {
       position: absolute;
       z-index: 0;
@@ -50,29 +73,38 @@
       inset-inline-start: 0;
 
       width: 20%;
-      height: 54px;
+      height: 58px;
 
-      border-radius: 17px;
+      border-radius: 19px;
 
-      background: linear-gradient(
-        135deg,
-        var(--tabs-pill-bg),
-        rgba(14, 125, 63, 0.18)
-      );
-      border: 1px solid rgba(14, 125, 63, 0.1);
-      box-shadow: 0 6px 18px var(--tabs-pill-glow);
+      // background: linear-gradient(
+      //   135deg,
+      //   #eaf5ee,
+      //   #e2f1e7
+      // );
+
+      // border: 1px solid rgba(0, 114, 60, 0.07);
+
+      // box-shadow:
+      //   0 4px 14px rgba(0, 114, 60, 0.08);
 
       opacity: 0;
       pointer-events: none;
+
       will-change: transform;
 
-      transition: transform 0.55s cubic-bezier(0.34, 1.25, 0.64, 1),
-        opacity 0.25s ease, background 0.3s ease;
+      transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.25s ease;
 
       &.visible {
         opacity: 1;
       }
     }
+
+    /* =====================================
+       Tab Item
+    ===================================== */
 
     .tab-item {
       position: relative;
@@ -80,95 +112,110 @@
 
       flex: 0 0 20%;
       min-width: 0;
-      height: 58px;
+
+      height: 72px;
 
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0;
 
-      color: var(--tabs-text);
+      gap: 5px;
+
+      // color: var(--tabs-text);
+
       text-decoration: none;
       cursor: pointer;
 
       -webkit-tap-highlight-color: transparent;
-      transition: color 0.3s ease !important;
+
+      transition: color 0.25s ease;
+
+      /* Icon */
 
       i {
-        width: 28px;
-        height: 28px;
+        width: 36px;
+        height: 36px;
 
         display: flex;
         align-items: center;
         justify-content: center;
 
-        font-size: 26px;
+        font-size: 28px !important;
+        line-height: 1;
 
-        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-          color 0.3s ease !important;
+        transition:
+          transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+          color 0.25s ease;
       }
 
-      /* Label يظهر بس في التاب النشط */
+      /* Label */
+
       > .tab-label {
-        font-size: 10px;
-        line-height: 1;
-        font-weight: 500;
+        font-size: 11px;
+        line-height: 1.1;
+
+        font-weight: 600;
         white-space: nowrap;
 
         opacity: 0;
         max-height: 0;
+
         margin-top: 0;
-        transform: translateY(4px);
+
         overflow: hidden;
 
-        transition: opacity 0.3s ease, transform 0.35s ease,
-          max-height 0.35s ease, margin-top 0.35s ease, color 0.3s ease !important;
+        transform: translateY(4px);
+
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease,
+          max-height 0.25s ease,
+          margin-top 0.25s ease;
       }
 
+      /* Active State */
+
       &.active {
-        color: var(--tabs-active);
+        // color: var(--tabs-green);
 
         i {
-          color: var(--tabs-active);
-          transform: translateY(-2px) scale(1.08);
-          animation: icon-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+          color: var(--tabs-green);
+
+          transform: scale(1.08);
         }
 
         > .tab-label {
           opacity: 1;
-          max-height: 12px;
-          margin-top: 5px;
-          transform: none;
-          color: var(--tabs-active);
+
+          max-height: 15px;
+
+          transform: translateY(0);
+
+          color: var(--tabs-green);
           font-weight: 800;
         }
       }
 
-      /* Press feedback */
+      /* Touch Feedback */
+
       &:active {
         i {
-          transform: scale(0.9);
-        }
-
-        &::after {
-          content: "";
-          position: absolute;
-          inset: 6px;
-          border-radius: 16px;
-          background: var(--tabs-active);
-          opacity: 0.08;
-          pointer-events: none;
+          transform: scale(0.92);
         }
       }
 
+      /* Cart Badge */
+
       .cart-count {
         position: absolute;
-        top: 2px;
-        inset-inline-start: calc(50% + 8px);
 
-        min-width: 18px;
-        height: 18px;
+        top: 3px;
+        inset-inline-start: calc(50% + 9px);
+
+        min-width: 20px;
+        height: 20px;
+
         padding: 0 4px;
 
         display: flex;
@@ -177,12 +224,15 @@
 
         color: #ffffff;
         background: #e53935;
+
         border: 2px solid var(--tabs-bg);
         border-radius: 50px;
 
-        font-size: 9px;
+        font-size: 10px;
         font-weight: 800;
         line-height: 1;
+
+        z-index: 3;
 
         animation: badge-bump 0.35s ease;
       }
@@ -190,66 +240,82 @@
   }
 }
 
-@keyframes icon-pop {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  40% {
-    transform: translateY(-5px) scale(1.2);
-  }
-  100% {
-    transform: translateY(-2px) scale(1.08);
-  }
-}
+/* =====================================
+   Badge Animation
+===================================== */
 
 @keyframes badge-bump {
   0% {
     transform: scale(1);
   }
+
   40% {
-    transform: scale(1.4);
+    transform: scale(1.3);
   }
+
   100% {
     transform: scale(1);
   }
 }
 
-/* Dark Mode */
+/* =====================================
+   Dark Mode
+===================================== */
+
 :host-context(html.ion-palette-dark) {
   --tabs-bg: #191e1b;
+
   --tabs-text: #9ba69e;
   --tabs-active: #55c987;
-  --tabs-pill-bg: #243b2d;
-  --tabs-pill-glow: rgba(85, 201, 135, 0.25);
+
+  --tabs-green-light: #243b2d;
+
   --tabs-border: rgba(255, 255, 255, 0.06);
-  --tabs-shadow: 0 -5px 25px rgba(0, 0, 0, 0.3);
+
+  --tabs-shadow:
+    0 6px 28px rgba(0, 0, 0, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Small Screens */
-// @media (max-width: 360px) {
-//   .tabs {
-//     padding-inline: 2px;
+/* =====================================
+   Responsive - Small Screens
+===================================== */
 
-//     .tab-list {
-//       .tab-item {
-//         i {
-//           font-size: 18px;
-//         }
+@media (max-width: 360px) {
+  .tabs {
+    width: calc(100% - 16px);
 
-//         > .tab-label {
-//           font-size: 9px;
-//         }
-//       }
+    min-height: 82px;
 
-//       .tab-indicator {
-//         height: 51px;
-//         border-radius: 15px;
-//       }
-//     }
-//   }
-// }
+    border-radius: 23px;
 
-/* Reduced Motion */
+    .tab-list {
+      min-height: 68px;
+
+      .tab-item {
+        height: 68px;
+
+        i {
+          font-size: 25px !important;
+        }
+
+        > .tab-label {
+          font-size: 9px;
+        }
+      }
+
+      .tab-indicator {
+        height: 54px;
+        border-radius: 16px;
+      }
+    }
+  }
+}
+
+/* =====================================
+   Reduced Motion
+===================================== */
+
 @media (prefers-reduced-motion: reduce) {
   .tabs,
   .tabs * {

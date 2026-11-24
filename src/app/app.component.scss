@@ -52,6 +52,10 @@ ion-menu.app-side-menu {
   gap: 15px;
 
   padding: 34px 10px 26px;
+  @supports (padding-top: env(safe-area-inset-top)) {
+    padding-top: calc(34px + env(safe-area-inset-top));
+  }
+  
   margin-bottom: 25px;
 
   border-bottom: 1px solid var(--menu-divider);
@@ -369,9 +373,10 @@ ion-menu.app-side-menu {
   justify-content: center;
 
   width: 180px;
-  margin: 0 auto;
 
   img {
+    position: relative;
+    bottom: 20px !important;
     display: block;
 
     width: 100%;

@@ -11,6 +11,7 @@
   --search-surface: #ffffff;
 }
 
+
 /* =========================================================
    MODAL
    ========================================================= */
@@ -116,7 +117,7 @@ ion-modal.search-modal::part(handle) {
 
 .search-input-wrapper ion-searchbar {
   min-height: 50px;
-  padding: 0;
+  padding: 0 0 0 10px;
 
   --background: var(--search-surface);
   --color: var(--search-text);

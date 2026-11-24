@@ -1,5 +1,8 @@
+
 <div class="tabs w-100">
   <nav class="tab-list" aria-label="Main navigation">
+
+    <!-- Active Indicator -->
     <span
       class="tab-indicator"
       [class.visible]="activeIndex >= 0"
@@ -8,22 +11,27 @@
     ></span>
 
     @for (tab of tabs; track tab.route; let i = $index) {
-    <a
-      class="tab-item"
-      [class.active]="activeIndex === i"
-      [routerLink]="tab.route"
-      [attr.aria-label]="tab.label"
-      [attr.aria-current]="activeIndex === i ? 'page' : null"
-      (click)="onTabClick()"
-    >
-      <i [class]="tab.icon"></i>
-      <span class="tab-label">{{ tab.label }}</span>
+      <a
+        class="tab-item"
+        [class.active]="activeIndex === i"
+        [routerLink]="tab.route"
+        [attr.aria-label]="tab.label"
+        [attr.aria-current]="activeIndex === i ? 'page' : null"
+        (click)="onTabClick()"
+      >
+        <i [class]="tab.icon"></i>
 
-      @if (tab.hasBadge && cartCount() > 0) { @for (count of [cartCount()];
-      track count) {
-      <span class="cart-count">{{ count > 99 ? "99+" : count }}</span>
-      } }
-    </a>
+        <span class="tab-label">
+          {{ tab.label }}
+        </span>
+
+        @if (tab.hasBadge && cartCount() > 0) {
+          <span class="cart-count">
+            {{ cartCount() > 99 ? '99+' : cartCount() }}
+          </span>
+        }
+      </a>
     }
+
   </nav>
 </div>

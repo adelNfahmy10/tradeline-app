@@ -1,8 +1,8 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, effect, inject, OnInit } from '@angular/core';
-
+import { Component, effect, inject, OnInit, AfterViewInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-
+import { Capacitor } from '@capacitor/core';
+import { SplashScreen } from '@capacitor/splash-screen';
 import {
   IonApp,
   IonSplitPane,
@@ -81,7 +81,7 @@ import { Geolocation } from '@capacitor/geolocation';
     NgxSpinnerComponent,
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   // ==========================================
   // DEPENDENCIES
   // ==========================================
@@ -189,6 +189,18 @@ export class AppComponent implements OnInit {
 
     // Initialize native app services.
     this.initializeApp();
+  }
+
+  showSplash = true;
+
+  async ngAfterViewInit(): Promise<void> {
+    if (Capacitor.isNativePlatform()) {
+      await new Promise<void>(resolve => {
+        requestAnimationFrame(() => resolve());
+      });
+
+      await SplashScreen.hide();
+    }
   }
 
   // ==========================================

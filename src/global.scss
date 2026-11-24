@@ -5806,7 +5806,7 @@ p {
   color: #555;
 }
 
-a {
+a:not(.tab-item) {
   color: #0e7d3f;
 }
 
@@ -7006,7 +7006,7 @@ html:not(.ion-palette-dark) .text-muted {
   color: var(--app-text-secondary) !important;
 }
 
-html:not(.ion-palette-dark) a,
+html:not(.ion-palette-dark) a:not(.tab-item),
 html:not(.ion-palette-dark) .main-color {
   color: var(--app-primary) !important;
 }
@@ -7150,8 +7150,7 @@ html:not(.ion-palette-dark) .head-list,
 html:not(.ion-palette-dark) .empty-cart,
 html:not(.ion-palette-dark) .success-status,
 html:not(.ion-palette-dark) .checkout-dialog,
-html:not(.ion-palette-dark) .checkout-address,
-html:not(.ion-palette-dark) .checkout-order {
+html:not(.ion-palette-dark) .checkout-address{
   background: var(--app-surface) !important;
 
   color: var(--app-text) !important;
@@ -7160,7 +7159,9 @@ html:not(.ion-palette-dark) .checkout-order {
 
   box-shadow: var(--app-shadow) !important;
 }
-html:not(.ion-palette-dark) .checkout-coupon {
+html:not(.ion-palette-dark) .checkout-coupon,
+html:not(.ion-palette-dark) .checkout-order 
+ {
   background: #fff !important;
 }
 
@@ -7736,4 +7737,43 @@ ion-modal.search-modal::part(handle) {
 
 ion-modal.search-modal::part(content) {
   overflow: hidden;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-background-color);
+    --color: var(--ion-text-color);
+    --border-width: 0;
+    --min-height: 60px;
+
+    padding: 12px 5px;
+  }
+
+  ion-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  ion-back-button {
+    // --color: var(--main-color);
+    --icon-font-size: 22px;
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+}
+
+
+ion-header {
+  padding-top: var(--ion-safe-area-top, env(safe-area-inset-top));
+  background: var(--ion-toolbar-background, #fff);
+}
+
+ion-toolbar {
+  --min-height: 56px;
 }

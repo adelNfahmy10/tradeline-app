@@ -29,3 +29,33 @@
     }
   }
 }
+
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-background-color);
+    --color: var(--ion-text-color);
+    --border-width: 0;
+    --min-height: 60px;
+
+    padding: 12px 5px;
+  }
+
+  ion-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  ion-back-button {
+    // --color: var(--main-color);
+    --icon-font-size: 22px;
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+}

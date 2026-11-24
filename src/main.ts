@@ -25,7 +25,6 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { importProvidersFrom } from '@angular/core';
 import { loadingInterceptor } from './core/interceptors/loading/loading-interceptor';
-import { slidePageAnimation } from './core/slide.animation';
 
 // register Swiper custom elements
 register();

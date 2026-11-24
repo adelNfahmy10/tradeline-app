@@ -8,12 +8,14 @@ import {
   IonToolbar,
   IonButtons,
   IonFooter,
+  IonMenuToggle,
+  IonBackButton
 } from '@ionic/angular/standalone';
 import { AuthService } from 'src/core/services/auth/auth-service';
 import { GlobalRefreshService } from 'src/core/services/global-refresh/global-refresh-service';
 import { SearchModalComponent } from 'src/app/components/search-modal/search-modal.component';
 import { TabsComponent } from 'src/app/components/tabs/tabs.component';
-import { IonMenuButton } from '@ionic/angular/standalone';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-service-tracking',
@@ -31,7 +33,10 @@ import { IonMenuButton } from '@ionic/angular/standalone';
     FormsModule,
     SearchModalComponent,
     TabsComponent,
-    IonMenuButton,
+    IonMenuToggle,
+    RouterLink,
+    IonBackButton,
+    IonButtons,
   ],
 })
 export class ServiceTrackingPage {

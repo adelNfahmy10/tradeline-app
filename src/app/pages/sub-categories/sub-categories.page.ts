@@ -13,6 +13,7 @@ import {
   IonFooter,
   IonRefresher,
   IonRefresherContent,
+  IonSpinner
 } from '@ionic/angular/standalone';
 
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -54,6 +55,7 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
     SkeletonReloadPage,
     RouterLink,
     TabsComponent,
+    IonSpinner
   ],
 })
 export class SubCategoriesPage implements OnInit {
@@ -62,6 +64,8 @@ export class SubCategoriesPage implements OnInit {
   private readonly _GlobalRefreshService = inject(GlobalRefreshService);
   private readonly _Router = inject(Router);
   private readonly _DestroyRef = inject(DestroyRef);
+
+  isAutoNavigating = false;
 
   private readonly productRequests$ = new Subject<{
     slug: string;
@@ -144,11 +148,60 @@ export class SubCategoriesPage implements OnInit {
   }
 
   // Listen To Product Requests
+  // private listenToProductRequests(): void {
+  //   this.productRequests$
+  //     .pipe(
+  //       switchMap(({ slug, sizeId }) => {
+  //         this.isLoading = true;
+  //         this.errorMessage = '';
+
+  //         return this._CategoriesService
+  //           .getSubCategoryBySize(slug, 10, 1, sizeId)
+  //           .pipe(
+  //             catchError((error) => {
+  //               console.error('Error loading products:', error);
+
+  //               this.subCategoryProducts = [];
+  //               this.errorMessage =
+  //                 'Unable to load products. Please try again.';
+
+  //               return EMPTY;
+  //             }),
+
+  //             finalize(() => {
+  //               this.isLoading = false;
+  //             })
+  //           );
+  //       }),
+
+  //       takeUntilDestroyed(this._DestroyRef)
+  //     )
+  //     .subscribe({
+  //       next: (res: any) => {
+  //         this.subCategoryProducts = res?.results || [];
+
+  //         // Automatic Navigation When Only One Product Exists
+  //         if (
+  //           !this.subCategory?.sub_category_size?.length &&
+  //           this.subCategoryProducts.length === 1
+  //         ) {
+  //           const product = this.subCategoryProducts[0];
+
+  //           this._Router.navigate(['/product', product.seo_slug], {
+  //             replaceUrl: true,
+  //           });
+  //         }
+  //       },
+  //     });
+  // }
+
+    
   private listenToProductRequests(): void {
     this.productRequests$
       .pipe(
         switchMap(({ slug, sizeId }) => {
           this.isLoading = true;
+          this.isAutoNavigating = false;
           this.errorMessage = '';
 
           return this._CategoriesService
@@ -163,35 +216,37 @@ export class SubCategoriesPage implements OnInit {
 
                 return EMPTY;
               }),
-
               finalize(() => {
                 this.isLoading = false;
               })
             );
         }),
-
         takeUntilDestroyed(this._DestroyRef)
       )
       .subscribe({
         next: (res: any) => {
-          this.subCategoryProducts = res?.results || [];
+          const results = res?.results || [];
 
-          // Automatic Navigation When Only One Product Exists
-          if (
-            !this.subCategory?.sub_category_size?.length &&
-            this.subCategoryProducts.length === 1
-          ) {
-            const product = this.subCategoryProducts[0];
+          this.subCategoryProducts = results;
 
-            this._Router.navigate(['/product', product.seo_slug], {
-              replaceUrl: true,
-            });
+          if (results.length === 1) {
+            const product = results[0];
+
+            this.isAutoNavigating = true;
+
+            setTimeout(() => {
+              this._Router.navigate(['/product', product.seo_slug], {
+                replaceUrl: true,
+              });
+            }, 1000);
           }
         },
       });
   }
 
   // Select Size
+
+  
   getSubCatBySize(sizeId: number): void {
     if (!this.subCategory?.seo_slug || this.selectedSizeId === sizeId) {
       return;

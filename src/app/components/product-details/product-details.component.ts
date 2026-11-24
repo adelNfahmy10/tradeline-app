@@ -320,6 +320,11 @@ export class ProductDetailsComponent implements OnInit {
             'Product removed from favorites successfully',
           );
         },
+        error: ()=>{
+          this._ToastrService.error(
+            'Unable to remove this product from your favorites. Please try again.'
+          );
+        }
       });
     } else {
       // Add
@@ -334,6 +339,11 @@ export class ProductDetailsComponent implements OnInit {
             'Product added to favorites successfully',
           );
         },
+        error: ()=>{
+          this._ToastrService.error(
+            'Unable to add this product to your favorites. Please try again.'
+          );
+        }
       });
     }
   }

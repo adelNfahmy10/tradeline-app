@@ -25,9 +25,19 @@
         <div class="search-input-wrapper">
           <i class="fa-solid fa-magnifying-glass search-input-icon"></i>
 
+          <!-- <ion-searchbar
+            #searchbar
+            placeholder="Search products..."
+            [debounce]="0"
+            [animated]="true"
+            (ionInput)="onSearch($event)"
+            (click)="modal.setCurrentBreakpoint(1)"
+          ></ion-searchbar> -->
+
           <ion-searchbar
             #searchbar
             placeholder="Search products..."
+            searchIcon="search-outline"
             [debounce]="0"
             [animated]="true"
             (ionInput)="onSearch($event)"

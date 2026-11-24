@@ -53,7 +53,6 @@ ion-header {
     --border-width: 0;
     --min-height: 60px;
 
-    padding: 12px;
   }
 
   ion-title {
@@ -65,7 +64,6 @@ ion-header {
 
 .tvc-header-logo {
   width: 105px;
-  height: 38px;
   object-fit: contain;
 }
 
@@ -411,3 +409,30 @@ ion-header {
   font-weight: 600;
   font-style: italic;
 }
+
+/* =========================================
+   HEADER
+========================================= */
+
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-background-color);
+    --color: var(--ion-text-color);
+    --border-width: 0;
+    --min-height: 60px;
+
+    padding: 12px 5px;
+  }
+
+  ion-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.tvc-header-logo {
+  width: 100px !important;
+  object-fit: contain;
+}
+

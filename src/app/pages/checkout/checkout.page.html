@@ -14,49 +14,59 @@
     <div class="payment-checkbox mb-3">
       <h4 class="main-color fw-semibold px-3 mb-1">Payment Methods</h4>
       <div class="payment-list p-3">
-        @if (hasPaymobPayment) { @for (pm of payments_arr_avail; track pm?.code)
-        { @if (pm?.is_allowed && pm?.code === 555) {
-        <label class="payment-item d-flex align-items-center pb-2">
-          <input
-            type="radio"
-            name="paymentMethod"
-            [value]="pm?.code"
-            [checked]="selectedPaymentMethod === pm?.code"
-            (change)="onPaymentChange(pm?.code)"
-          />
-
-          <img [src]="pm?.image" alt="Paymob" />
-          Online Payment
-        </label>
-        } } } @else {
-        <div class="payment-unavailable">
-          <div class="payment-unavailable__icon">
-            <i class="fa-solid fa-store"></i>
+        @if (isPaymentsLoading) {
+          <div class="payment-loading">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Loading payment methods...</p>
           </div>
+        } @else if (hasPaymobPayment) {
+          @for (pm of payments_arr_avail; track pm?.code) {
+            @if (pm?.is_allowed && pm?.code === 555) {
+              <label class="payment-item d-flex align-items-center pb-2">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  [value]="pm?.code"
+                  [checked]="selectedPaymentMethod === pm?.code"
+                  (change)="onPaymentChange(pm?.code)"
+                />
 
-          <span class="payment-unavailable__brand"> TRADELINE STORES </span>
+                <img [src]="pm?.image" alt="Paymob" />
+                Online Payment
+              </label>
+            }
+          }
+        } @else {
+          <div class="payment-unavailable">
+            <div class="payment-unavailable__icon">
+              <i class="fa-solid fa-store"></i>
+            </div>
 
-          <h5>Online Payment Coming Soon</h5>
+            <span class="payment-unavailable__brand">TRADELINE STORES</span>
 
-          <p>
-            We're currently updating our online payment service to give you a
-            better shopping experience.
-          </p>
+            <h5>Online Payment Coming Soon</h5>
 
-          <div class="payment-unavailable__note">
-            <i class="fa-solid fa-circle-info"></i>
-            <span>Please check back again shortly.</span>
+            <p>
+              We're currently updating our online payment service to give you a
+              better shopping experience.
+            </p>
+
+            <div class="payment-unavailable__note">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>Please check back again shortly.</span>
+            </div>
+
+            <button
+              type="button"
+              class="payment-unavailable__btn"
+              (click)="goToShop()"
+            >
+              <i class="fa-solid fa-arrow-left"></i>
+              Back to Shop
+            </button>
           </div>
-
-          <button
-            type="button"
-            class="payment-unavailable__btn"
-            (click)="goToShop()"
-          >
-            <i class="fa-solid fa-arrow-left"></i>
-            Back to Shop
-          </button>
-        </div>
         }
         <!-- @for (pm of payments_arr_avail; track $index) { @if (pm?.is_allowed) {
         <label class="payment-item d-flex align-items-center pb-2">
