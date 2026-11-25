@@ -236,10 +236,10 @@ ion-item-options {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 8px;
     border-radius: 12px;
     background: var(--cart-green);
-    color: #ffffff;
+    color: #ffffff !important;
     text-decoration: none;
     font-size: 14px;
     font-weight: 700;

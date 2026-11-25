@@ -36,7 +36,6 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
     IonToolbar,
     CommonModule,
     FormsModule,
-    IonMenuButton,
     TabsComponent,
     RouterLink,
     SearchModalComponent,

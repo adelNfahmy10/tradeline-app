@@ -1,4 +1,3 @@
-
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
@@ -13,9 +12,9 @@ const config: CapacitorConfig = {
       androidScaleType: 'CENTER_INSIDE',
       showSpinner: false,
       splashFullScreen: true,
-      splashImmersive: false
-    }
-  }
+      splashImmersive: false,
+    },
+  },
 };
 
 export default config;

@@ -7011,6 +7011,52 @@ html:not(.ion-palette-dark) .main-color {
   color: var(--app-primary) !important;
 }
 
+/* =========================================
+   REDIRECT MESSAGE - LIGHT MODE
+========================================= */
+
+html:not(.ion-palette-dark) {
+  .redirect-message {
+    background: #f8faf9;
+    border: 1px solid #e8efeb;
+
+    h5 {
+      color: #202b24;
+    }
+
+    p {
+      color: #7b8580;
+    }
+  }
+
+  a.browse-products {
+    color: #fff !important;
+  }
+}
+
+/* =========================================
+   REDIRECT MESSAGE - DARK MODE
+========================================= */
+
+html.ion-palette-dark {
+  .redirect-message {
+    background: #171c19;
+    border: 1px solid #29332d;
+
+    h5 {
+      color: #f1f5f2;
+    }
+
+    p {
+      color: #a0aaa4;
+    }
+  }
+
+  a.browse-products {
+    color: #fff !important;
+  }
+}
+
 /* Ionic lists, items, cards and controls */
 
 html:not(.ion-palette-dark) ion-list {
@@ -7150,7 +7196,7 @@ html:not(.ion-palette-dark) .head-list,
 html:not(.ion-palette-dark) .empty-cart,
 html:not(.ion-palette-dark) .success-status,
 html:not(.ion-palette-dark) .checkout-dialog,
-html:not(.ion-palette-dark) .checkout-address{
+html:not(.ion-palette-dark) .checkout-address {
   background: var(--app-surface) !important;
 
   color: var(--app-text) !important;
@@ -7160,8 +7206,7 @@ html:not(.ion-palette-dark) .checkout-address{
   box-shadow: var(--app-shadow) !important;
 }
 html:not(.ion-palette-dark) .checkout-coupon,
-html:not(.ion-palette-dark) .checkout-order 
- {
+html:not(.ion-palette-dark) .checkout-order {
   background: #fff !important;
 }
 
@@ -7329,8 +7374,6 @@ html:not(.ion-palette-dark) .cart-details .btns .checkout:hover:not(:disabled) {
   background: var(--app-primary-hover) !important;
 
   border-color: var(--app-primary-hover) !important;
-
-  color: #ffffff !important;
 }
 
 html:not(.ion-palette-dark) .cart-details .btns .continue {
@@ -7739,7 +7782,6 @@ ion-modal.search-modal::part(content) {
   overflow: hidden;
 }
 
-
 /* =========================================
    HEADER
    ========================================= */
@@ -7767,7 +7809,6 @@ ion-header {
     --padding-end: 0;
   }
 }
-
 
 ion-header {
   padding-top: var(--ion-safe-area-top, env(safe-area-inset-top));

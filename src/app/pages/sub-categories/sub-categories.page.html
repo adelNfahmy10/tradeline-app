@@ -56,72 +56,70 @@
       </div>
 
       @if (isAutoNavigating) {
-        <div class="col-12">
-          <div class="redirect-message">
-  <div class="redirect-icon">
-    <i class="fa-solid fa-bag-shopping"></i>
-  </div>
+      <div class="col-12">
+        <div class="redirect-message">
+          <div class="redirect-icon">
+            <i class="fa-solid fa-bag-shopping"></i>
+          </div>
 
-  <h5>Taking You to Your Product</h5>
+          <h5>Taking You to Your Product</h5>
 
-  <p>
-    We've found the perfect match!
-    Redirecting you to view product details.
-  </p>
+          <p>
+            We've found the perfect match! Redirecting you to view product
+            details.
+          </p>
 
-  <ion-spinner name="crescent"></ion-spinner>
-</div>
+          <ion-spinner name="crescent"></ion-spinner>
         </div>
+      </div>
       } @else {
-        <div class="row g-3">
-          @for (subCat of subCategoryProducts; track subCat.seo_slug) {
-          <div class="col-12">
-            <article
-              class="product-card d-flex align-items-center"
-              [routerLink]="'/product/' + subCat.seo_slug"
-            >
-              <!-- Product Image -->
-              <div class="product-image flex-shrink-0">
-                <img
-                  loading="lazy"
-                  [src]="subCat.picture1 || 'assets/images/anim-logo.gif'"
-                  [alt]="subCat.picture1_alt || subCat.name"
-                />
-              </div>
-
-              <!-- Product Info -->
-              <div class="product-info flex-grow-1">
-                <h4 class="product-name">{{ subCat.name }}</h4>
-
-                <div class="product-price">
-                  <span>{{ subCat.price | number }}</span>
-                  <small>EGP</small>
-                </div>
-              </div>
-
-              <!-- Arrow -->
-              <i class="fa-solid fa-chevron-right product-arrow"></i>
-            </article>
-          </div>
-          } @empty {
-          <div class="col-12">
-            <div class="empty-products">
-              <div class="empty-icon">
-                <i class="fa-solid fa-box-open"></i>
-              </div>
-
-              <h5>No Products Available</h5>
-              <p>
-                We couldn't find any products for this selection. Try choosing
-                another size to explore more products.
-              </p>
+      <div class="row g-3">
+        @for (subCat of subCategoryProducts; track subCat.seo_slug) {
+        <div class="col-12">
+          <article
+            class="product-card d-flex align-items-center"
+            [routerLink]="'/product/' + subCat.seo_slug"
+          >
+            <!-- Product Image -->
+            <div class="product-image flex-shrink-0">
+              <img
+                loading="lazy"
+                [src]="subCat.picture1 || 'assets/images/anim-logo.gif'"
+                [alt]="subCat.picture1_alt || subCat.name"
+              />
             </div>
-          </div>
-          }
+
+            <!-- Product Info -->
+            <div class="product-info flex-grow-1">
+              <h4 class="product-name">{{ subCat.name }}</h4>
+
+              <div class="product-price">
+                <span>{{ subCat.price | number }}</span>
+                <small>EGP</small>
+              </div>
+            </div>
+
+            <!-- Arrow -->
+            <i class="fa-solid fa-chevron-right product-arrow"></i>
+          </article>
         </div>
+        } @empty {
+        <div class="col-12">
+          <div class="empty-products">
+            <div class="empty-icon">
+              <i class="fa-solid fa-box-open"></i>
+            </div>
+
+            <h5>No Products Available</h5>
+            <p>
+              We couldn't find any products for this selection. Try choosing
+              another size to explore more products.
+            </p>
+          </div>
+        </div>
+        }
+      </div>
       }
-
-
     </div>
   </section>
 </ion-content>

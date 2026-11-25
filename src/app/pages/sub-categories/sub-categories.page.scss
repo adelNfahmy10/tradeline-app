@@ -247,8 +247,6 @@
   }
 }
 
-
-
 /* =========================================
    HEADER
    ========================================= */
@@ -277,7 +275,6 @@ ion-header {
   }
 }
 
-
 .redirect-message {
   display: flex;
   flex-direction: column;
@@ -285,8 +282,6 @@ ion-header {
   justify-content: center;
   text-align: center;
   padding: 45px 20px;
-  background: #f8faf9;
-  border: 1px solid #e8efeb;
   border-radius: 16px;
   margin-top: 20px;
 
@@ -304,14 +299,12 @@ ion-header {
   }
 
   h5 {
-    color: #202b24;
     font-size: 17px;
     font-weight: 700;
     margin-bottom: 8px;
   }
 
   p {
-    color: #7b8580;
     font-size: 13px;
     line-height: 1.6;
     max-width: 280px;

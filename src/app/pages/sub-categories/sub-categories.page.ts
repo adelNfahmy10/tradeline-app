@@ -13,7 +13,7 @@ import {
   IonFooter,
   IonRefresher,
   IonRefresherContent,
-  IonSpinner
+  IonSpinner,
 } from '@ionic/angular/standalone';
 
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -52,10 +52,9 @@ import { GlobalRefreshService } from 'src/core/services/global-refresh/global-re
     IonToolbar,
     CommonModule,
     FormsModule,
-    SkeletonReloadPage,
     RouterLink,
     TabsComponent,
-    IonSpinner
+    IonSpinner,
   ],
 })
 export class SubCategoriesPage implements OnInit {
@@ -195,7 +194,6 @@ export class SubCategoriesPage implements OnInit {
   //     });
   // }
 
-    
   private listenToProductRequests(): void {
     this.productRequests$
       .pipe(
@@ -246,7 +244,6 @@ export class SubCategoriesPage implements OnInit {
 
   // Select Size
 
-  
   getSubCatBySize(sizeId: number): void {
     if (!this.subCategory?.seo_slug || this.selectedSizeId === sizeId) {
       return;
